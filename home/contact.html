@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Biluibaba & Study Insights</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand':     '#FF5500',
+                        'brand-light': '#FF7733',
+                        'surface':   '#0A0A0A',
+                        'surface-2': '#111111',
+                        'surface-3': '#181818',
+                        'surface-4': '#1F1F1F',
+                    },
+                    fontFamily: {
+                        sans:    ['Inter', 'sans-serif'],
+                        display: ['Manrope', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root { --brand: #FF5500; }
+        * { box-sizing: border-box; }
+        body {
+            background-color: #0A0A0A;
+            color: #D4D4D4;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #0A0A0A; }
+        ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--brand); }
+        ::selection { background: var(--brand); color: #000; }
+
+        .glass {
+            background: rgba(10,10,10,0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        .nav-link {
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #888;
+            transition: color 0.25s;
+        }
+        .nav-link:hover { color: #fff; }
+
+        /* Page header */
+        .page-header {
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            background: linear-gradient(180deg, rgba(255,85,0,0.05) 0%, transparent 100%);
+            position: relative;
+        }
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,85,0,0.5) 50%, transparent);
+        }
+        .page-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 14px;
+            background: rgba(255,85,0,0.07);
+            border: 1px solid rgba(255,85,0,0.2);
+            border-radius: 999px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--brand);
+            margin-bottom: 20px;
+        }
+        .tag-dot {
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: var(--brand);
+            animation: blink 2s ease-in-out infinite;
+        }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+        /* Form card */
+        .form-card {
+            background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 24px;
+            padding: clamp(28px, 5vw, 48px);
+            position: relative;
+            overflow: hidden;
+        }
+        .form-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(255,85,0,0.4), rgba(255,255,255,0.05) 60%, transparent);
+        }
+
+        /* Inputs */
+        .field-label {
+            display: block;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.45);
+            margin-bottom: 8px;
+        }
+        .field-input {
+            width: 100%;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 10px;
+            padding: 13px 16px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .field-input::placeholder { color: rgba(255,255,255,0.2); }
+        .field-input:focus {
+            border-color: rgba(255,85,0,0.45);
+            background: rgba(255,85,0,0.04);
+        }
+        textarea.field-input { resize: vertical; min-height: 130px; }
+
+        /* Submit button */
+        .btn-submit {
+            width: 100%;
+            padding: 15px 24px;
+            background: var(--brand);
+            color: #fff;
+            font-family: 'Manrope', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-submit:hover {
+            background: #FF7733;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 32px rgba(255,85,0,0.35);
+        }
+        .btn-submit:active { transform: translateY(0); }
+
+        /* WhatsApp card */
+        .wa-card {
+            background: linear-gradient(135deg, rgba(37,211,102,0.08), rgba(37,211,102,0.03));
+            border: 1px solid rgba(37,211,102,0.2);
+            border-radius: 20px;
+            padding: 28px 24px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .wa-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(37,211,102,0.4) 50%, transparent);
+        }
+        .wa-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 28px;
+            background: #25D366;
+            color: #fff;
+            font-family: 'Manrope', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+            margin-top: 16px;
+        }
+        .wa-btn:hover {
+            background: #1ebe5d;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(37,211,102,0.3);
+        }
+
+        /* Info row */
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 20px;
+            background: rgba(255,255,255,0.025);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+        }
+        .info-icon {
+            width: 38px; height: 38px;
+            border-radius: 10px;
+            background: rgba(255,85,0,0.1);
+            border: 1px solid rgba(255,85,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: var(--brand);
+        }
+
+        /* Success state */
+        .success-msg {
+            display: none;
+            padding: 14px 18px;
+            background: rgba(37,211,102,0.08);
+            border: 1px solid rgba(37,211,102,0.25);
+            border-radius: 10px;
+            color: #4ade80;
+            font-size: 13px;
+            font-weight: 600;
+            text-align: center;
+            margin-top: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass border-b border-[rgba(255,255,255,0.06)]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3 min-w-0">
+                <div class="relative flex-shrink-0">
+                    <div class="w-8 h-8 bg-brand rounded-sm flex items-center justify-center">
+                        <span class="font-display font-bold text-white text-xs">B</span>
+                    </div>
+                    <div class="absolute -right-1 -bottom-1 w-3 h-3 bg-brand/30 border border-brand/50 rounded-sm"></div>
+                </div>
+                <div class="min-w-0">
+                    <div class="font-display font-bold text-white text-sm tracking-wide leading-none truncate">BILUIBABA <span class="text-brand/60">×</span> STUDY INSIGHTS</div>
+                    <div class="text-[9px] text-gray-600 tracking-[0.2em] uppercase font-medium mt-0.5 hidden sm:block">Combined Venture Portfolio</div>
+                </div>
+            </a>
+            <a href="index.html" class="flex items-center gap-2 text-gray-500 hover:text-white transition-colors text-xs font-semibold uppercase tracking-widest">
+                <svg fill="none" viewBox="0 0 16 16" class="w-4 h-4"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Back to Portfolio
+            </a>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header pt-28 pb-12 px-4 sm:px-6">
+        <div class="max-w-2xl mx-auto text-center">
+            <div class="flex justify-center">
+                <div class="page-tag">
+                    <span class="tag-dot"></span>
+                    Get In Touch
+                </div>
+            </div>
+            <h1 class="font-display font-extrabold text-white text-3xl sm:text-4xl tracking-tight mb-4">
+                Contact the Portfolio Team
+            </h1>
+            <p class="text-sm text-gray-500 leading-relaxed max-w-md mx-auto">
+                Interested in investing or learning more? Send us a message below or reach out directly on WhatsApp — we typically respond within 24 hours.
+            </p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="py-14 px-4 sm:px-6 pb-20">
+        <div class="max-w-4xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
+
+                <!-- Contact Form -->
+                <div class="lg:col-span-3">
+                    <div class="form-card">
+                        <h2 class="font-display font-bold text-white text-lg mb-6 uppercase tracking-wide">Send a Message</h2>
+
+                        <form id="contact-form" onsubmit="handleSubmit(event)">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <label class="field-label" for="name">Your Name</label>
+                                    <input class="field-input" type="text" id="name" name="name" placeholder="Full name" required>
+                                </div>
+                                <div>
+                                    <label class="field-label" for="email">Email Address</label>
+                                    <input class="field-input" type="email" id="email" name="email" placeholder="you@example.com" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="field-label" for="subject">Subject</label>
+                                <input class="field-input" type="text" id="subject" name="subject" placeholder="Investment enquiry, partnership, etc.">
+                            </div>
+
+                            <div class="mb-6">
+                                <label class="field-label" for="message">Message</label>
+                                <textarea class="field-input" id="message" name="message" placeholder="Tell us about your interest in the portfolio…" required></textarea>
+                            </div>
+
+                            <button type="submit" class="btn-submit">
+                                Send via WhatsApp
+                                <svg fill="none" viewBox="0 0 24 24" class="w-4 h-4"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+
+                            <div id="success-msg" class="success-msg">
+                                Opening WhatsApp with your message — thank you!
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Side info -->
+                <div class="lg:col-span-2 flex flex-col gap-5">
+
+                    <!-- WhatsApp card -->
+                    <div class="wa-card">
+                        <div class="flex justify-center mb-3">
+                            <svg viewBox="0 0 24 24" class="w-10 h-10" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        </div>
+                        <h3 class="font-display font-bold text-white text-base uppercase tracking-wide">WhatsApp Direct</h3>
+                        <p class="text-gray-500 text-sm mt-2 leading-relaxed">
+                            Prefer to chat directly? Reach the team instantly on WhatsApp.
+                        </p>
+                        <div class="mt-3 font-display font-bold text-white text-lg tracking-widest">
+                            +880 1318-485287
+                        </div>
+                        <a href="https://wa.me/8801318485287" target="_blank" rel="noopener noreferrer" class="wa-btn">
+                            <svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                            Open WhatsApp
+                        </a>
+                    </div>
+
+                    <!-- Info rows -->
+                    <div class="flex flex-col gap-3">
+                        <div class="info-row">
+                            <div class="info-icon">
+                                <svg fill="none" viewBox="0 0 20 20" class="w-4 h-4"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm0-12v4l3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </div>
+                            <div>
+                                <div class="text-[10px] font-bold uppercase tracking-widest text-gray-600 mb-0.5">Response Time</div>
+                                <div class="text-sm text-white font-medium">Within 24 hours</div>
+                            </div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-icon">
+                                <svg fill="none" viewBox="0 0 20 20" class="w-4 h-4"><path d="M17.5 10a7.5 7.5 0 11-15 0 7.5 7.5 0 0115 0z" stroke="currentColor" stroke-width="1.6"/><path d="M10 6.25v3.75l2.5 1.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                            </div>
+                            <div>
+                                <div class="text-[10px] font-bold uppercase tracking-widest text-gray-600 mb-0.5">Availability</div>
+                                <div class="text-sm text-white font-medium">Sun – Thu, 9 AM – 7 PM BST</div>
+                            </div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-icon">
+                                <svg fill="none" viewBox="0 0 20 20" class="w-4 h-4"><path d="M3 4h14a1 1 0 011 1v10a1 1 0 01-1 1H3a1 1 0 01-1-1V5a1 1 0 011-1z" stroke="currentColor" stroke-width="1.6"/><path d="M2 5l8 7 8-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                            </div>
+                            <div>
+                                <div class="text-[10px] font-bold uppercase tracking-widest text-gray-600 mb-0.5">Location</div>
+                                <div class="text-sm text-white font-medium">Dhaka, Bangladesh</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-10 border-t border-[rgba(255,255,255,0.05)] bg-surface">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-gray-600 text-xs">© 2026 Biluibaba &amp; Study Insights. All rights reserved.</p>
+            <a href="index.html" class="text-gray-600 hover:text-brand text-xs uppercase tracking-widest font-semibold transition-colors">← Return to Portfolio</a>
+        </div>
+    </footer>
+
+    <script>
+        function handleSubmit(e) {
+            e.preventDefault();
+            const name    = document.getElementById('name').value.trim();
+            const email   = document.getElementById('email').value.trim();
+            const subject = document.getElementById('subject').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            const text = [
+                `*New Investor Enquiry*`,
+                `---`,
+                `*Name:* ${name}`,
+                `*Email:* ${email}`,
+                subject ? `*Subject:* ${subject}` : null,
+                ``,
+                `*Message:*`,
+                message,
+            ].filter(Boolean).join('\n');
+
+            const url = `https://wa.me/8801318485287?text=${encodeURIComponent(text)}`;
+            window.open(url, '_blank');
+
+            document.getElementById('success-msg').style.display = 'block';
+            document.getElementById('contact-form').reset();
+        }
+    </script>
+
+</body>
+</html>

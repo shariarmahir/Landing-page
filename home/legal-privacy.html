@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal & Privacy | Biluibaba & Study Insights</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand': '#FF5500',
+                        'brand-light': '#FF7733',
+                        'surface': '#0A0A0A',
+                        'surface-2': '#111111',
+                        'surface-3': '#181818',
+                        'surface-4': '#1F1F1F',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Manrope', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root { --brand: #FF5500; }
+        * { box-sizing: border-box; }
+        body {
+            background-color: #0A0A0A;
+            color: #D4D4D4;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #0A0A0A; }
+        ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--brand); }
+
+        .glass {
+            background: rgba(10,10,10,0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        .nav-link {
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #888;
+            transition: color 0.25s;
+        }
+        .nav-link:hover { color: #fff; }
+
+        /* Page header */
+        .page-header {
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            background: linear-gradient(180deg, rgba(255,85,0,0.04) 0%, transparent 100%);
+        }
+        .page-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 14px;
+            background: rgba(255,85,0,0.07);
+            border: 1px solid rgba(255,85,0,0.2);
+            border-radius: 999px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--brand);
+            margin-bottom: 20px;
+        }
+
+        /* Tab nav */
+        .tab-btn {
+            padding: 10px 24px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            border-radius: 6px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #666;
+            background: transparent;
+        }
+        .tab-btn.active {
+            color: #fff;
+            background: rgba(255,85,0,0.1);
+            border-color: rgba(255,85,0,0.25);
+        }
+        .tab-btn:not(.active):hover { color: #aaa; }
+
+        /* Content sections */
+        .content-section { display: none; }
+        .content-section.active { display: block; }
+
+        .prose-section {
+            max-width: 760px;
+            margin: 0 auto;
+        }
+        .section-block {
+            margin-bottom: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .section-block:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        .section-number {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            background: rgba(255,85,0,0.1);
+            border: 1px solid rgba(255,85,0,0.2);
+            color: var(--brand);
+            font-family: 'Manrope', sans-serif;
+            font-size: 11px;
+            font-weight: 800;
+            text-align: center;
+            line-height: 26px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        .section-title {
+            font-family: 'Manrope', sans-serif;
+            font-weight: 700;
+            font-size: 15px;
+            color: #fff;
+            letter-spacing: 0.02em;
+            display: flex;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+        .section-body {
+            color: rgba(255,255,255,0.45);
+            font-size: 14px;
+            line-height: 1.85;
+            padding-left: 40px;
+        }
+        .section-body p { margin-bottom: 10px; }
+        .section-body p:last-child { margin-bottom: 0; }
+        .section-body ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .section-body ul li {
+            padding: 5px 0 5px 16px;
+            position: relative;
+        }
+        .section-body ul li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--brand);
+            opacity: 0.6;
+        }
+
+        /* Info box */
+        .info-box {
+            padding: 16px 20px;
+            background: rgba(255,85,0,0.05);
+            border: 1px solid rgba(255,85,0,0.15);
+            border-radius: 10px;
+            margin-bottom: 36px;
+            color: rgba(255,255,255,0.5);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+        .info-box strong { color: rgba(255,255,255,0.75); font-weight: 600; }
+
+        /* Divider rule */
+        .brand-rule {
+            width: 48px;
+            height: 2px;
+            background: var(--brand);
+            margin-bottom: 28px;
+            border-radius: 2px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass border-b border-[rgba(255,255,255,0.06)]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3 min-w-0">
+                <div class="relative flex-shrink-0">
+                    <div class="w-8 h-8 bg-brand rounded-sm flex items-center justify-center">
+                        <span class="font-display font-bold text-white text-xs">B</span>
+                    </div>
+                    <div class="absolute -right-1 -bottom-1 w-3 h-3 bg-brand/30 border border-brand/50 rounded-sm"></div>
+                </div>
+                <div class="min-w-0">
+                    <div class="font-display font-bold text-white text-sm tracking-wide leading-none truncate">BILUIBABA <span class="text-brand/60">×</span> STUDY INSIGHTS</div>
+                    <div class="text-[9px] text-gray-600 tracking-[0.2em] uppercase font-medium mt-0.5 hidden sm:block">Combined Venture Portfolio</div>
+                </div>
+            </a>
+
+            <a href="index.html" class="flex items-center gap-2 text-gray-500 hover:text-white transition-colors text-xs font-semibold uppercase tracking-widest">
+                <svg fill="none" viewBox="0 0 16 16" class="w-4 h-4"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Back to Portfolio
+            </a>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header pt-28 pb-12 px-4 sm:px-6">
+        <div class="max-w-3xl mx-auto text-center">
+            <div class="flex justify-center">
+                <div class="page-tag">Legal & Privacy</div>
+            </div>
+            <h1 class="font-display font-extrabold text-white text-3xl sm:text-4xl tracking-tight mb-4">
+                Legal Notice &amp; Privacy Policy
+            </h1>
+            <p class="text-sm text-gray-500 leading-relaxed max-w-xl mx-auto">
+                This document governs your use of this investor portfolio website and outlines how we handle any information submitted through it.
+            </p>
+            <!-- Tab switcher -->
+            <div class="flex justify-center gap-2 mt-8">
+                <button class="tab-btn active" onclick="switchTab('legal', this)">Legal Notice</button>
+                <button class="tab-btn" onclick="switchTab('privacy', this)">Privacy Policy</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="py-14 px-4 sm:px-6">
+
+        <!-- Last updated -->
+        <div class="max-w-760px mx-auto mb-10 text-center">
+            <p class="text-[11px] text-gray-600 uppercase tracking-widest">Last updated: January 2026</p>
+        </div>
+
+        <!-- ── LEGAL SECTION ── -->
+        <div id="tab-legal" class="content-section active prose-section">
+
+            <div class="info-box">
+                <strong>Important:</strong> This website is an investor information document prepared for the purpose of presenting a private venture opportunity. It does not constitute a public offering of securities and is intended solely for qualified, accredited investors.
+            </div>
+
+            <div class="brand-rule"></div>
+
+            <div class="section-block">
+                <div class="section-title">
+                    <span class="section-number">1</span>
+                    Disclaimer of Investment Advice
+                </div>
+                <div class="section-body">
+                    <p>Nothing on this website constitutes financial, legal, or investment advice. The information presented is for informational purposes only and should not be relied upon as the sole basis for any investment decision.</p>
+                    <p>Prospective investors are encouraged to conduct their own independent due diligence and consult with qualified financial and legal advisors before making any investment.</p>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <div class="section-title">
+                    <span class="section-number">2</span>
+                    Forward-Looking Statements
+                </div>
+                <div class="section-body">
+                    <p>This website may contain forward-looking statements, including projections, estimates, and growth targets. These statements are based on current assumptions and involve significant risks and uncertainties. Actual results may differ materially from those projected.</p>
+                    <p>We do not undertake any obligation to update or revise forward-looking statements to reflect subsequent events or circumstances.</p>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <div class="section-title">
+                    <span class="section-number">3</span>
+                    No Public Offering
+                </div>
+                <div class="section-body">
+                    <p>This presentation does not constitute a public offering of securities in any jurisdiction. Access to this document is restricted to invited individuals who have agreed to keep its contents confidential.</p>
+                    <p>Redistribution or reproduction of any part of this website without prior written consent is strictly prohibited.</p>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <div class="section-title">
+                    <span class="section-number">4</span>
+                    Intellectual Property
+                </div>
+                <div class="section-body">
+                    <p>All content on this website — including text, graphics, brand names, logos, and financial models — is the property of the respective venture entities and is protected under applicable intellectual property laws.</p>
+                    <p>Unauthorised use, reproduction, or distribution of any content is prohibited.</p>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <div class="section-title">
+                    <span class="section-number">5</span>
+                    Governing Law
+                </div>
+                <div class="section-body">
+                    <p>This legal notice is governed by and construed in accordance with the laws of the People's Republic of Bangladesh. Any disputes arising from or relating to this website shall be subject to the exclusive jurisdiction of the courts of Bangladesh.</p>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <div class="section-title">
+                    <span class="section-number">6</span>
+                    Contact
+                </div>
+                <div class="section-body">
+                    <p>For legal enquiries, please reach out to the portfolio team directly via the contact information provided in the investor deck.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── PRIVACY SECTION ── -->
+        <div id="tab-privacy" class="content-section prose-section">
+
+            <div class="info-box">
+                <strong>Summary:</strong> This website does not use cookies for tracking, does not run advertising networks, and does not sell your personal data. Any information you voluntarily submit is used solely to respond to your enquiry.
+            </div>
+
+            <div class="brand-rule"></div>
+
+            <div class="section-block">
+                <div class="section-title">
+                    <span class="section-number">1</span>
+                    Information We Collect
+                </div>
+                <div class="section-body">
+                    <p>We may collect the following information only when you voluntarily contact or engage with us:</p>
+                    <ul>
+                        <li>Name and professional title</li>
+                        <li>Email address and phone number</li>
+                        <li>Organisation or firm name</li>
+                        <li>Any message or enquiry you choose to send</li>
+                    </ul>
+                    <p>We do not collect information passively beyond standard web server logs (IP address, browser type, referring URL) which are retained for security purposes only.</p>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <div class="section-title">
+                    <span class="section-number">2</span>
+                    How We Use Your Information
+                </div>
+                <div class="section-body">
+                    <p>Information submitted through this site is used exclusively to:</p>
+                    <ul>
+                        <li>Respond to your enquiry or investment interest</li>
+                        <li>Share relevant investment documentation upon request</li>
+                        <li>Schedule follow-up discussions with the portfolio team</li>
+                    </ul>
+                    <p>We will never use your contact details for unsolicited marketing or share them with third-party marketing platforms.</p>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <div class="section-title">
+                    <span class="section-number">3</span>
+                    Data Sharing
+                </div>
+                <div class="section-body">
+                    <p>We do not sell, trade, or rent your personal information to any third party. Your data may be shared internally between the Biluibaba and Study Insights teams solely for the purpose of responding to your enquiry.</p>
+                    <p>We may disclose information if required by law or regulatory authority.</p>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <div class="section-title">
+                    <span class="section-number">4</span>
+                    Cookies &amp; Tracking
+                </div>
+                <div class="section-body">
+                    <p>This website does not use advertising cookies, tracking pixels, or third-party analytics services that profile visitors. Basic browser storage may be used for functional purposes (e.g. remembering your tab selection on this page) and does not identify you personally.</p>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <div class="section-title">
+                    <span class="section-number">5</span>
+                    Data Retention
+                </div>
+                <div class="section-body">
+                    <p>Enquiry data is retained only as long as necessary to complete the relevant investor communication process. If you wish for your information to be deleted, you may request this at any time by contacting us directly.</p>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <div class="section-title">
+                    <span class="section-number">6</span>
+                    Your Rights
+                </div>
+                <div class="section-body">
+                    <p>You have the right to:</p>
+                    <ul>
+                        <li>Access the personal data we hold about you</li>
+                        <li>Request correction of inaccurate information</li>
+                        <li>Request deletion of your personal data</li>
+                        <li>Withdraw consent at any time</li>
+                    </ul>
+                    <p>To exercise any of these rights, contact us through the investor deck contact details.</p>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <div class="section-title">
+                    <span class="section-number">7</span>
+                    Policy Updates
+                </div>
+                <div class="section-body">
+                    <p>We may update this Privacy Policy from time to time. The "Last updated" date at the top of this page will reflect any changes. Continued use of this website after any update constitutes your acceptance of the revised policy.</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-10 mt-8 border-t border-[rgba(255,255,255,0.05)] bg-surface">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-gray-600 text-xs">© 2026 Biluibaba &amp; Study Insights. All rights reserved.</p>
+            <a href="index.html" class="text-gray-600 hover:text-brand text-xs uppercase tracking-widest font-semibold transition-colors">← Return to Portfolio</a>
+        </div>
+    </footer>
+
+    <script>
+        function switchTab(tab, btn) {
+            document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById('tab-' + tab).classList.add('active');
+            btn.classList.add('active');
+            history.replaceState(null, '', '#' + tab);
+        }
+
+        // Auto-switch based on URL hash
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash.replace('#', '');
+            if (hash === 'privacy') {
+                const btn = document.querySelectorAll('.tab-btn')[1];
+                switchTab('privacy', btn);
+            }
+        });
+    </script>
+
+</body>
+</html>

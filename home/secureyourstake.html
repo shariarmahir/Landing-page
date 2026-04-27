@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Your Stake | Investor Relations</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'neon-orange': '#FF5500',
+                        'metallic-silver': '#C0C0C0',
+                        'deep-black': '#050505',
+                        'charcoal': '#121212',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Oswald', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #050505;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* PREMIUM GLASSMORPHISM */
+        .glass-card {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .glass-input {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .glass-input:focus {
+            background: rgba(0, 0, 0, 0.4);
+            border-color: #FF5500;
+            outline: none;
+            box-shadow: 0 0 15px rgba(255, 85, 0, 0.2);
+        }
+
+        /* Ambient Background Glow */
+        .ambient-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255,85,0,0.15) 0%, rgba(0,0,0,0) 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Noise Texture */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Form Button Animation */
+        .btn-submit {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-submit::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        .btn-submit:hover::after {
+            left: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="noise-overlay"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-deep-black/80 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <i class="fa-solid fa-arrow-left text-gray-400 group-hover:text-neon-orange transition-colors"></i>
+                <div class="leading-none">
+                    <h1 class="font-display font-bold text-xl tracking-wider text-white">INVESTOR PORTAL</h1>
+                </div>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <section class="relative min-h-screen pt-32 pb-20 px-6 flex items-center justify-center overflow-hidden">
+        
+        <!-- Background Glow -->
+        <div class="ambient-glow -top-20 -right-20"></div>
+        <div class="ambient-glow bottom-0 -left-20 bg-blue-900/10"></div>
+
+        <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 relative z-10">
+            
+            <!-- Left Column: The Pitch -->
+            <div class="flex flex-col justify-center">
+                <div class="inline-block px-4 py-1 mb-6 w-fit border border-neon-orange/50 rounded bg-neon-orange/10">
+                    <span class="text-neon-orange font-bold uppercase tracking-[0.2em] text-xs">Closing Round</span>
+                </div>
+                
+                <h1 class="font-display text-5xl md:text-7xl font-bold uppercase leading-tight text-white mb-6">
+                    Secure Your <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-neon-orange to-yellow-600">Stake.</span>
+                </h1>
+                
+                <p class="text-gray-400 text-lg mb-10 max-w-lg leading-relaxed">
+                    You are looking at a ground-floor opportunity to own <strong class="text-white">20% Equity</strong> in a combined venture targeting the <strong class="text-white">$4B+</strong> global education and pet care markets.
+                </p>
+
+                <!-- Deal Breaker Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+                    <div class="p-6 border border-white/10 bg-white/5 rounded-lg hover:border-neon-orange/50 transition-colors">
+                        <div class="text-3xl font-display font-bold text-white mb-1">20%</div>
+                        <div class="text-xs text-gray-500 uppercase tracking-wider">Equity Offered</div>
+                    </div>
+                    <div class="p-6 border border-white/10 bg-white/5 rounded-lg hover:border-neon-orange/50 transition-colors">
+                        <div class="text-3xl font-display font-bold text-white mb-1">25 Lac</div>
+                        <div class="text-xs text-gray-500 uppercase tracking-wider">Investment Ask (BDT)</div>
+                    </div>
+                </div>
+
+                <!-- Process List -->
+                <div class="space-y-4 text-gray-300">
+                    <div class="flex items-center gap-4">
+                        <div class="w-8 h-8 rounded-full border border-gray-600 flex items-center justify-center text-xs font-bold text-gray-400">1</div>
+                        <span>Submit your interest via the secure form.</span>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-8 h-8 rounded-full border border-gray-600 flex items-center justify-center text-xs font-bold text-gray-400">2</div>
+                        <span>Receive the Confidential Investor Deck & NDAs.</span>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-8 h-8 rounded-full border border-gray-600 flex items-center justify-center text-xs font-bold text-gray-400">3</div>
+                        <span>Schedule a private meeting with the Founders.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: The Contact Form -->
+            <div class="relative">
+                <div class="glass-card rounded-2xl p-8 md:p-10 relative">
+                    <!-- Form Header -->
+                    <div class="mb-8">
+                        <h3 class="font-display text-2xl font-bold text-white uppercase mb-2">Expression of Interest</h3>
+                        <p class="text-gray-500 text-sm">All information is strictly confidential.</p>
+                    </div>
+
+                    <form id="investorForm" class="space-y-6" onsubmit="handleFormSubmit(event)">
+                        
+                        <!-- Name -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-xs font-bold uppercase tracking-wider text-gray-400">Full Name</label>
+                                <input type="text" name="fullName" required class="glass-input w-full px-4 py-3 rounded text-sm placeholder-gray-600" placeholder="e.g. John Doe">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs font-bold uppercase tracking-wider text-gray-400">Company / Firm</label>
+                                <input type="text" name="company" class="glass-input w-full px-4 py-3 rounded text-sm placeholder-gray-600" placeholder="e.g. Angel Ventures">
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold uppercase tracking-wider text-gray-400">Email Address</label>
+                            <input type="email" name="email" required class="glass-input w-full px-4 py-3 rounded text-sm placeholder-gray-600" placeholder="john@example.com">
+                        </div>
+
+                        <!-- Interest Level -->
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold uppercase tracking-wider text-gray-400">Investment Interest</label>
+                            <div class="grid grid-cols-3 gap-3">
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="interest" value="Partial" class="peer sr-only" checked>
+                                    <div class="text-center py-3 border border-white/10 rounded text-sm text-gray-400 hover:bg-white/5 peer-checked:bg-neon-orange peer-checked:text-black peer-checked:border-neon-orange transition-all">
+                                        Partial
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="interest" value="Full 20%" class="peer sr-only">
+                                    <div class="text-center py-3 border border-white/10 rounded text-sm text-gray-400 hover:bg-white/5 peer-checked:bg-neon-orange peer-checked:text-black peer-checked:border-neon-orange transition-all">
+                                        Full 20%
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="interest" value="Lead" class="peer sr-only">
+                                    <div class="text-center py-3 border border-white/10 rounded text-sm text-gray-400 hover:bg-white/5 peer-checked:bg-neon-orange peer-checked:text-black peer-checked:border-neon-orange transition-all">
+                                        Lead
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Message -->
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold uppercase tracking-wider text-gray-400">Message / Questions</label>
+                            <textarea name="message" rows="4" class="glass-input w-full px-4 py-3 rounded text-sm placeholder-gray-600" placeholder="Specific terms or timeline questions..."></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn-submit w-full py-4 bg-neon-orange text-black font-display font-bold uppercase tracking-widest text-lg rounded hover:bg-white transition-colors shadow-[0_0_20px_rgba(255,85,0,0.4)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)]">
+                            Submit Interest
+                        </button>
+
+                        <p class="text-center text-[10px] text-gray-600 uppercase tracking-wider mt-4">
+                            By submitting, you agree to receive communication regarding this investment opportunity.
+                        </p>
+                    </form>
+
+                    <!-- Decorative Border Glow -->
+                    <div class="absolute -bottom-1 -right-1 w-20 h-20 border-r-2 border-b-2 border-neon-orange rounded-br-2xl opacity-50"></div>
+                    <div class="absolute -top-1 -left-1 w-20 h-20 border-l-2 border-t-2 border-neon-orange rounded-tl-2xl opacity-50"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-black border-t border-white/5 text-center">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="font-display text-2xl font-bold text-white tracking-widest uppercase mb-4">Biluibaba <span class="text-neon-orange">|</span> Study Insights</h2>
+            <p class="text-gray-600 text-xs">
+                &copy; 2026 Biluibaba & Study Insights Holdings. Confidential Investor Material.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Success Modal (Hidden by default) -->
+    <div id="successModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/90 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="bg-charcoal border border-neon-orange p-10 rounded-2xl max-w-md text-center transform scale-95 transition-transform duration-300" id="modalContent">
+            <div class="w-20 h-20 bg-neon-orange/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fa-solid fa-check text-4xl text-neon-orange"></i>
+            </div>
+            <h3 class="font-display text-3xl font-bold text-white uppercase mb-2">Interest Received</h3>
+            <p class="text-gray-400 mb-8">Thank you for your interest. Our team will reach out within 24 hours with the NDAs and full deck.</p>
+            <button onclick="closeModal()" class="px-8 py-3 border border-white/20 text-white font-bold uppercase tracking-widest text-xs hover:bg-white hover:text-black transition-all">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <!-- Interactive Script -->
+    <script>
+        function handleFormSubmit(e) {
+            e.preventDefault();
+
+            const form = e.target;
+            const fullName = form.querySelector('[name="fullName"]').value.trim();
+            const company = form.querySelector('[name="company"]').value.trim();
+            const email = form.querySelector('[name="email"]').value.trim();
+            const interest = form.querySelector('input[name="interest"]:checked')?.value || 'Partial';
+            const message = form.querySelector('[name="message"]').value.trim();
+
+            const whatsappNumber = '8801318485287';
+            const whatsappMessage = [
+                'Hello, I want to submit my investment interest.',
+                '',
+                `Name: ${fullName}`,
+                `Company/Firm: ${company || 'N/A'}`,
+                `Email: ${email}`,
+                `Investment Interest: ${interest}`,
+                `Message/Questions: ${message || 'N/A'}`
+            ].join('\n');
+
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`, '_blank');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('successModal');
+            const content = document.getElementById('modalContent');
+
+            modal.classList.add('opacity-0');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300);
+        }
+    </script>
+</body>
+</html>

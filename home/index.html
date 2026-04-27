@@ -1,0 +1,1923 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investor Portfolio | Biluibaba & Study Insights</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand': '#FF5500',
+                        'brand-light': '#FF7733',
+                        'brand-dim': 'rgba(255,85,0,0.12)',
+                        'surface': '#0A0A0A',
+                        'surface-2': '#111111',
+                        'surface-3': '#181818',
+                        'surface-4': '#1F1F1F',
+                        'border': 'rgba(255,255,255,0.07)',
+                        'border-bright': 'rgba(255,255,255,0.12)',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Manrope', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --brand: #FF5500;
+            --brand-glow: rgba(255, 85, 0, 0.35);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            background-color: #0A0A0A;
+            color: #D4D4D4;
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #0A0A0A; }
+        ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--brand); }
+        ::selection { background: var(--brand); color: #000; }
+
+        /* Scroll progress bar */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #FF5500, #FF9944);
+            z-index: 1000;
+            transition: width 0.1s linear;
+            box-shadow: 0 0 12px rgba(255,85,0,0.6);
+        }
+
+        /* Navbar */
+        .nav-link {
+            position: relative;
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #888;
+            transition: color 0.25s;
+            padding-bottom: 4px;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 1px;
+            background: var(--brand);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover { color: #fff; }
+        .nav-link:hover::after { width: 100%; }
+
+        /* Hero grid */
+        .hero-grid {
+            background-image:
+                linear-gradient(rgba(255,85,0,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,85,0,0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+        }
+
+        /* Animated noise texture */
+        .noise::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            opacity: 0.4;
+            z-index: 1;
+        }
+
+        /* Gradient orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            opacity: 0.12;
+        }
+        .hero-shell {
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            border-radius: 0;
+            padding: 0;
+            position: relative;
+        }
+        .hero-shell::before { display: none; }
+        .hero-panel {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .hero-copy-block {
+            max-width: 980px;
+            width: 100%;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 7px 18px 7px 10px;
+            background: rgba(255,85,0,0.06);
+            border: 1px solid rgba(255,85,0,0.22);
+            border-radius: 999px;
+            margin-bottom: 30px;
+            color: rgba(255,255,255,0.52);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+        }
+        .hero-badge-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--brand);
+            box-shadow: 0 0 8px rgba(255,85,0,0.7);
+            animation: blink 2s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+        .hero-title {
+            font-family: 'Manrope', sans-serif;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: #fff;
+            line-height: 1;
+            letter-spacing: -0.04em;
+            font-size: clamp(32px, 5.5vw, 86px);
+            white-space: nowrap;
+            margin: 0;
+        }
+        .hero-title-accent {
+            display: block;
+            margin-top: 6px;
+            color: var(--brand);
+            font-family: 'Manrope', sans-serif;
+            font-weight: 700;
+            font-size: clamp(13px, 1.9vw, 30px);
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+        .hero-rule {
+            width: 80px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,85,0,0.7), transparent);
+            margin: 26px auto;
+        }
+        .hero-desc {
+            color: rgba(255,255,255,0.42);
+            max-width: 50ch;
+            margin: 0 auto;
+            font-size: clamp(13px, 1.2vw, 15px);
+            line-height: 1.85;
+        }
+        .hero-proof {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 28px;
+        }
+        .hero-proof-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 0 20px;
+            color: rgba(255,255,255,0.32);
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            border-right: 1px solid rgba(255,255,255,0.07);
+        }
+        .hero-proof-item:last-child { border-right: none; }
+        .hero-proof-dot {
+            width: 4px; height: 4px;
+            border-radius: 50%;
+            background: var(--brand);
+            flex-shrink: 0;
+        }
+        .hero-cta {
+            margin-top: 28px;
+        }
+        .hero-stats-panel {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            gap: 1px;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.06);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+        }
+        .hero-shell > .hero-headline,
+        .hero-shell > .hero-sub,
+        .hero-shell > .hero-desc,
+        .hero-shell > .hero-cta,
+        .hero-shell > .hero-stats {
+            display: none;
+        }
+        .hero-stat-card {
+            background: linear-gradient(180deg, rgba(18,18,18,0.96), rgba(10,10,10,0.92));
+            padding: 22px 22px 20px;
+        }
+        .hero-stat-label {
+            margin-top: 8px;
+            color: #6F6F6F;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+        .hero-stat-note {
+            margin-top: 12px;
+            color: rgba(255,255,255,0.44);
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        /* Counter animation */
+        .counter { font-variant-numeric: tabular-nums; }
+
+        /* Section fade in */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1), transform 0.7s cubic-bezier(0.4,0,0.2,1);
+        }
+        .reveal.visible { opacity: 1; transform: none; }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+
+        /* Gradient border card */
+        .grad-border {
+            position: relative;
+            border-radius: 16px;
+        }
+        .grad-border::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(255,85,0,0.4), transparent 50%, rgba(255,85,0,0.1));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        /* Tag pill */
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            background: rgba(255,85,0,0.08);
+            border: 1px solid rgba(255,85,0,0.2);
+            border-radius: 100px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--brand);
+        }
+        .tag-dot {
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: var(--brand);
+            animation: blink 2s ease-in-out infinite;
+        }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+        /* Primary button */
+        .btn-primary {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 32px;
+            background: var(--brand);
+            color: #fff;
+            font-family: 'Manrope', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 0 0 rgba(255,85,0,0.4);
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent, rgba(255,255,255,0.12));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(255,85,0,0.4);
+        }
+        .btn-primary:hover::before { opacity: 1; }
+
+        /* Secondary button */
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 32px;
+            background: transparent;
+            color: #ccc;
+            font-family: 'Manrope', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.12);
+            transition: all 0.3s ease;
+        }
+        .btn-secondary:hover {
+            border-color: var(--brand);
+            color: var(--brand);
+            background: rgba(255,85,0,0.05);
+        }
+
+        .btn-team {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 9px 14px;
+            background: rgba(255,85,0,0.08);
+            color: #fff;
+            border: 1px solid rgba(255,85,0,0.2);
+            border-radius: 999px;
+            font-family: 'Manrope', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+        .btn-team:hover {
+            background: rgba(255,85,0,0.16);
+            border-color: rgba(255,85,0,0.4);
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .insight-panel {
+            position: relative;
+            overflow: hidden;
+            border-radius: 28px;
+            background:
+                radial-gradient(circle at top right, rgba(255,85,0,0.12), transparent 30%),
+                linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015));
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 24px 70px rgba(0,0,0,0.35);
+        }
+        .insight-panel::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(120deg, rgba(255,85,0,0.08), transparent 25%),
+                linear-gradient(180deg, rgba(255,255,255,0.02), transparent 45%);
+            pointer-events: none;
+        }
+        .method-card {
+            position: relative;
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            padding: 22px;
+            border-radius: 22px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: transform 0.35s ease, border-color 0.35s ease, background 0.35s ease, box-shadow 0.35s ease;
+        }
+        .method-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255,85,0,0.22);
+            background: linear-gradient(180deg, rgba(255,85,0,0.08), rgba(255,255,255,0.03));
+            box-shadow: 0 14px 36px rgba(0,0,0,0.28);
+        }
+        .method-card-number {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(180deg, rgba(255,85,0,0.16), rgba(255,85,0,0.05));
+            border: 1px solid rgba(255,85,0,0.2);
+            color: var(--brand);
+            font-family: 'Manrope', sans-serif;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.16em;
+            flex-shrink: 0;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+        .method-card-kicker {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: rgba(255,255,255,0.38);
+            margin-bottom: 8px;
+        }
+        .method-card-title {
+            color: #fff;
+            font-size: 15px;
+            line-height: 1.3;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 6px;
+        }
+        .method-card-copy {
+            color: #7A7A7A;
+            font-size: 14px;
+            line-height: 1.7;
+            max-width: 40ch;
+        }
+        .leadership-card {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            padding: 22px;
+            border-radius: 24px;
+            background:
+                radial-gradient(circle at top right, rgba(255,85,0,0.08), transparent 35%),
+                linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+        }
+        .leadership-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255,85,0,0.24);
+            box-shadow: 0 18px 46px rgba(0,0,0,0.3);
+        }
+        .leadership-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(255,85,0,0.35), rgba(255,255,255,0));
+        }
+        .leadership-avatar {
+            width: 88px;
+            height: 88px;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255,255,255,0.08);
+            color: #8A93B8;
+            font-family: 'Manrope', sans-serif;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+        .leadership-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .leadership-role {
+            color: var(--brand);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+        .leadership-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: rgba(255,255,255,0.42);
+            font-size: 11px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+        .leadership-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 999px;
+            background: rgba(255,85,0,0.7);
+        }
+        .metric-premium {
+            border-radius: 26px;
+            padding: 28px 24px;
+            text-align: center;
+            background:
+                radial-gradient(circle at top center, rgba(255,85,0,0.12), transparent 45%),
+                linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+            border: 1px solid rgba(255,85,0,0.16);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+        }
+        .roadmap-panel {
+            position: relative;
+            overflow: hidden;
+            border-radius: 30px;
+            background:
+                radial-gradient(circle at top left, rgba(255,85,0,0.12), transparent 28%),
+                linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015));
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 24px 70px rgba(0,0,0,0.35);
+        }
+        .roadmap-panel::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background:
+                linear-gradient(90deg, rgba(255,255,255,0.02), transparent 20%),
+                linear-gradient(180deg, rgba(255,85,0,0.06), transparent 34%);
+        }
+        .roadmap-rail {
+            position: absolute;
+            top: 34px;
+            bottom: 34px;
+            left: 27px;
+            width: 1px;
+            background: linear-gradient(180deg, rgba(255,85,0,0.35), rgba(255,255,255,0.06));
+        }
+        .roadmap-item {
+            position: relative;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 18px;
+            align-items: start;
+        }
+        .roadmap-node {
+            position: relative;
+            z-index: 1;
+            width: 18px;
+            height: 18px;
+            margin-top: 18px;
+            border-radius: 999px;
+            background: #0A0A0A;
+            border: 4px solid rgba(255,85,0,0.95);
+            box-shadow: 0 0 0 8px rgba(255,85,0,0.12);
+            flex-shrink: 0;
+        }
+        .roadmap-node.future {
+            border-color: rgba(255,255,255,0.22);
+            box-shadow: 0 0 0 8px rgba(255,255,255,0.04);
+        }
+        .roadmap-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 24px;
+            padding: 24px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.018));
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+        }
+        .roadmap-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255,85,0,0.22);
+            box-shadow: 0 16px 42px rgba(0,0,0,0.28);
+        }
+        .roadmap-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at top right, rgba(255,85,0,0.08), transparent 28%);
+        }
+        .roadmap-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 12px;
+            min-width: 72px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,85,0,0.18);
+            background: rgba(255,85,0,0.08);
+            color: var(--brand);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+        .roadmap-badge.future {
+            background: rgba(255,255,255,0.04);
+            border-color: rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+        }
+        .roadmap-kpi {
+            border-radius: 16px;
+            padding: 14px 16px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .roadmap-kpi-value {
+            color: #fff;
+            font-family: 'Manrope', sans-serif;
+            font-size: 18px;
+            font-weight: 800;
+            line-height: 1;
+        }
+        .roadmap-kpi-label {
+            margin-top: 6px;
+            color: rgba(255,255,255,0.42);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 640px) {
+            /* Hero mobile fixes */
+            .hero-badge {
+                font-size: 8.5px;
+                letter-spacing: 0.13em;
+                padding: 6px 12px 6px 8px;
+                margin-bottom: 18px;
+            }
+            .hero-title {
+                font-size: clamp(26px, 7.5vw, 42px);
+                white-space: normal;
+                word-break: break-word;
+            }
+            .hero-title-accent {
+                font-size: clamp(11px, 3.2vw, 16px);
+                letter-spacing: 0.08em;
+                white-space: normal;
+            }
+            .hero-rule {
+                margin: 16px auto;
+            }
+            .hero-desc {
+                font-size: 13px;
+                max-width: none;
+                padding: 0 4px;
+            }
+            .hero-proof {
+                flex-wrap: wrap;
+                gap: 6px;
+                margin-top: 18px;
+            }
+            .hero-proof-item {
+                padding: 5px 12px;
+                border-right: none;
+                border: 1px solid rgba(255,255,255,0.07);
+                border-radius: 999px;
+                font-size: 8px;
+            }
+            /* Other section mobile */
+            .method-card,
+            .leadership-card {
+                padding: 18px;
+                border-radius: 20px;
+            }
+            .method-card-number,
+            .leadership-avatar {
+                width: 72px;
+                height: 72px;
+                border-radius: 20px;
+            }
+            .roadmap-panel {
+                border-radius: 24px;
+            }
+            .roadmap-card {
+                padding: 18px;
+                border-radius: 20px;
+            }
+            .roadmap-rail {
+                left: 20px;
+            }
+            .roadmap-node {
+                margin-top: 14px;
+            }
+        }
+
+        /* Arrow icon */
+        .arrow-icon {
+            width: 16px; height: 16px;
+            transition: transform 0.3s;
+        }
+        .btn-primary:hover .arrow-icon,
+        .btn-secondary:hover .arrow-icon { transform: translateX(4px); }
+
+        /* Stat card hover */
+        .stat-card {
+            transition: background 0.3s, border-color 0.3s, transform 0.3s;
+        }
+        .stat-card:hover {
+            border-color: rgba(255,85,0,0.25) !important;
+            background: rgba(255,85,0,0.04) !important;
+            transform: translateY(-3px);
+        }
+
+        /* Service card */
+        .service-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            transition: transform 0.5s cubic-bezier(0.23,1,0.32,1), box-shadow 0.4s ease;
+        }
+        .service-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 42px rgba(0,0,0,0.32);
+        }
+        .service-card img { transition: transform 0.7s cubic-bezier(0.23,1,0.32,1), filter 0.4s ease; }
+        .service-card:hover img { transform: scale(1.08); filter: saturate(1.08) contrast(1.02); }
+        .service-card-overlay {
+            background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.34) 52%, rgba(0,0,0,0.08) 100%);
+            transition: opacity 0.3s;
+        }
+
+        /* Timeline dot */
+        .timeline-dot {
+            position: relative;
+            z-index: 10;
+            width: 18px; height: 18px;
+            background: var(--brand);
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(255,85,0,0.15), 0 0 24px rgba(255,85,0,0.4);
+            flex-shrink: 0;
+            transition: box-shadow 0.3s;
+        }
+        .timeline-dot:hover {
+            box-shadow: 0 0 0 8px rgba(255,85,0,0.12), 0 0 40px rgba(255,85,0,0.6);
+        }
+
+        /* Metric row hover */
+        .metric-row { transition: background 0.2s; }
+        .metric-row:hover { background: rgba(255,85,0,0.04); }
+
+        /* Floating animation */
+        @keyframes float {
+            0%,100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+        }
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes slide-up {
+            from { opacity:0; transform:translateY(40px); }
+            to { opacity:1; transform:translateY(0); }
+        }
+        @keyframes fade-in {
+            from { opacity:0; }
+            to { opacity:1; }
+        }
+
+        .hero-headline  { animation: slide-up 0.9s cubic-bezier(0.16,1,0.3,1) 0s    both; }
+        .hero-title     { animation: slide-up 0.9s cubic-bezier(0.16,1,0.3,1) 0.1s  both; }
+        .hero-title-accent { animation: slide-up 0.9s cubic-bezier(0.16,1,0.3,1) 0.18s both; }
+        .hero-rule      { animation: slide-up 0.9s cubic-bezier(0.16,1,0.3,1) 0.24s both; }
+        .hero-desc      { animation: slide-up 0.9s cubic-bezier(0.16,1,0.3,1) 0.32s both; }
+        .hero-proof     { animation: slide-up 0.9s cubic-bezier(0.16,1,0.3,1) 0.42s both; }
+
+        /* Section label */
+        .section-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--brand);
+        }
+
+        /* Divider line */
+        .h-line {
+            height: 1px;
+            background: linear-gradient(90deg, var(--brand), transparent);
+        }
+
+        /* Glass */
+        .glass {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.07);
+        }
+
+        /* Number highlight */
+        .num-highlight {
+            background: linear-gradient(135deg, #FF5500, #FF9944);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Roadmap icon float */
+        .roadmap-icon { animation: float 4s ease-in-out infinite; }
+
+        /* Chart grid override */
+        .chartjs-tooltip { font-family: 'Inter', sans-serif !important; }
+
+        /* CTA section background */
+        .cta-bg {
+            background: radial-gradient(ellipse 60% 60% at 50% 100%, rgba(255,85,0,0.08) 0%, transparent 70%);
+        }
+
+        /* Mobile menu */
+        #mobile-menu {
+            transition: max-height 0.3s ease, opacity 0.3s ease;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        #mobile-menu.open {
+            max-height: 500px;
+            opacity: 1;
+        }
+
+        /* Typewriter cursor */
+        .cursor::after {
+            content: '|';
+            animation: blink 1s step-end infinite;
+            color: var(--brand);
+        }
+
+        /* Responsive helpers */
+        @media (max-width: 480px) {
+            .hero-stat-num { font-size: 1.25rem !important; }
+            .hero-stat-card {
+                padding: 18px 18px 16px;
+            }
+            .service-card { height: 240px !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Scroll Progress -->
+    <div id="scroll-progress"></div>
+
+    <!-- ═══════════════════════════════════════════
+         NAVIGATION
+    ═══════════════════════════════════════════ -->
+    <nav class="fixed top-0 w-full z-50 glass border-b border-[rgba(255,255,255,0.06)]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3 min-w-0">
+                <div class="relative flex-shrink-0">
+                    <div class="w-8 h-8 bg-brand rounded-sm flex items-center justify-center">
+                        <span class="font-display font-bold text-white text-xs">B</span>
+                    </div>
+                    <div class="absolute -right-1 -bottom-1 w-3 h-3 bg-brand/30 border border-brand/50 rounded-sm"></div>
+                </div>
+                <div class="min-w-0">
+                    <div class="font-display font-bold text-white text-sm tracking-wide leading-none truncate">BILUIBABA <span class="text-brand/60">×</span> STUDY INSIGHTS</div>
+                    <div class="text-[9px] text-gray-600 tracking-[0.2em] uppercase font-medium mt-0.5 hidden sm:block">Combined Venture Portfolio</div>
+                </div>
+            </a>
+
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#overview" class="nav-link">Overview</a>
+                <a href="#biluibaba" class="nav-link">Biluibaba</a>
+                <a href="#study-insights" class="nav-link">Study Insights</a>
+                <a href="financials.html" class="nav-link">Financial Model</a>
+            </div>
+
+            <!-- CTA -->
+            <div class="flex items-center gap-3 flex-shrink-0">
+                <a href="contact.html" class="hidden md:inline-flex items-center gap-2 px-4 py-2 bg-brand text-white text-[11px] font-bold uppercase tracking-widest rounded-md hover:bg-brand-light transition-colors font-display">
+                    Request Deck
+                    <svg class="arrow-icon" fill="none" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+                <!-- Hamburger -->
+                <button id="menu-btn" class="md:hidden w-8 h-8 flex flex-col justify-center items-center gap-1.5" aria-label="Menu">
+                    <span class="w-5 h-0.5 bg-white transition-all"></span>
+                    <span class="w-5 h-0.5 bg-white transition-all"></span>
+                    <span class="w-3 h-0.5 bg-white transition-all"></span>
+                </button>
+            </div>
+                </div>
+            </div>
+                </div>
+            </div>
+                </div>
+            </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Nav -->
+        <div id="mobile-menu" class="border-t border-[rgba(255,255,255,0.06)]">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-col gap-4">
+                <a href="#overview" class="nav-link">Overview</a>
+                <a href="#biluibaba" class="nav-link">Biluibaba</a>
+                <a href="#study-insights" class="nav-link">Study Insights</a>
+                <a href="financials.html" class="nav-link">Financial Model</a>
+                <a href="contact.html" class="btn-primary text-center justify-center mt-2">Request Deck</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════
+         HERO
+    ═══════════════════════════════════════════ -->
+    <header class="relative w-full flex items-center justify-center overflow-hidden pt-16 min-h-screen md:min-h-0 md:aspect-video">
+        <!-- Background grid -->
+        <div class="absolute inset-0 hero-grid"></div>
+
+        <!-- Centre radial glow -->
+        <div class="absolute inset-0" style="background: radial-gradient(ellipse 60% 55% at 50% 52%, rgba(255,85,0,0.07) 0%, transparent 70%);"></div>
+
+        <!-- Subtle ambient orb -->
+        <div class="orb w-[800px] h-[800px] bg-brand" style="top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.04;filter:blur(120px);"></div>
+
+        <!-- Top edge accent -->
+        <div class="absolute top-0 left-0 right-0 h-px" style="background:linear-gradient(90deg,transparent 0%,rgba(255,85,0,0.4) 30%,rgba(255,85,0,0.6) 50%,rgba(255,85,0,0.4) 70%,transparent 100%);"></div>
+
+        <!-- Content -->
+        <div class="relative z-10 w-full max-w-5xl mx-auto px-6 sm:px-10">
+            <div class="hero-shell">
+                <div class="hero-panel">
+                    <div class="hero-copy-block">
+
+                        <!-- Badge -->
+                        <div class="hero-headline flex justify-center">
+                            <div class="hero-badge">
+                                <span class="hero-badge-dot"></span>
+                                Investor Portfolio · 2026 · Bangladesh
+                            </div>
+                        </div>
+
+                        <!-- Title — single line -->
+                        <h1 class="hero-title">Built For Scale</h1>
+                        <p class="hero-title-accent">Across Two Growth Sectors</p>
+
+                        <!-- Branded rule -->
+                        <div class="hero-rule"></div>
+
+                        <!-- Description -->
+                        <p class="hero-desc">
+                            A modern holding opportunity uniting Bangladesh's premium pet-services platform with a high-demand global education consultancy — diversified revenue, capital-efficient expansion, disciplined value creation.
+                        </p>
+
+                        <!-- Proof row -->
+                        <div class="hero-proof">
+                            <div class="hero-proof-item">
+                                <span class="hero-proof-dot"></span>
+                                Revenue Diversification
+                            </div>
+                            <div class="hero-proof-item">
+                                <span class="hero-proof-dot"></span>
+                                Low Overhead Execution
+                            </div>
+                            <div class="hero-proof-item">
+                                <span class="hero-proof-dot"></span>
+                                Scalable Market Access
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll cue -->
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-25">
+            <span class="text-[9px] uppercase tracking-[0.3em] text-white">Scroll</span>
+            <div class="w-px h-8 bg-gradient-to-b from-brand to-transparent"></div>
+        </div>
+    </header>
+
+    <!-- ═══════════════════════════════════════════
+         OVERVIEW METRICS
+    ═══════════════════════════════════════════ -->
+    <section id="overview" class="py-16 sm:py-24 bg-surface-2 border-y border-[rgba(255,255,255,0.05)]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+
+                <div class="stat-card grad-border bg-surface-3 p-6 sm:p-8 rounded-2xl reveal">
+                    <div class="flex items-start justify-between mb-6">
+                        <div class="w-10 h-10 rounded-lg bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">⚡</div>
+                        <span class="tag text-[9px]">Equity</span>
+                    </div>
+                    <div class="font-display font-extrabold text-4xl sm:text-5xl text-white mb-1">20<span class="text-brand">%</span></div>
+                    <div class="text-[10px] uppercase tracking-widest text-gray-500 font-semibold mb-4">Equity Offered</div>
+                    <div class="h-line w-full mb-4"></div>
+                    <p class="text-gray-500 text-sm leading-relaxed">Strategic stake in the combined holding company. Direct access to two booming markets.</p>
+                </div>
+
+                <div class="stat-card grad-border bg-surface-3 p-6 sm:p-8 rounded-2xl reveal reveal-delay-1">
+                    <div class="flex items-start justify-between mb-6">
+                        <div class="w-10 h-10 rounded-lg bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">📈</div>
+                        <span class="tag text-[9px]">Returns</span>
+                    </div>
+                    <div class="font-display font-extrabold text-4xl sm:text-5xl text-white mb-1">5<span class="text-brand">X</span></div>
+                    <div class="text-[10px] uppercase tracking-widest text-gray-500 font-semibold mb-4">Projected ROI</div>
+                    <div class="h-line w-full mb-4"></div>
+                    <p class="text-gray-500 text-sm leading-relaxed">Conservative projections based on Year 3 valuation of 60M BDT against initial seed.</p>
+                </div>
+
+                <div class="stat-card grad-border bg-surface-3 p-6 sm:p-8 rounded-2xl reveal reveal-delay-2 sm:col-span-2 lg:col-span-1">
+                    <div class="flex items-start justify-between mb-6">
+                        <div class="w-10 h-10 rounded-lg bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">💰</div>
+                        <span class="tag text-[9px]">Capital</span>
+                    </div>
+                    <div class="font-display font-extrabold text-4xl sm:text-5xl text-white mb-1">2.5<span class="text-brand text-2xl sm:text-3xl">Cr</span></div>
+                    <div class="text-[10px] uppercase tracking-widest text-gray-500 font-semibold mb-4">Investment Ask</div>
+                    <div class="h-line w-full mb-4"></div>
+                    <p class="text-gray-500 text-sm leading-relaxed">Capital earmarked for tech infrastructure, licensing, marketing, and office scaling.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         BILUIBABA
+    ═══════════════════════════════════════════ -->
+    <section id="biluibaba" class="py-16 sm:py-24 bg-surface">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+
+            <!-- Header -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16 reveal">
+                <div>
+                    <div class="section-label mb-3">Platform 01</div>
+                    <h2 class="font-display font-extrabold uppercase text-white leading-none" style="font-size: clamp(30px, 5.5vw, 72px);">
+                        Biluibaba<span class="text-brand">.com</span>
+                    </h2>
+                    <div class="h-line w-24 mt-4"></div>
+                </div>
+                <div class="flex flex-col items-start md:items-end gap-3">
+                    <p class="text-gray-500 max-w-sm text-sm leading-relaxed md:text-right">
+                        Bangladesh's first one-stop pet service platform. Bridging premium pet care and accessibility through technology.
+                    </p>
+                    <a href="https://biluibaba.com/" target="_blank" rel="noopener noreferrer"
+                       class="inline-flex items-center gap-2 px-4 py-2 rounded-md border border-brand/30 bg-brand/08 text-brand text-[11px] font-bold uppercase tracking-widest hover:bg-brand hover:text-white transition-all duration-200"
+                       style="background:rgba(255,85,0,0.06);">
+                        Visit Live Website
+                        <svg fill="none" viewBox="0 0 16 16" class="w-3.5 h-3.5"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 3h3v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Service Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-16 sm:mb-24">
+                <div class="service-card h-64 sm:h-80 reveal">
+                    <img src="public/E-Commerce.jpg" alt="E-Commerce" class="absolute inset-0 w-full h-full object-cover">
+                    <div class="service-card-overlay absolute inset-0"></div>
+                    <div class="absolute inset-0 p-5 sm:p-6 flex flex-col justify-end">
+                        <div class="section-label mb-2">Core</div>
+                        <h3 class="font-display font-bold text-lg sm:text-xl text-white uppercase">E-Commerce</h3>
+                        <p class="text-gray-400 text-xs mt-2 leading-relaxed">Premium food, accessories & grooming delivered.</p>
+                    </div>
+                    <div class="absolute top-4 right-4 w-8 h-8 rounded-full bg-brand/80 flex items-center justify-center text-white text-xs font-bold font-display">01</div>
+                </div>
+
+                <div class="service-card h-64 sm:h-80 reveal reveal-delay-1">
+                    <img src="public/Vet Service.jpg" alt="Vet Service" class="absolute inset-0 w-full h-full object-cover">
+                    <div class="service-card-overlay absolute inset-0"></div>
+                    <div class="absolute inset-0 p-5 sm:p-6 flex flex-col justify-end">
+                        <div class="section-label mb-2">Healthcare</div>
+                        <h3 class="font-display font-bold text-lg sm:text-xl text-white uppercase">Vet Service</h3>
+                        <p class="text-gray-400 text-xs mt-2 leading-relaxed">Online consultations, appointments & home visits.</p>
+                    </div>
+                    <div class="absolute top-4 right-4 w-8 h-8 rounded-full bg-brand/80 flex items-center justify-center text-white text-xs font-bold font-display">02</div>
+                </div>
+
+                <div class="service-card h-64 sm:h-80 reveal reveal-delay-2">
+                    <img src="public/Pet Delivery.jpg" alt="Pet Delivery" class="absolute inset-0 w-full h-full object-cover">
+                    <div class="service-card-overlay absolute inset-0"></div>
+                    <div class="absolute inset-0 p-5 sm:p-6 flex flex-col justify-end">
+                        <div class="section-label mb-2">Logistics</div>
+                        <h3 class="font-display font-bold text-lg sm:text-xl text-white uppercase">Pet Delivery</h3>
+                        <p class="text-gray-400 text-xs mt-2 leading-relaxed">Trained handlers, secure and comfortable transport.</p>
+                    </div>
+                    <div class="absolute top-4 right-4 w-8 h-8 rounded-full bg-brand/80 flex items-center justify-center text-white text-xs font-bold font-display">03</div>
+                </div>
+
+                <div class="service-card h-64 sm:h-80 reveal reveal-delay-3">
+                    <img src="public/Adoption.jpg" alt="Adoption" class="absolute inset-0 w-full h-full object-cover">
+                    <div class="service-card-overlay absolute inset-0"></div>
+                    <div class="absolute inset-0 p-5 sm:p-6 flex flex-col justify-end">
+                        <div class="section-label mb-2">Community</div>
+                        <h3 class="font-display font-bold text-lg sm:text-xl text-white uppercase">Adoption</h3>
+                        <p class="text-gray-400 text-xs mt-2 leading-relaxed">Verified listings connecting loving homes with pets.</p>
+                    </div>
+                    <div class="absolute top-4 right-4 w-8 h-8 rounded-full bg-brand/80 flex items-center justify-center text-white text-xs font-bold font-display">04</div>
+                </div>
+            </div>
+
+            <!-- Roadmap -->
+            <div class="reveal roadmap-panel p-6 sm:p-8 lg:p-10 mb-0">
+                <div class="relative z-10">
+                    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-8 sm:mb-10">
+                        <div class="max-w-2xl">
+                            <div class="section-label mb-3">Growth Roadmap</div>
+                            <h3 class="font-display font-extrabold uppercase text-white leading-none" style="font-size: clamp(24px, 3vw, 42px);">
+                                Structured Expansion With <span class="num-highlight">Measured Milestones</span>
+                            </h3>
+                        </div>
+                        <p class="text-gray-500 text-sm leading-relaxed max-w-md">
+                            A phased scale-up plan designed to de-risk execution, deepen market coverage, and build toward regional platform leadership.
+                        </p>
+                    </div>
+
+                    <div class="relative space-y-5 sm:space-y-6">
+                        <div class="roadmap-rail hidden sm:block"></div>
+
+                        <div class="roadmap-item">
+                            <div class="roadmap-node"></div>
+                            <div class="roadmap-card">
+                                <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
+                                    <div class="max-w-2xl">
+                                        <div class="flex flex-wrap items-center gap-3 mb-4">
+                                            <span class="font-display font-extrabold text-brand text-2xl sm:text-3xl">2025</span>
+                                            <span class="roadmap-badge">Active</span>
+                                        </div>
+                                        <h4 class="font-display font-bold text-white text-2xl uppercase mb-3">Foundation Phase</h4>
+                                        <p class="text-gray-500 text-sm leading-relaxed max-w-xl">Dhaka city launch focused on setting premium pet-care standards across e-commerce, veterinary support, delivery logistics, and trusted adoption services.</p>
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-3 min-w-full sm:min-w-[280px] lg:max-w-[320px]">
+                                        <div class="roadmap-kpi">
+                                            <div class="roadmap-kpi-value">4</div>
+                                            <div class="roadmap-kpi-label">Core Verticals</div>
+                                        </div>
+                                        <div class="roadmap-kpi">
+                                            <div class="roadmap-kpi-value">Dhaka</div>
+                                            <div class="roadmap-kpi-label">Launch Market</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="roadmap-item">
+                            <div class="roadmap-node"></div>
+                            <div class="roadmap-card">
+                                <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
+                                    <div class="max-w-2xl">
+                                        <div class="flex flex-wrap items-center gap-3 mb-4">
+                                            <span class="font-display font-extrabold text-white/75 text-2xl sm:text-3xl">2026</span>
+                                            <span class="roadmap-badge">Upcoming</span>
+                                        </div>
+                                        <h4 class="font-display font-bold text-white text-2xl uppercase mb-3">National Expansion</h4>
+                                        <p class="text-gray-500 text-sm leading-relaxed max-w-xl">Extend beyond the capital with new city coverage, stronger last-mile logistics, and partner-led growth to scale service availability nationwide.</p>
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-3 min-w-full sm:min-w-[280px] lg:max-w-[320px]">
+                                        <div class="roadmap-kpi">
+                                            <div class="roadmap-kpi-value">Multi-City</div>
+                                            <div class="roadmap-kpi-label">Coverage Plan</div>
+                                        </div>
+                                        <div class="roadmap-kpi">
+                                            <div class="roadmap-kpi-value">Partner</div>
+                                            <div class="roadmap-kpi-label">Scale Model</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="roadmap-item">
+                            <div class="roadmap-node future"></div>
+                            <div class="roadmap-card">
+                                <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
+                                    <div class="max-w-2xl">
+                                        <div class="flex flex-wrap items-center gap-3 mb-4">
+                                            <span class="font-display font-extrabold text-white/50 text-2xl sm:text-3xl">2027</span>
+                                            <span class="roadmap-badge future">Future</span>
+                                        </div>
+                                        <h4 class="font-display font-bold text-white text-2xl uppercase mb-3">Regional Scale</h4>
+                                        <p class="text-gray-500 text-sm leading-relaxed max-w-xl">Position the platform for cross-border growth into South and Southeast Asia with stronger brand equity, replicable operations, and regional partnerships.</p>
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-3 min-w-full sm:min-w-[280px] lg:max-w-[320px]">
+                                        <div class="roadmap-kpi">
+                                            <div class="roadmap-kpi-value">Regional</div>
+                                            <div class="roadmap-kpi-label">Target Scope</div>
+                                        </div>
+                                        <div class="roadmap-kpi">
+                                            <div class="roadmap-kpi-value">Scale</div>
+                                            <div class="roadmap-kpi-label">Operating Goal</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal hidden">
+                <div class="flex items-center gap-4 mb-10 sm:mb-12">
+                    <div class="section-label">Growth Roadmap</div>
+                    <div class="flex-1 h-px bg-[rgba(255,255,255,0.06)]"></div>
+                </div>
+
+                <div class="space-y-0">
+                    <!-- 2025 -->
+                    <div class="flex gap-5 sm:gap-8 items-stretch">
+                        <div class="flex flex-col items-center">
+                            <div class="timeline-dot mt-2"></div>
+                            <div class="w-px flex-1 bg-gradient-to-b from-brand/30 to-transparent mt-2"></div>
+                        </div>
+                        <div class="pb-10 sm:pb-12 flex-1 min-w-0">
+                            <div class="flex items-center gap-3 mb-2">
+                                <span class="font-display font-bold text-brand text-lg sm:text-xl">2025</span>
+                                <span class="tag text-[9px]">Active</span>
+                            </div>
+                            <h4 class="font-display font-bold text-white text-xl sm:text-2xl uppercase mb-2">Foundation</h4>
+                            <p class="text-gray-500 text-sm max-w-md">Dhaka City Launch. Establishing comfortable pet care standards across all verticals — e-commerce, vet, delivery, and adoption.</p>
+                        </div>
+                        <div class="hidden md:flex items-start flex-shrink-0">
+                            <div class="grad-border bg-surface-3 rounded-2xl p-6 w-44 text-center">
+                                <div class="roadmap-icon text-4xl mb-3">🏗️</div>
+                                <div class="tag text-[8px]">Launch Phase</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2026 -->
+                    <div class="flex gap-5 sm:gap-8 items-stretch">
+                        <div class="flex flex-col items-center">
+                            <div class="timeline-dot mt-2" style="opacity:0.5;"></div>
+                            <div class="w-px flex-1 bg-[rgba(255,255,255,0.05)] mt-2"></div>
+                        </div>
+                        <div class="pb-10 sm:pb-12 flex-1 min-w-0">
+                            <div class="flex items-center gap-3 mb-2">
+                                <span class="font-display font-bold text-gray-400 text-lg sm:text-xl">2026</span>
+                                <span class="tag text-[9px]" style="opacity:0.5;">Upcoming</span>
+                            </div>
+                            <h4 class="font-display font-bold text-white text-xl sm:text-2xl uppercase mb-2">Expansion</h4>
+                            <p class="text-gray-500 text-sm max-w-md">Crossing city boundaries to reach wider parts of Bangladesh, adding franchise partners and scaling logistics nationwide.</p>
+                        </div>
+                        <div class="hidden md:flex items-start flex-shrink-0">
+                            <div class="bg-surface-3 rounded-2xl p-6 w-44 text-center border border-[rgba(255,255,255,0.05)]">
+                                <div class="roadmap-icon text-4xl mb-3" style="animation-delay:1s;">📈</div>
+                                <div class="tag text-[8px]" style="opacity:0.5;">Growth Phase</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2027 -->
+                    <div class="flex gap-5 sm:gap-8 items-stretch">
+                        <div class="flex flex-col items-center">
+                            <div class="timeline-dot mt-2" style="opacity:0.25;"></div>
+                        </div>
+                        <div class="pb-4 flex-1 min-w-0">
+                            <div class="flex items-center gap-3 mb-2">
+                                <span class="font-display font-bold text-gray-600 text-lg sm:text-xl">2027</span>
+                                <span class="tag text-[9px]" style="opacity:0.3;">Future</span>
+                            </div>
+                            <h4 class="font-display font-bold text-white text-xl sm:text-2xl uppercase mb-2">Global</h4>
+                            <p class="text-gray-500 text-sm max-w-md">International expansion, crossing national borders and establishing presence in South & Southeast Asian markets.</p>
+                        </div>
+                        <div class="hidden md:flex items-start flex-shrink-0">
+                            <div class="bg-surface-3 rounded-2xl p-6 w-44 text-center border border-[rgba(255,255,255,0.04)]">
+                                <div class="roadmap-icon text-4xl mb-3" style="animation-delay:2s; opacity:0.5;">🌍</div>
+                                <div class="tag text-[9px]" style="opacity:0.3;">Global Scale</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         STUDY INSIGHTS
+    ═══════════════════════════════════════════ -->
+    <section id="study-insights" class="py-16 sm:py-24 bg-surface-2 border-y border-[rgba(255,255,255,0.05)]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16 reveal">
+                <div>
+                    <div class="section-label mb-3">Platform 02 · Education Consultancy</div>
+                    <h2 class="font-display font-extrabold uppercase text-white leading-none" style="font-size: clamp(30px, 5.5vw, 72px);">
+                        Study<br><span class="num-highlight">Insights</span>
+                    </h2>
+                    <div class="h-line w-24 mt-4"></div>
+                </div>
+                <p class="text-gray-500 max-w-xs text-sm leading-relaxed">
+                    Bridging ambitions to global education — honest, transparent guidance for Bangladeshi students to Europe, UK, and Australia.
+                </p>
+            </div>
+
+            <!-- Bento Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-16 sm:mb-20">
+                <!-- Big card -->
+                <div class="col-span-2 md:row-span-2 grad-border bg-surface-3 rounded-2xl p-6 sm:p-8 relative overflow-hidden reveal">
+                    <div class="relative z-10">
+                        <div class="section-label mb-3">Total Market</div>
+                        <div class="font-display font-extrabold text-4xl sm:text-5xl text-white mb-1">$662<span class="text-brand">M</span></div>
+                        <p class="text-gray-500 text-xs uppercase tracking-widest font-semibold mb-4">Annual Spending Potential</p>
+                        <div class="h-line w-full mb-4"></div>
+                        <p class="text-gray-500 text-sm leading-relaxed max-w-xs">Bangladeshi students are increasingly investing in foreign education, with spending reaching record levels year over year.</p>
+                    </div>
+                    <div class="absolute -bottom-12 -right-12 w-48 h-48 rounded-full border border-brand/10"></div>
+                    <div class="absolute -bottom-20 -right-20 w-64 h-64 rounded-full border border-brand/05"></div>
+                </div>
+
+                <!-- Small cards -->
+                <div class="bg-surface-3 rounded-2xl p-4 sm:p-6 text-center border border-[rgba(255,255,255,0.05)] reveal reveal-delay-1 stat-card">
+                    <div class="font-display font-bold text-2xl sm:text-3xl text-white mb-1">49<span class="text-brand text-lg sm:text-xl">%</span></div>
+                    <div class="text-[10px] uppercase tracking-widest text-gray-500 mt-1">Youth Population</div>
+                </div>
+
+                <div class="bg-surface-3 rounded-2xl p-4 sm:p-6 text-center border border-[rgba(255,255,255,0.05)] reveal reveal-delay-2 stat-card">
+                    <div class="font-display font-bold text-2xl sm:text-3xl text-white mb-1">9.4<span class="text-brand text-lg sm:text-xl">%</span></div>
+                    <div class="text-[10px] uppercase tracking-widest text-gray-500 mt-1">CAGR Growth</div>
+                </div>
+
+                <div class="col-span-2 bg-surface-3 rounded-2xl p-4 sm:p-6 border border-[rgba(255,255,255,0.05)] reveal reveal-delay-3 stat-card">
+                    <div class="flex items-center gap-3 sm:gap-4">
+                        <div class="font-display font-bold text-3xl sm:text-4xl text-white whitespace-nowrap">172<span class="text-brand text-xl sm:text-2xl">M</span></div>
+                        <div>
+                            <div class="text-[10px] uppercase tracking-widest text-gray-500">Total Population</div>
+                            <div class="text-[10px] uppercase tracking-widest text-brand/70 font-semibold mt-1">Massive Talent Pool</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Methodology -->
+            <div class="reveal insight-panel p-6 sm:p-8 lg:p-10">
+                <div class="relative z-10">
+                    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-8 sm:mb-10">
+                        <div class="max-w-2xl">
+                            <div class="section-label mb-3">Our Methodology</div>
+                            <h3 class="font-display font-extrabold uppercase text-white leading-none" style="font-size: clamp(24px, 3vw, 42px);">
+                                Premium Guidance For <span class="num-highlight">Global Study Paths</span>
+                            </h3>
+                        </div>
+                        <p class="text-gray-500 text-sm leading-relaxed max-w-md">
+                            A concierge-style process built to move students from ambition to admission with clarity, speed, and precision.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+                        <div class="method-card">
+                            <div class="method-card-number">01</div>
+                            <div>
+                                <div class="method-card-kicker">Foundation</div>
+                                <h4 class="method-card-title">University Selection</h4>
+                                <p class="method-card-copy">Program matching and shortlisting tailored to academic background, career goals, and destination fit.</p>
+                            </div>
+                        </div>
+                        <div class="method-card">
+                            <div class="method-card-number">02</div>
+                            <div>
+                                <div class="method-card-kicker">Mobility</div>
+                                <h4 class="method-card-title">Visa & Immigration</h4>
+                                <p class="method-card-copy">Hands-on preparation that strengthens application quality and improves visa approval confidence.</p>
+                            </div>
+                        </div>
+                        <div class="method-card">
+                            <div class="method-card-number">03</div>
+                            <div>
+                                <div class="method-card-kicker">Strategy</div>
+                                <h4 class="method-card-title">Career Counseling</h4>
+                                <p class="method-card-copy">Academic planning aligned with long-term employability, industry demand, and future career progression.</p>
+                            </div>
+                        </div>
+                        <div class="method-card">
+                            <div class="method-card-number">04</div>
+                            <div>
+                                <div class="method-card-kicker">Access</div>
+                                <h4 class="method-card-title">Scholarship Assistance</h4>
+                                <p class="method-card-copy">Targeted support to identify, position for, and secure meaningful funding opportunities worldwide.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 sm:mt-16 reveal reveal-delay-1">
+                <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-5 mb-6 sm:mb-8">
+                    <div>
+                        <div class="section-label mb-3">Leadership</div>
+                        <h3 class="font-display font-extrabold uppercase text-white leading-none" style="font-size: clamp(24px, 3vw, 38px);">
+                            The Team Behind <span class="num-highlight">Execution</span>
+                        </h3>
+                    </div>
+                    <p class="text-gray-500 text-sm leading-relaxed max-w-md">
+                        Senior operators combining student placement expertise, brand building, and disciplined business execution.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+                    <div class="leadership-card">
+                        <div class="flex items-start gap-4">
+                            <div class="leadership-avatar">
+                                <img src="public/study-insights/sadman_bin_arif.jpg" alt="Sadman Bin Arif" onerror="this.onerror=null;this.parentElement.innerText='SA';">
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <div class="text-white font-semibold text-lg leading-tight">Sadman Bin Arif</div>
+                                <div class="leadership-role mt-2">Managing Director</div>
+                                <div class="leadership-meta mt-4">
+                                    <span class="leadership-dot"></span>
+                                    <span>Strategic Leadership</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="leadership-card">
+                        <div class="flex items-start gap-4">
+                            <div class="leadership-avatar">
+                                <img src="public/study-insights/mahir_shariar_mahin.jpg" alt="Mahir Shariar Mahin" onerror="this.onerror=null;this.parentElement.innerText='MM';">
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <div class="text-white font-semibold text-lg leading-tight">Mahir Shariar Mahin</div>
+                                <div class="leadership-role mt-2">Head of Operation</div>
+                                <div class="leadership-meta mt-4">
+                                    <span class="leadership-dot"></span>
+                                    <span>Operational Delivery</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="leadership-card">
+                        <div class="flex items-start gap-4">
+                            <div class="leadership-avatar">
+                                <img src="public/study-insights/shah_sadad_ahmed.jpg" alt="Shah Sadad Ahmed" onerror="this.onerror=null;this.parentElement.innerText='SS';">
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <div class="text-white font-semibold text-lg leading-tight">Shah Sadad Ahmed</div>
+                                <div class="leadership-role mt-2">Head of Admissions</div>
+                                <div class="leadership-meta mt-4">
+                                    <span class="leadership-dot"></span>
+                                    <span>Admissions Strategy</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="leadership-card">
+                        <div class="flex items-start gap-4">
+                            <div class="leadership-avatar">
+                                <img src="public/study-insights/dewan_abdullah_fahad.jpg" alt="Dewan Abdullah Fahad" onerror="this.onerror=null;this.parentElement.innerText='DAF';">
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <div class="text-white font-semibold text-lg leading-tight">Dewan Abdullah Fahad</div>
+                                <div class="leadership-role mt-2">Head of Creative</div>
+                                <div class="leadership-meta mt-4">
+                                    <span class="leadership-dot"></span>
+                                    <span>Brand & Creative Direction</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Key metric -->
+                    <div class="md:col-span-2 mt-1 metric-premium">
+                        <div class="font-display font-bold text-3xl text-white mb-1">52.8k<span class="text-brand">+</span></div>
+                        <div class="text-[10px] uppercase tracking-widest text-gray-500">Bangladeshi Students Abroad (2023)</div>
+                    </div>
+                </div>
+                <div class="mt-6 sm:mt-8 flex justify-center">
+                    <a href="team.html" class="btn-team">
+                        Our Team
+                        <svg width="12" height="12" fill="none" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         FINANCIAL MODEL
+    ═══════════════════════════════════════════ -->
+    <section id="financials" class="py-16 sm:py-24 bg-surface">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+
+            <div class="text-center mb-12 sm:mb-16 reveal">
+                <div class="section-label mb-3">Financial Projections</div>
+                <h2 class="font-display font-extrabold uppercase text-white" style="font-size: clamp(26px, 4.5vw, 56px);">
+                    Clear Path to <span class="num-highlight">Profitability</span>
+                </h2>
+                <p class="text-gray-500 mt-4 text-sm max-w-lg mx-auto">Data-driven model demonstrating sustainable growth across both ventures.</p>
+                <div class="mt-6">
+                    <a href="financials.html" class="btn-primary inline-flex">
+                        View Full Financial Model
+                        <svg class="arrow-icon" fill="none" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                <!-- Chart -->
+                <div class="col-span-1 lg:col-span-2 grad-border bg-surface-3 rounded-2xl p-5 sm:p-6 reveal">
+                    <div class="flex justify-between items-center mb-5 sm:mb-6">
+                        <div>
+                            <div class="section-label mb-1">Revenue Growth</div>
+                            <h3 class="font-display font-bold text-white text-base sm:text-lg uppercase">3-Year Projection</h3>
+                        </div>
+                        <div class="flex gap-2">
+                            <span class="px-2.5 py-1 bg-surface-4 text-gray-500 rounded text-[10px] font-bold uppercase tracking-wider">Y1</span>
+                            <span class="px-2.5 py-1 bg-surface-4 text-gray-500 rounded text-[10px] font-bold uppercase tracking-wider">Y2</span>
+                            <span class="px-2.5 py-1 bg-brand text-white rounded text-[10px] font-bold uppercase tracking-wider">Y3</span>
+                        </div>
+                    </div>
+                    <div class="h-56 sm:h-72">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Cash Flow Summary -->
+                <div class="grad-border bg-surface-3 rounded-2xl p-5 sm:p-6 flex flex-col reveal reveal-delay-1">
+                    <div class="section-label mb-2">Cash Flow</div>
+                    <h3 class="font-display font-bold text-white text-base sm:text-lg uppercase mb-5 sm:mb-6">Summary</h3>
+
+                    <div class="space-y-2 sm:space-y-3 flex-1">
+                        <div class="metric-row flex justify-between items-center py-3 px-3 rounded-lg border-b border-[rgba(255,255,255,0.04)]">
+                            <span class="text-gray-500 text-xs">Initial Investment</span>
+                            <span class="text-white font-mono text-xs sm:text-sm font-semibold">25 Lac BDT</span>
+                        </div>
+                        <div class="metric-row flex justify-between items-center py-3 px-3 rounded-lg border-b border-[rgba(255,255,255,0.04)]">
+                            <span class="text-gray-500 text-xs">Year 1 Revenue</span>
+                            <span class="text-white font-mono text-xs sm:text-sm font-semibold">60 Lac BDT</span>
+                        </div>
+                        <div class="metric-row flex justify-between items-center py-3 px-3 rounded-lg border-b border-[rgba(255,255,255,0.04)]">
+                            <span class="text-gray-500 text-xs">Year 2 Revenue</span>
+                            <span class="text-white font-mono text-xs sm:text-sm font-semibold">90 Lac BDT</span>
+                        </div>
+                        <div class="metric-row flex justify-between items-center py-3 px-3 rounded-lg border-b border-[rgba(255,255,255,0.04)]">
+                            <span class="text-gray-500 text-xs">Year 3 Revenue</span>
+                            <span class="text-white font-mono text-xs sm:text-sm font-semibold">120 Lac BDT</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-5 sm:mt-6 p-4 bg-brand/06 border border-brand/15 rounded-xl">
+                        <div class="text-[9px] uppercase tracking-widest text-gray-500 mb-1">Break-even Point</div>
+                        <div class="font-display font-bold text-xl sm:text-2xl text-brand">Month 8–10</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="grad-border bg-surface-3 rounded-2xl overflow-hidden reveal">
+                <div class="overflow-x-auto -webkit-overflow-scrolling-touch">
+                    <table class="w-full text-left min-w-[560px]">
+                        <thead>
+                            <tr class="border-b border-[rgba(255,255,255,0.06)]">
+                                <th class="py-4 px-4 sm:px-6 text-[10px] font-bold uppercase tracking-wider text-gray-600">Category</th>
+                                <th class="py-4 px-4 sm:px-6 text-[10px] font-bold uppercase tracking-wider text-gray-600">Monthly (BDT)</th>
+                                <th class="py-4 px-4 sm:px-6 text-[10px] font-bold uppercase tracking-wider text-gray-600">Annual (BDT)</th>
+                                <th class="py-4 px-4 sm:px-6 text-[10px] font-bold uppercase tracking-wider text-gray-600 hidden sm:table-cell">Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody class="font-mono text-sm text-gray-300">
+                            <tr class="bg-brand/04">
+                                <td colspan="4" class="py-2 px-4 sm:px-6 text-[10px] font-bold uppercase text-brand tracking-widest">Revenue Streams</td>
+                            </tr>
+                            <tr class="metric-row border-b border-[rgba(255,255,255,0.04)]">
+                                <td class="py-3.5 px-4 sm:px-6 text-xs sm:text-sm">Biluibaba E-commerce</td>
+                                <td class="py-3.5 px-4 sm:px-6 text-green-400 text-xs sm:text-sm">150,000</td>
+                                <td class="py-3.5 px-4 sm:px-6 text-green-400 text-xs sm:text-sm">1,800,000</td>
+                                <td class="py-3.5 px-4 sm:px-6 text-xs text-gray-600 hidden sm:table-cell">Products & Accessories</td>
+                            </tr>
+                            <tr class="metric-row border-b border-[rgba(255,255,255,0.04)]">
+                                <td class="py-3.5 px-4 sm:px-6 text-xs sm:text-sm">Biluibaba Vet Services</td>
+                                <td class="py-3.5 px-4 sm:px-6 text-green-400 text-xs sm:text-sm">100,000</td>
+                                <td class="py-3.5 px-4 sm:px-6 text-green-400 text-xs sm:text-sm">1,200,000</td>
+                                <td class="py-3.5 px-4 sm:px-6 text-xs text-gray-600 hidden sm:table-cell">Consultations & Home Visits</td>
+                            </tr>
+                            <tr class="metric-row border-b border-[rgba(255,255,255,0.04)]">
+                                <td class="py-3.5 px-4 sm:px-6 text-xs sm:text-sm">Study Insights Consultancy</td>
+                                <td class="py-3.5 px-4 sm:px-6 text-green-400 text-xs sm:text-sm">150,000</td>
+                                <td class="py-3.5 px-4 sm:px-6 text-green-400 text-xs sm:text-sm">1,800,000</td>
+                                <td class="py-3.5 px-4 sm:px-6 text-xs text-gray-600 hidden sm:table-cell">University Placements</td>
+                            </tr>
+                            <tr class="bg-surface-4/50">
+                                <td colspan="4" class="py-2 px-4 sm:px-6 text-[10px] font-bold uppercase text-gray-600 tracking-widest">Operational Expenses</td>
+                            </tr>
+                            <tr class="metric-row border-b border-[rgba(255,255,255,0.04)]">
+                                <td class="py-3.5 px-4 sm:px-6 text-xs sm:text-sm">Rent & Utilities</td>
+                                <td class="py-3.5 px-4 sm:px-6 text-red-400 text-xs sm:text-sm">-25,000</td>
+                                <td class="py-3.5 px-4 sm:px-6 text-red-400 text-xs sm:text-sm">-300,000</td>
+                                <td class="py-3.5 px-4 sm:px-6 text-xs text-gray-600 hidden sm:table-cell">Office Space</td>
+                            </tr>
+                            <tr class="metric-row border-b border-[rgba(255,255,255,0.04)]">
+                                <td class="py-3.5 px-4 sm:px-6 text-xs sm:text-sm">Employee Salaries</td>
+                                <td class="py-3.5 px-4 sm:px-6 text-red-400 text-xs sm:text-sm">-280,000</td>
+                                <td class="py-3.5 px-4 sm:px-6 text-red-400 text-xs sm:text-sm">-3,360,000</td>
+                                <td class="py-3.5 px-4 sm:px-6 text-xs text-gray-600 hidden sm:table-cell">9 Team Members</td>
+                            </tr>
+                            <tr class="metric-row border-b border-[rgba(255,255,255,0.04)]">
+                                <td class="py-3.5 px-4 sm:px-6 text-xs sm:text-sm">Marketing</td>
+                                <td class="py-3.5 px-4 sm:px-6 text-red-400 text-xs sm:text-sm">-30,000</td>
+                                <td class="py-3.5 px-4 sm:px-6 text-red-400 text-xs sm:text-sm">-360,000</td>
+                                <td class="py-3.5 px-4 sm:px-6 text-xs text-gray-600 hidden sm:table-cell">Ads, Influencers, Content</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr class="bg-brand/06 border-t border-brand/20">
+                                <td class="py-4 px-4 sm:px-6 font-bold text-white text-xs sm:text-sm">Net Monthly Profit (Y2+)</td>
+                                <td class="py-4 px-4 sm:px-6 font-bold text-brand font-mono text-xs sm:text-sm">~150,000</td>
+                                <td class="py-4 px-4 sm:px-6 font-bold text-brand font-mono text-xs sm:text-sm">1,800,000</td>
+                                <td class="py-4 px-4 sm:px-6 hidden sm:table-cell"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         INVESTMENT CTA
+    ═══════════════════════════════════════════ -->
+    <section id="invest" class="py-16 sm:py-24 bg-surface-2 border-t border-[rgba(255,255,255,0.05)] relative overflow-hidden cta-bg">
+        <!-- BG decoration -->
+        <div class="absolute inset-0 hero-grid opacity-40"></div>
+        <div class="orb w-96 h-96 bg-brand bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2" style="opacity:0.06;"></div>
+
+        <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-12 items-center">
+                <!-- Left -->
+                <div class="reveal">
+                    <div class="section-label mb-4">Investment Opportunity</div>
+                    <h2 class="font-display font-extrabold uppercase text-white leading-none mb-5 sm:mb-6" style="font-size: clamp(32px, 5.5vw, 72px);">
+                        Join The<br><span class="num-highlight">Venture</span>
+                    </h2>
+                    <p class="text-gray-400 text-sm sm:text-base leading-relaxed mb-7 sm:mb-8 max-w-md">
+                        We're offering <strong class="text-white">20% Equity</strong> for a <strong class="text-white">25 Lac BDT</strong> investment — secured for immediate scaling of tech infrastructure, licensing, and aggressive market entry.
+                    </p>
+
+                    <div class="space-y-3 mb-8 sm:mb-10">
+                        <div class="flex items-center gap-3">
+                            <div class="w-5 h-5 rounded-full bg-brand/15 border border-brand/30 flex items-center justify-center flex-shrink-0">
+                                <svg width="8" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#FF5500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </div>
+                            <span class="text-gray-300 text-sm">Dual Revenue Stream Model — Stability + Growth</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-5 h-5 rounded-full bg-brand/15 border border-brand/30 flex items-center justify-center flex-shrink-0">
+                                <svg width="8" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#FF5500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </div>
+                            <span class="text-gray-300 text-sm">Experienced Leadership Team with Proven Track Record</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-5 h-5 rounded-full bg-brand/15 border border-brand/30 flex items-center justify-center flex-shrink-0">
+                                <svg width="8" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#FF5500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </div>
+                            <span class="text-gray-300 text-sm">Projected 3-Year ROI of 380% (Conservative)</span>
+                        </div>
+                    </div>
+
+                    <a href="contact.html" class="btn-primary inline-flex">
+                        Secure Your Stake
+                        <svg class="arrow-icon" fill="none" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                </div>
+
+                <!-- Cap Table Card -->
+                <div class="grad-border bg-surface-3 rounded-2xl p-6 sm:p-8 reveal reveal-delay-1">
+                    <div class="section-label mb-2">Post-Money</div>
+                    <h3 class="font-display font-bold text-white text-lg sm:text-xl uppercase mb-5 sm:mb-6">Cap Table</h3>
+
+                    <div class="relative flex justify-center mb-6 sm:mb-8">
+                        <canvas id="capTableChart" width="160" height="160" style="max-width:160px;"></canvas>
+                        <div class="absolute inset-0 flex items-center justify-center flex-col pointer-events-none">
+                            <span class="font-display font-bold text-xl sm:text-2xl text-white">100%</span>
+                            <span class="text-[9px] text-gray-600 uppercase tracking-widest">Total</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center p-3 bg-surface-4 rounded-lg">
+                            <div class="flex items-center gap-3">
+                                <div class="w-3 h-3 rounded-sm bg-surface-2 border border-gray-600 flex-shrink-0"></div>
+                                <span class="text-white text-sm font-medium">Founders & Team</span>
+                            </div>
+                            <span class="text-gray-400 font-mono text-sm font-bold">80%</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-brand/08 border border-brand/15 rounded-lg">
+                            <div class="flex items-center gap-3">
+                                <div class="w-3 h-3 rounded-sm bg-brand flex-shrink-0"></div>
+                                <span class="text-white text-sm font-medium">Seed Investor</span>
+                            </div>
+                            <span class="text-brand font-mono text-sm font-bold">20%</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-5 sm:mt-6 pt-5 border-t border-[rgba(255,255,255,0.06)] text-center">
+                        <div class="text-[9px] uppercase tracking-widest text-gray-600 mb-2">Post-Money Valuation</div>
+                        <div class="font-display font-extrabold text-2xl sm:text-3xl text-white">1.25 Cr <span class="text-brand text-lg sm:text-xl">BDT</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         FOOTER
+    ═══════════════════════════════════════════ -->
+    <footer class="py-10 sm:py-12 bg-surface border-t border-[rgba(255,255,255,0.05)]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 md:gap-8">
+                <div class="text-center md:text-left">
+                    <div class="font-display font-bold text-white text-base sm:text-lg tracking-wider mb-1">BILUIBABA <span class="text-brand/60">×</span> STUDY INSIGHTS</div>
+                    <div class="text-gray-700 text-xs">&copy; 2026 Combined Holdings. Investor Confidential Material.</div>
+                </div>
+                <div class="flex flex-wrap justify-center gap-5 sm:gap-8 text-gray-600 text-xs uppercase tracking-widest font-semibold">
+                    <a href="contact.html" class="hover:text-white transition-colors">Contact</a>
+                    <a href="legal-privacy.html" class="hover:text-white transition-colors">Legal</a>
+                    <a href="legal-privacy.html#privacy" class="hover:text-white transition-colors">Privacy</a>
+                    <a href="financials.html" class="hover:text-brand transition-colors">Financial Model</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ═══════════════════════════════════════════
+         SCRIPTS
+    ═══════════════════════════════════════════ -->
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // Scroll progress bar
+        const bar = document.getElementById('scroll-progress');
+        window.addEventListener('scroll', () => {
+            const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
+            bar.style.width = pct + '%';
+        });
+
+        // Mobile menu
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+        });
+        mobileMenu.querySelectorAll('a').forEach(a => {
+            a.addEventListener('click', () => mobileMenu.classList.remove('open'));
+        });
+
+        // Reveal on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    observer.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Counter animation
+        const counters = document.querySelectorAll('.counter');
+        const counterObs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (!e.isIntersecting) return;
+                const el = e.target;
+                const target = parseInt(el.dataset.target);
+                const suffix = el.dataset.suffix || '';
+                let current = 0;
+                const step = target / 40;
+                const timer = setInterval(() => {
+                    current = Math.min(current + step, target);
+                    el.textContent = Math.floor(current) + suffix;
+                    if (current >= target) clearInterval(timer);
+                }, 30);
+                counterObs.unobserve(el);
+            });
+        }, { threshold: 0.5 });
+        counters.forEach(c => counterObs.observe(c));
+
+        // Revenue Chart
+        const ctxRev = document.getElementById('revenueChart').getContext('2d');
+        const grad = ctxRev.createLinearGradient(0, 0, 0, 300);
+        grad.addColorStop(0, 'rgba(255,85,0,0.8)');
+        grad.addColorStop(1, 'rgba(255,85,0,0.05)');
+
+        new Chart(ctxRev, {
+            type: 'bar',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3'],
+                datasets: [{
+                    label: 'Revenue (BDT)',
+                    data: [6000000, 9000000, 12000000],
+                    backgroundColor: [
+                        'rgba(255,85,0,0.3)',
+                        'rgba(255,85,0,0.55)',
+                        'rgba(255,85,0,0.9)',
+                    ],
+                    borderColor: '#FF5500',
+                    borderWidth: 1,
+                    borderRadius: 8,
+                    borderSkipped: false,
+                    barPercentage: 0.55,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: '#181818',
+                        titleColor: '#fff',
+                        bodyColor: '#aaa',
+                        borderColor: 'rgba(255,85,0,0.3)',
+                        borderWidth: 1,
+                        cornerRadius: 8,
+                        padding: 12,
+                        callbacks: {
+                            label: ctx => ' BDT ' + (ctx.raw / 100000).toFixed(1) + ' Lac'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.04)' },
+                        border: { display: false },
+                        ticks: {
+                            color: '#555',
+                            font: { family: 'Inter', size: 11 },
+                            callback: v => (v / 100000) + ' Lac'
+                        }
+                    },
+                    x: {
+                        grid: { display: false },
+                        border: { display: false },
+                        ticks: { color: '#888', font: { family: 'Manrope', size: 13, weight: '700' } }
+                    }
+                },
+                animation: { duration: 1400, easing: 'easeOutQuart' }
+            }
+        });
+
+        // Cap Table Chart
+        const ctxCap = document.getElementById('capTableChart').getContext('2d');
+        new Chart(ctxCap, {
+            type: 'doughnut',
+            data: {
+                labels: ['Founders', 'Investor'],
+                datasets: [{
+                    data: [80, 20],
+                    backgroundColor: ['#1F1F1F', '#FF5500'],
+                    borderColor: ['#2a2a2a', '#FF7733'],
+                    borderWidth: 2,
+                    hoverOffset: 6,
+                }]
+            },
+            options: {
+                responsive: false,
+                cutout: '78%',
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: '#181818',
+                        titleColor: '#fff',
+                        bodyColor: '#aaa',
+                        borderColor: 'rgba(255,85,0,0.3)',
+                        borderWidth: 1,
+                        cornerRadius: 8,
+                        padding: 10,
+                    }
+                },
+                animation: { duration: 1200, easing: 'easeOutQuart' }
+            }
+        });
+
+    });
+    </script>
+</body>
+</html>

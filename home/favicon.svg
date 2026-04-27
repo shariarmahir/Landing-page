@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36">
+  <!-- Main orange square -->
+  <rect x="0" y="0" width="27" height="27" rx="5" fill="#FF5500"/>
+  <!-- White B -->
+  <text x="13.5" y="21" font-family="Arial Black, Arial, sans-serif" font-size="17" font-weight="900" fill="white" text-anchor="middle">B</text>
+  <!-- Accent corner square -->
+  <rect x="19" y="19" width="13" height="13" rx="3" fill="rgba(255,85,0,0.32)" stroke="rgba(255,136,68,0.55)" stroke-width="1"/>
+</svg>

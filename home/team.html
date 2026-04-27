@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unified Leadership Team | Investor Portfolio</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'neon-orange': '#FF5500',
+                        'metallic-silver': '#C0C0C0',
+                        'deep-black': '#050505',
+                        'charcoal': '#121212',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Oswald', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #050505;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism Card */
+        .glass-card {
+            background: rgba(20, 20, 20, 0.4);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 85, 0, 0.3);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Image Styling */
+        .img-wrapper {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease, filter 0.4s ease;
+            filter: grayscale(100%);
+        }
+
+        .glass-card:hover .team-img {
+            transform: scale(1.1);
+            filter: grayscale(0%);
+        }
+
+        .img-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(5,5,5,0.95) 0%, rgba(5,5,5,0.3) 50%, transparent 100%);
+            opacity: 0.9;
+            transition: opacity 0.4s ease;
+        }
+        
+        .glass-card:hover .img-overlay {
+            opacity: 1;
+        }
+
+        /* Text Gradients */
+        .gradient-text {
+            background: linear-gradient(to right, #fff, #999);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Fallback for Missing Images */
+        .img-fallback {
+            background: #111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-size: 2rem;
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+        }
+
+        /* Study Insights Section Specifics */
+        .study-accent {
+            border-top: 2px solid rgba(192, 192, 192, 0.5); /* Silver accent */
+        }
+        
+        .bilu-accent {
+            border-top: 2px solid rgba(255, 85, 0, 0.5); /* Orange accent */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-deep-black/90 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <i class="fa-solid fa-arrow-left text-gray-400 group-hover:text-neon-orange transition-colors"></i>
+                <div class="leading-none">
+                    <h1 class="font-display font-bold text-xl tracking-wider text-white">OUR TEAM</h1>
+                </div>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="relative pt-32 pb-16 px-6">
+        <div class="max-w-7xl mx-auto text-center relative z-10">
+            <span class="text-neon-orange font-bold tracking-[0.2em] uppercase text-xs mb-4 block">The Visionaries</span>
+            <h2 class="font-display text-5xl md:text-7xl font-bold uppercase text-white mb-6">
+                Leadership <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500">Roster</span>
+            </h2>
+            <p class="text-gray-400 max-w-2xl mx-auto text-lg">
+                A unified management team driving the dual expansion of Biluibaba and Study Insights.
+            </p>
+        </div>
+    </section>
+
+    <!-- SECTION 1: STUDY INSIGHTS TEAM (First as requested) -->
+    <section class="py-12 px-6 bg-charcoal/30 border-b border-white/5 study-accent">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-center gap-4 mb-10">
+                <div class="h-px bg-gray-700 flex-1"></div>
+                <h3 class="font-display text-3xl font-bold uppercase tracking-wider text-metallic-silver">Study Insights</h3>
+                <div class="h-px bg-gray-700 flex-1"></div>
+            </div>
+
+            <!-- Grid Layout: 4 Members -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Member 1: Sadman Bin Arif -->
+                <div class="glass-card rounded-lg group">
+                    <div class="img-wrapper h-64">
+                        <!-- Using underscores in filename for web compatibility -->
+                        <img src="public/study-insights/sadman_bin_arif.jpg" alt="Sadman Bin Arif" class="team-img"
+                             onerror="this.onerror=null;this.parentElement.classList.add('img-fallback');this.parentElement.innerText='SA';this.style.display='none';">
+                        <div class="img-overlay"></div>
+                    </div>
+                    <div class="p-5 relative -mt-10 z-20">
+                        <h4 class="font-display text-xl font-bold text-white uppercase mb-1 group-hover:text-metallic-silver transition-colors">Sadman Bin Arif</h4>
+                        <p class="text-xs font-bold uppercase tracking-widest text-gray-400">Managing Director</p>
+                    </div>
+                </div>
+
+                <!-- Member 2: Mahir Shariar Mahin -->
+                <div class="glass-card rounded-lg group">
+                    <div class="img-wrapper h-64">
+                        <img src="public/study-insights/mahir_shariar_mahin.jpg" alt="Mahir Shariar Mahin" class="team-img"
+                             onerror="this.onerror=null;this.parentElement.classList.add('img-fallback');this.parentElement.innerText='MM';this.style.display='none';">
+                        <div class="img-overlay"></div>
+                    </div>
+                    <div class="p-5 relative -mt-10 z-20">
+                        <h4 class="font-display text-xl font-bold text-white uppercase mb-1 group-hover:text-metallic-silver transition-colors">Mahir Shariar Mahin</h4>
+                        <p class="text-xs font-bold uppercase tracking-widest text-gray-400">Head of Operation</p>
+                    </div>
+                </div>
+
+                <!-- Member 3: Shah Sadad Ahmed -->
+                <div class="glass-card rounded-lg group">
+                    <div class="img-wrapper h-64">
+                        <img src="public/study-insights/shah_sadad_ahmed.jpg" alt="Shah Sadad Ahmed" class="team-img"
+                             onerror="this.onerror=null;this.parentElement.classList.add('img-fallback');this.parentElement.innerText='SS';this.style.display='none';">
+                        <div class="img-overlay"></div>
+                    </div>
+                    <div class="p-5 relative -mt-10 z-20">
+                        <h4 class="font-display text-xl font-bold text-white uppercase mb-1 group-hover:text-metallic-silver transition-colors">Shah Sadad Ahmed</h4>
+                        <p class="text-xs font-bold uppercase tracking-widest text-gray-400">Head of Admissions</p>
+                    </div>
+                </div>
+
+                <!-- Member 4: Dewan Abdullah Fahad -->
+                <div class="glass-card rounded-lg group">
+                    <div class="img-wrapper h-64">
+                        <img src="public/study-insights/dewan_abdullah_fahad.jpg" alt="Dewan Abdullah Fahad" class="team-img"
+                             onerror="this.onerror=null;this.parentElement.classList.add('img-fallback');this.parentElement.innerText='DAF';this.style.display='none';">
+                        <div class="img-overlay"></div>
+                    </div>
+                    <div class="p-5 relative -mt-10 z-20">
+                        <h4 class="font-display text-xl font-bold text-white uppercase mb-1 group-hover:text-metallic-silver transition-colors">Dewan Abdullah Fahad</h4>
+                        <p class="text-xs font-bold uppercase tracking-widest text-gray-400">Head of Creative</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: BILUIBABA TEAM (Second as requested) -->
+    <section class="py-20 px-6 bg-deep-black border-t border-white/5 bilu-accent">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-center gap-4 mb-12">
+                <div class="h-px bg-gray-700 flex-1"></div>
+                <h3 class="font-display text-3xl font-bold uppercase tracking-wider text-neon-orange">Biluibaba</h3>
+                <div class="h-px bg-gray-700 flex-1"></div>
+            </div>
+
+            <!-- Grid Layout: 6 Members -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Member 1: Sadman Bin Arif -->
+                <div class="glass-card rounded-xl group">
+                    <div class="img-wrapper h-80">
+                        <img src="public/sadman_bin_arif.jpg" alt="Sadman Bin Arif" class="team-img"
+                             onerror="this.onerror=null;this.parentElement.classList.add('img-fallback');this.parentElement.innerText='SA';this.style.display='none';">
+                        <div class="img-overlay"></div>
+                        <div class="absolute bottom-4 left-4 z-20">
+                            <div class="h-1 w-12 bg-neon-orange mb-2 group-hover:w-24 transition-all duration-300"></div>
+                        </div>
+                    </div>
+                    <div class="p-6 relative -mt-12 z-20">
+                        <h4 class="font-display text-2xl font-bold text-white uppercase mb-1 group-hover:text-neon-orange transition-colors">Sadman Bin Arif</h4>
+                        <p class="text-sm font-bold uppercase tracking-wider text-metallic-silver">CEO & Founder</p>
+                    </div>
+                </div>
+
+                <!-- Member 2: Dewan Abdullah Fahad -->
+                <div class="glass-card rounded-xl group">
+                    <div class="img-wrapper h-80">
+                        <img src="public/dewan_abdullah_fahad.jpg" alt="Dewan Abdullah Fahad" class="team-img"
+                             onerror="this.onerror=null;this.parentElement.classList.add('img-fallback');this.parentElement.innerText='DAF';this.style.display='none';">
+                        <div class="img-overlay"></div>
+                        <div class="absolute bottom-4 left-4 z-20">
+                            <div class="h-1 w-12 bg-neon-orange mb-2 group-hover:w-24 transition-all duration-300"></div>
+                        </div>
+                    </div>
+                    <div class="p-6 relative -mt-12 z-20">
+                        <h4 class="font-display text-2xl font-bold text-white uppercase mb-1 group-hover:text-neon-orange transition-colors">Dewan Abdullah Fahad</h4>
+                        <p class="text-sm font-bold uppercase tracking-wider text-metallic-silver">COO & Co-Founder</p>
+                    </div>
+                </div>
+
+                <!-- Member 3: Sami Adnan -->
+                <div class="glass-card rounded-xl group">
+                    <div class="img-wrapper h-80">
+                        <img src="public/sami_adnan.jpg" alt="Sami Adnan" class="team-img"
+                             onerror="this.onerror=null;this.parentElement.classList.add('img-fallback');this.parentElement.innerText='CTO';this.style.display='none';">
+                        <div class="img-overlay"></div>
+                        <div class="absolute bottom-4 left-4 z-20">
+                            <div class="h-1 w-12 bg-neon-orange mb-2 group-hover:w-24 transition-all duration-300"></div>
+                        </div>
+                    </div>
+                    <div class="p-6 relative -mt-12 z-20">
+                        <h4 class="font-display text-2xl font-bold text-white uppercase mb-1 group-hover:text-neon-orange transition-colors">Sami Adnan</h4>
+                        <p class="text-sm font-bold uppercase tracking-wider text-metallic-silver">Chief Technology Officer</p>
+                    </div>
+                </div>
+
+                <!-- Member 4: Kazi Shabbin Hossain -->
+                <div class="glass-card rounded-xl group">
+                    <div class="img-wrapper h-80">
+                        <img src="public/kazi_shabbin_hossain.jpg" alt="Kazi Shabbin Hossain" class="team-img"
+                             onerror="this.onerror=null;this.parentElement.classList.add('img-fallback');this.parentElement.innerText='KS';this.style.display='none';">
+                        <div class="img-overlay"></div>
+                        <div class="absolute bottom-4 left-4 z-20">
+                            <div class="h-1 w-12 bg-neon-orange mb-2 group-hover:w-24 transition-all duration-300"></div>
+                        </div>
+                    </div>
+                    <div class="p-6 relative -mt-12 z-20">
+                        <h4 class="font-display text-2xl font-bold text-white uppercase mb-1 group-hover:text-neon-orange transition-colors">Kazi Shabbin Hossain</h4>
+                        <p class="text-sm font-bold uppercase tracking-wider text-metallic-silver">Head of IT</p>
+                    </div>
+                </div>
+
+                <!-- Member 5: Md Munjurul Karim -->
+                <div class="glass-card rounded-xl group">
+                    <div class="img-wrapper h-80">
+                        <img src="public/md_munjurul_karim.jpg" alt="Md Munjurul Karim" class="team-img"
+                             onerror="this.onerror=null;this.parentElement.classList.add('img-fallback');this.parentElement.innerText='MK';this.style.display='none';">
+                        <div class="img-overlay"></div>
+                        <div class="absolute bottom-4 left-4 z-20">
+                            <div class="h-1 w-12 bg-neon-orange mb-2 group-hover:w-24 transition-all duration-300"></div>
+                        </div>
+                    </div>
+                    <div class="p-6 relative -mt-12 z-20">
+                        <h4 class="font-display text-2xl font-bold text-white uppercase mb-1 group-hover:text-neon-orange transition-colors">Md Munjurul Karim</h4>
+                        <p class="text-sm font-bold uppercase tracking-wider text-metallic-silver">Head of Marketing & Sales</p>
+                    </div>
+                </div>
+
+                <!-- Member 6: Md Sajidul Islam -->
+                <div class="glass-card rounded-xl group">
+                    <div class="img-wrapper h-80">
+                        <img src="public/md_sajidul_islam.jpg" alt="Md Sajidul Islam" class="team-img"
+                             onerror="this.onerror=null;this.parentElement.classList.add('img-fallback');this.parentElement.innerText='SI';this.style.display='none';">
+                        <div class="img-overlay"></div>
+                        <div class="absolute bottom-4 left-4 z-20">
+                            <div class="h-1 w-12 bg-neon-orange mb-2 group-hover:w-24 transition-all duration-300"></div>
+                        </div>
+                    </div>
+                    <div class="p-6 relative -mt-12 z-20">
+                        <h4 class="font-display text-2xl font-bold text-white uppercase mb-1 group-hover:text-neon-orange transition-colors">Md Sajidul Islam</h4>
+                        <p class="text-sm font-bold uppercase tracking-wider text-metallic-silver">Head of Procurement</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-black border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <div class="flex justify-center items-center gap-2 mb-4">
+                <div class="w-8 h-8 bg-neon-orange"></div>
+                <h2 class="font-display text-2xl font-bold text-white uppercase tracking-widest">Biluibaba <span class="text-gray-600">|</span> Study Insights</h2>
+            </div>
+            <p class="text-gray-700 text-xs uppercase tracking-widest">
+                &copy; 2026 Biluibaba & Study Insights Holdings. Confidential.
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>
