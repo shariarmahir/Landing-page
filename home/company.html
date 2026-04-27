@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Profile | Study Insights</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand':       '#FF5500',
+                        'brand-light': '#FF7733',
+                        'surface':     '#0A0A0A',
+                        'surface-2':   '#111111',
+                        'surface-3':   '#181818',
+                        'surface-4':   '#1F1F1F',
+                    },
+                    fontFamily: {
+                        sans:    ['Inter', 'sans-serif'],
+                        display: ['Manrope', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * { box-sizing: border-box; }
+        body { background: #0A0A0A; color: #D4D4D4; font-family: 'Inter', sans-serif; }
+
+        /* Nav */
+        .nav-glass {
+            background: rgba(10,10,10,0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .nav-link {
+            color: #888;
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            letter-spacing: 0.02em;
+            transition: color 0.18s;
+        }
+        .nav-link:hover { color: #fff; }
+
+        /* Section labels */
+        .section-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: #FF5500;
+        }
+        .h-line {
+            height: 1px;
+            background: linear-gradient(90deg, #FF5500 0%, rgba(255,85,0,0) 100%);
+        }
+        .num-highlight { color: #FF5500; }
+
+        /* Hero */
+        .company-hero {
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        /* Stat cards */
+        .stat-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,85,0,0.08);
+            border: 1px solid rgba(255,85,0,0.18);
+            border-radius: 100px;
+            padding: 6px 14px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #FF5500;
+            letter-spacing: 0.08em;
+        }
+
+        /* Info card */
+        .info-card {
+            background: #181818;
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 16px;
+            padding: 24px 28px;
+        }
+        .info-card-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,85,0,0.1);
+            border: 1px solid rgba(255,85,0,0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* Team cards */
+        .team-card {
+            background: #181818;
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 16px;
+            padding: 24px;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+        .team-card:hover {
+            border-color: rgba(255,85,0,0.25);
+            transform: translateY(-2px);
+        }
+        .team-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: rgba(255,85,0,0.15);
+            border: 2px solid rgba(255,85,0,0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 16px;
+            color: #FF5500;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .team-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .team-role {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: #FF5500;
+        }
+
+        /* Service items */
+        .service-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 18px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .service-item:last-child { border-bottom: none; }
+        .service-num {
+            font-family: 'Manrope', sans-serif;
+            font-size: 11px;
+            font-weight: 800;
+            color: #FF5500;
+            letter-spacing: 0.1em;
+            min-width: 28px;
+            padding-top: 2px;
+        }
+
+        /* Location card */
+        .location-card {
+            background: linear-gradient(135deg, rgba(255,85,0,0.06) 0%, rgba(255,85,0,0.02) 100%);
+            border: 1px solid rgba(255,85,0,0.15);
+            border-radius: 20px;
+            padding: 32px;
+        }
+
+        /* Destination badges */
+        .dest-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #1F1F1F;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            padding: 8px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #D4D4D4;
+        }
+
+        /* CTA button */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 28px;
+            background: #FF5500;
+            color: #fff;
+            font-family: 'Manrope', sans-serif;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: background 0.18s, transform 0.15s;
+        }
+        .btn-primary:hover { background: #FF7733; transform: translateY(-1px); }
+
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: transparent;
+            color: #D4D4D4;
+            font-family: 'Manrope', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 10px;
+            text-decoration: none;
+            transition: border-color 0.18s, color 0.18s;
+        }
+        .btn-outline:hover { border-color: rgba(255,85,0,0.5); color: #FF5500; }
+
+        /* Scroll reveal */
+        .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
+        .reveal.visible { opacity: 1; transform: none; }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+
+        /* Footer */
+        .footer-link { color: #555; font-size: 13px; text-decoration: none; transition: color 0.18s; }
+        .footer-link:hover { color: #FF5500; }
+    </style>
+</head>
+<body>
+
+    <!-- ═══ NAV ═══ -->
+    <nav class="nav-glass fixed top-0 left-0 right-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+            <a href="index.html" class="font-display font-extrabold text-white text-lg tracking-tight">
+                Study<span class="text-brand">Insights</span>
+            </a>
+            <div class="flex items-center gap-4 sm:gap-6">
+                <a href="index.html#study-insights" class="nav-link hidden sm:inline">Overview</a>
+                <a href="contact.html" class="btn-primary py-2 px-5 text-[11px]">
+                    Get in Touch
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ═══ HERO ═══ -->
+    <section class="company-hero pt-32 pb-16 sm:pt-40 sm:pb-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="max-w-3xl reveal">
+                <div class="section-label mb-4">Company Profile · Founded March 2026</div>
+                <h1 class="font-display font-extrabold text-white leading-none mb-6"
+                    style="font-size: clamp(36px, 6vw, 80px); letter-spacing: -0.03em;">
+                    Empowering Your<br><span class="num-highlight">Global Academic</span><br>Journey
+                </h1>
+                <div class="h-line w-24 mb-6"></div>
+                <p class="text-gray-400 text-base sm:text-lg leading-relaxed max-w-2xl">
+                    Study Insights is an education consultancy dedicated to bridging the gap between ambitious students and world-class international education — with honest, transparent, and expert guidance.
+                </p>
+                <div class="flex flex-wrap gap-3 mt-8">
+                    <span class="stat-pill">
+                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" fill="#FF5500"/></svg>
+                        Active · March 2026
+                    </span>
+                    <span class="stat-pill">
+                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" fill="#FF5500"/></svg>
+                        Dhaka, Bangladesh
+                    </span>
+                    <span class="stat-pill">
+                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" fill="#FF5500"/></svg>
+                        UK · Europe · Australia
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ ABOUT ═══ -->
+    <section class="py-16 sm:py-24 bg-surface-2 border-y border-[rgba(255,255,255,0.05)]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                <div class="reveal">
+                    <div class="section-label mb-3">About Us</div>
+                    <h2 class="font-display font-extrabold uppercase text-white leading-none mb-6"
+                        style="font-size: clamp(26px, 4vw, 50px);">
+                        Who We <span class="num-highlight">Are</span>
+                    </h2>
+                    <div class="h-line w-20 mb-8"></div>
+                    <div class="space-y-5 text-gray-400 text-sm sm:text-base leading-relaxed">
+                        <p>
+                            Welcome to Study Insights — an education consultancy firm dedicated to bridging the gap between ambitious students and world-class international education.
+                        </p>
+                        <p>
+                            Founded in March 2026, we were established with a singular mission: to provide honest, transparent, and expert guidance to students aspiring to study in Europe, the UK, and Australia.
+                        </p>
+                        <p>
+                            At Study Insights, we believe that education is the most powerful tool for shaping a bright future. We understand that the path to international study can be complex, and we take great pleasure in simplifying that journey — ensuring every student we work with finds the future they truly deserve.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 reveal reveal-delay-1">
+                    <div class="info-card">
+                        <div class="info-card-icon mb-4">
+                            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#FF5500" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </div>
+                        <div class="text-white font-semibold text-sm mb-1">Mission</div>
+                        <p class="text-gray-500 text-xs leading-relaxed">Honest, transparent guidance for every student's international education journey.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-icon mb-4">
+                            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#FF5500" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                        </div>
+                        <div class="text-white font-semibold text-sm mb-1">Founded</div>
+                        <p class="text-gray-500 text-xs leading-relaxed">March 2026 — built from the ground up in Dhaka, Bangladesh.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-icon mb-4">
+                            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#FF5500" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                        </div>
+                        <div class="text-white font-semibold text-sm mb-1">Headquarters</div>
+                        <p class="text-gray-500 text-xs leading-relaxed">Dhaka Trade Centre, Karwan Bazar, Dhaka.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-icon mb-4">
+                            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#FF5500" stroke-width="2"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path d="M9 12l2 2 4-4"/></svg>
+                        </div>
+                        <div class="text-white font-semibold text-sm mb-1">Destinations</div>
+                        <p class="text-gray-500 text-xs leading-relaxed">UK, Europe, and Australia — the top choices for Bangladeshi students.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ DESTINATIONS ═══ -->
+    <section class="py-16 sm:py-20 bg-surface">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-10 reveal">
+                <div class="section-label mb-3">Study Destinations</div>
+                <h2 class="font-display font-extrabold uppercase text-white leading-none"
+                    style="font-size: clamp(24px, 3.5vw, 46px);">
+                    Where We Send <span class="num-highlight">Students</span>
+                </h2>
+            </div>
+            <div class="flex flex-wrap justify-center gap-4 reveal reveal-delay-1">
+                <div class="dest-badge">
+                    <span>🇬🇧</span> United Kingdom
+                </div>
+                <div class="dest-badge">
+                    <span>🇩🇪</span> Germany
+                </div>
+                <div class="dest-badge">
+                    <span>🇳🇱</span> Netherlands
+                </div>
+                <div class="dest-badge">
+                    <span>🇸🇪</span> Sweden
+                </div>
+                <div class="dest-badge">
+                    <span>🇳🇴</span> Norway
+                </div>
+                <div class="dest-badge">
+                    <span>🇦🇺</span> Australia
+                </div>
+                <div class="dest-badge">
+                    <span>🇫🇮</span> Finland
+                </div>
+                <div class="dest-badge">
+                    <span>🇩🇰</span> Denmark
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ LEADERSHIP ═══ -->
+    <section class="py-16 sm:py-24 bg-surface-2 border-y border-[rgba(255,255,255,0.05)]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-12 reveal">
+                <div class="section-label mb-3">Our Leadership Team</div>
+                <h2 class="font-display font-extrabold uppercase text-white leading-none"
+                    style="font-size: clamp(26px, 4vw, 52px);">
+                    The People Behind <span class="num-highlight">Study Insights</span>
+                </h2>
+                <p class="text-gray-500 text-sm mt-4 max-w-md mx-auto">Our firm is built on a foundation of professional integrity and academic expertise.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+
+                <div class="team-card reveal">
+                    <div class="flex items-start gap-4 mb-4">
+                        <div class="team-avatar">
+                            <img src="public/study-insights/sadman_bin_arif.jpg" alt="Sadman Bin Arif"
+                                 onerror="this.onerror=null;this.parentElement.innerText='SA';">
+                        </div>
+                        <div>
+                            <div class="text-white font-semibold text-base leading-tight">Sadman Bin Arif</div>
+                            <div class="team-role mt-1">Managing Director</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-500 text-xs leading-relaxed">
+                        Leads the firm's strategic direction, partnerships, and long-term vision for growing Study Insights into a leading global consultancy.
+                    </p>
+                </div>
+
+                <div class="team-card reveal reveal-delay-1">
+                    <div class="flex items-start gap-4 mb-4">
+                        <div class="team-avatar">
+                            <img src="public/study-insights/mahir_shariar_mahin.jpg" alt="Mahir Shariar Mahin"
+                                 onerror="this.onerror=null;this.parentElement.innerText='MM';">
+                        </div>
+                        <div>
+                            <div class="text-white font-semibold text-base leading-tight">Mahir Shariar Mahin</div>
+                            <div class="team-role mt-1">Manager & Head of Operation</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-500 text-xs leading-relaxed">
+                        Oversees day-to-day operations, student workflow management, and ensures seamless delivery of our consultancy services.
+                    </p>
+                </div>
+
+                <div class="team-card reveal reveal-delay-2">
+                    <div class="flex items-start gap-4 mb-4">
+                        <div class="team-avatar">
+                            <img src="public/study-insights/shah_sadad_ahmed.jpg" alt="Shah Sadad Ahmed"
+                                 onerror="this.onerror=null;this.parentElement.innerText='SS';">
+                        </div>
+                        <div>
+                            <div class="text-white font-semibold text-base leading-tight">Shah Sadad Ahmed</div>
+                            <div class="team-role mt-1">Counselor & Head of Admissions</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-500 text-xs leading-relaxed">
+                        Guides students through the full admissions pipeline — from university selection through to visa application — with precision and care.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ PHILOSOPHY ═══ -->
+    <section class="py-16 sm:py-24 bg-surface">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+
+                <div class="reveal">
+                    <div class="section-label mb-3">Our Philosophy</div>
+                    <h2 class="font-display font-extrabold uppercase text-white leading-none mb-6"
+                        style="font-size: clamp(26px, 4vw, 50px);">
+                        Honesty <span class="num-highlight">&</span> Growth
+                    </h2>
+                    <div class="h-line w-20 mb-8"></div>
+                    <div class="space-y-5 text-gray-400 text-sm sm:text-base leading-relaxed">
+                        <p>
+                            We aren't just consultants — we are partners in your academic career. Our goal is to grow into a leading global consultancy by doing honest work.
+                        </p>
+                        <p>
+                            We specialize in helping students who possess the drive and the dream to succeed, providing them with the ethical support and accurate information needed to navigate admissions and visa processes across the globe.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="reveal reveal-delay-1">
+                    <div class="section-label mb-3">Our Services</div>
+                    <h2 class="font-display font-extrabold uppercase text-white leading-none mb-6"
+                        style="font-size: clamp(26px, 4vw, 50px);">
+                        What We <span class="num-highlight">Offer</span>
+                    </h2>
+                    <div class="h-line w-20 mb-6"></div>
+                    <div>
+                        <div class="service-item">
+                            <div class="service-num">01</div>
+                            <div>
+                                <div class="text-white font-semibold text-sm mb-1">University Selection</div>
+                                <p class="text-gray-500 text-xs leading-relaxed">Program matching and shortlisting tailored to academic background, career goals, and destination fit.</p>
+                            </div>
+                        </div>
+                        <div class="service-item">
+                            <div class="service-num">02</div>
+                            <div>
+                                <div class="text-white font-semibold text-sm mb-1">Visa & Immigration Support</div>
+                                <p class="text-gray-500 text-xs leading-relaxed">Hands-on preparation that strengthens application quality and improves visa approval confidence.</p>
+                            </div>
+                        </div>
+                        <div class="service-item">
+                            <div class="service-num">03</div>
+                            <div>
+                                <div class="text-white font-semibold text-sm mb-1">Career Counseling</div>
+                                <p class="text-gray-500 text-xs leading-relaxed">Academic planning aligned with long-term employability, industry demand, and future career progression.</p>
+                            </div>
+                        </div>
+                        <div class="service-item">
+                            <div class="service-num">04</div>
+                            <div>
+                                <div class="text-white font-semibold text-sm mb-1">Scholarship Assistance</div>
+                                <p class="text-gray-500 text-xs leading-relaxed">Targeted support to identify, position for, and secure meaningful funding opportunities worldwide.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ LOCATION ═══ -->
+    <section class="py-16 sm:py-24 bg-surface-2 border-y border-[rgba(255,255,255,0.05)]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-12 reveal">
+                <div class="section-label mb-3">Visit Us</div>
+                <h2 class="font-display font-extrabold uppercase text-white leading-none"
+                    style="font-size: clamp(26px, 4vw, 52px);">
+                    Our <span class="num-highlight">Office</span>
+                </h2>
+            </div>
+
+            <div class="max-w-2xl mx-auto reveal reveal-delay-1">
+                <div class="location-card text-center">
+                    <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-brand/10 border border-brand/20 mb-6">
+                        <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="#FF5500" stroke-width="2">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                            <circle cx="12" cy="9" r="2.5" fill="#FF5500" stroke="none"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display font-bold text-white text-xl mb-2">Study Insights</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-1">Dhaka Trade Centre, 6th Floor</p>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-1">Kazi Nazrul Islam Avenue, Karwan Bazar</p>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">Dhaka, Bangladesh</p>
+                    <a href="contact.html" class="btn-primary">
+                        Get Directions &amp; Contact
+                        <svg width="12" height="12" fill="none" viewBox="0 0 16 16">
+                            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ CTA ═══ -->
+    <section class="py-16 sm:py-24 bg-surface">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center reveal">
+            <div class="section-label mb-4">Start Your Journey</div>
+            <h2 class="font-display font-extrabold uppercase text-white leading-none mb-6"
+                style="font-size: clamp(26px, 4.5vw, 56px);">
+                Let's Shape Your <span class="num-highlight">Future Together</span>
+            </h2>
+            <p class="text-gray-400 text-sm sm:text-base leading-relaxed max-w-xl mx-auto mb-8">
+                Whether you are aiming for the historic universities of the UK, the innovative campuses of Europe, or the vibrant academic life in Australia — Study Insights is here to make your dream a reality.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="contact.html" class="btn-primary">
+                    Start Your Application
+                    <svg width="12" height="12" fill="none" viewBox="0 0 16 16">
+                        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+                <a href="index.html" class="btn-outline">
+                    Back to Portfolio
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ FOOTER ═══ -->
+    <footer class="border-t border-[rgba(255,255,255,0.06)] py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="font-display font-extrabold text-white text-base tracking-tight">
+                Study<span class="text-brand">Insights</span>
+            </div>
+            <div class="flex items-center gap-6">
+                <a href="index.html" class="footer-link">Portfolio</a>
+                <a href="contact.html" class="footer-link">Contact</a>
+                <a href="legal-privacy.html" class="footer-link">Legal</a>
+            </div>
+            <p class="text-gray-600 text-xs">&copy; 2026 Study Insights. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll reveal
+        const revealEls = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(el => {
+                if (el.isIntersecting) {
+                    el.target.classList.add('visible');
+                    observer.unobserve(el.target);
+                }
+            });
+        }, { threshold: 0.08 });
+        revealEls.forEach(el => observer.observe(el));
+    </script>
+
+</body>
+</html>
