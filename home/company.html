@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <script>
         tailwind.config = {
@@ -18,11 +19,14 @@
                 extend: {
                     colors: {
                         'brand':       '#FF5500',
-                        'brand-light': '#FF7733',
-                        'surface':     '#0A0A0A',
-                        'surface-2':   '#111111',
-                        'surface-3':   '#181818',
-                        'surface-4':   '#1F1F1F',
+                        'brand-light': '#FF7A3D',
+                        'ink':         '#0A0A0A',
+                        'ink-2':       '#0F0F0F',
+                        'ink-3':       '#151515',
+                        'ink-4':       '#1B1B1B',
+                        'ink-5':       '#222222',
+                        'chalk':       '#E8E4E0',
+                        'chalk-dim':   '#8A8580',
                     },
                     fontFamily: {
                         sans:    ['Inter', 'sans-serif'],
@@ -34,571 +38,412 @@
     </script>
 
     <style>
-        * { box-sizing: border-box; }
-        body { background: #0A0A0A; color: #D4D4D4; font-family: 'Inter', sans-serif; }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #0A0A0A; color: #C0BBB5; font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
-        /* Nav */
-        .nav-glass {
-            background: rgba(10,10,10,0.85);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-        }
-        .nav-link {
-            color: #888;
-            font-size: 13px;
-            font-weight: 500;
-            text-decoration: none;
-            letter-spacing: 0.02em;
-            transition: color 0.18s;
-        }
+        #scroll-progress { position: fixed; top: 0; left: 0; height: 2px; z-index: 9999; background: linear-gradient(90deg, #FF5500, #FF7A3D, #FF5500); width: 0%; box-shadow: 0 0 14px rgba(255,85,0,0.5); }
+        .grain { position: fixed; inset: 0; pointer-events: none; z-index: 9000; opacity: 0.022; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+        .nav-glass { background: rgba(10,10,10,0.72); backdrop-filter: blur(28px) saturate(1.5); -webkit-backdrop-filter: blur(28px) saturate(1.5); border-bottom: 1px solid rgba(255,255,255,0.04); transition: background 0.35s, box-shadow 0.35s; }
+        .nav-glass.scrolled { background: rgba(10,10,10,0.94); box-shadow: 0 8px 40px rgba(0,0,0,0.5); }
+        .nav-link { color: #666; font-size: 13px; font-weight: 500; text-decoration: none; letter-spacing: 0.03em; transition: color 0.2s; position: relative; }
+        .nav-link::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 1px; background: #FF5500; transform: scaleX(0); transform-origin: right; transition: transform 0.3s cubic-bezier(0.23,1,0.32,1); }
         .nav-link:hover { color: #fff; }
+        .nav-link:hover::after { transform: scaleX(1); transform-origin: left; }
 
-        /* Section labels */
-        .section-label {
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: #FF5500;
-        }
-        .h-line {
-            height: 1px;
-            background: linear-gradient(90deg, #FF5500 0%, rgba(255,85,0,0) 100%);
-        }
-        .num-highlight { color: #FF5500; }
+        .section-label { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; color: #FF5500; display: inline-flex; align-items: center; gap: 10px; }
+        .section-label::before { content: ''; width: 20px; height: 1px; background: #FF5500; }
+        .accent-line { height: 1px; width: 56px; background: linear-gradient(90deg, #FF5500, transparent); }
+        .section-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent); }
 
-        /* Hero */
-        .company-hero {
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-        }
+        .hero-mesh { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 55% 65% at 15% 25%, rgba(255,85,0,0.06) 0%, transparent 70%), radial-gradient(ellipse 40% 50% at 85% 75%, rgba(255,120,61,0.035) 0%, transparent 70%), radial-gradient(ellipse 70% 35% at 50% -5%, rgba(255,85,0,0.025) 0%, transparent 55%); }
+        .hero-glow { position: absolute; border-radius: 50%; filter: blur(160px); opacity: 0.1; pointer-events: none; }
+        .hero-pill { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,85,0,0.05); border: 1px solid rgba(255,85,0,0.1); border-radius: 100px; padding: 7px 16px; font-size: 11px; font-weight: 600; color: #FF5500; letter-spacing: 0.05em; }
+        .hero-pill-dot { width: 6px; height: 6px; border-radius: 50%; background: #FF5500; animation: pulse-dot 2s ease-in-out infinite; }
+        @keyframes pulse-dot { 0%, 100% { opacity:1; transform:scale(1); } 50% { opacity:0.4; transform:scale(0.7); } }
 
-        /* Stat cards */
-        .stat-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255,85,0,0.08);
-            border: 1px solid rgba(255,85,0,0.18);
-            border-radius: 100px;
-            padding: 6px 14px;
-            font-size: 11px;
-            font-weight: 600;
-            color: #FF5500;
-            letter-spacing: 0.08em;
-        }
+        .r { opacity: 0; transform: translateY(28px); transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1); }
+        .r.v { opacity: 1; transform: none; }
+        .r-d1 { transition-delay: 0.07s; } .r-d2 { transition-delay: 0.14s; } .r-d3 { transition-delay: 0.21s; } .r-d4 { transition-delay: 0.28s; }
+        .r-d5 { transition-delay: 0.35s; } .r-d6 { transition-delay: 0.42s; } .r-d7 { transition-delay: 0.49s; } .r-d8 { transition-delay: 0.56s; }
 
-        /* Info card */
-        .info-card {
-            background: #181818;
-            border: 1px solid rgba(255,255,255,0.07);
-            border-radius: 16px;
-            padding: 24px 28px;
-        }
-        .info-card-icon {
-            width: 40px;
-            height: 40px;
-            background: rgba(255,85,0,0.1);
-            border: 1px solid rgba(255,85,0,0.2);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
+        .p-card { background: linear-gradient(150deg, rgba(20,20,20,0.85), rgba(14,14,14,0.65)); border: 1px solid rgba(255,255,255,0.05); border-radius: 18px; backdrop-filter: blur(8px); transition: all 0.4s cubic-bezier(0.23,1,0.32,1); position: relative; overflow: hidden; }
+        .p-card::before { content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px; background: linear-gradient(135deg, rgba(255,85,0,0.18), transparent 50%, rgba(255,255,255,0.04)); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0; transition: opacity 0.4s; pointer-events: none; }
+        .p-card:hover { border-color: rgba(255,85,0,0.12); transform: translateY(-4px); box-shadow: 0 20px 50px rgba(0,0,0,0.35), 0 0 35px rgba(255,85,0,0.04); }
+        .p-card:hover::before { opacity: 1; }
 
-        /* Team cards */
-        .team-card {
-            background: #181818;
-            border: 1px solid rgba(255,255,255,0.07);
-            border-radius: 16px;
-            padding: 24px;
-            transition: border-color 0.2s, transform 0.2s;
-        }
-        .team-card:hover {
-            border-color: rgba(255,85,0,0.25);
-            transform: translateY(-2px);
-        }
-        .team-avatar {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: rgba(255,85,0,0.15);
-            border: 2px solid rgba(255,85,0,0.25);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 16px;
-            color: #FF5500;
-            overflow: hidden;
-            flex-shrink: 0;
-        }
-        .team-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .team-role {
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            color: #FF5500;
-        }
+        .icon-box { width: 44px; height: 44px; background: rgba(255,85,0,0.07); border: 1px solid rgba(255,85,0,0.12); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.3s; }
+        .p-card:hover .icon-box { background: rgba(255,85,0,0.14); border-color: rgba(255,85,0,0.25); box-shadow: 0 0 18px rgba(255,85,0,0.08); }
 
-        /* Service items */
-        .service-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 14px;
-            padding: 18px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .service-item:last-child { border-bottom: none; }
-        .service-num {
-            font-family: 'Manrope', sans-serif;
-            font-size: 11px;
-            font-weight: 800;
-            color: #FF5500;
-            letter-spacing: 0.1em;
-            min-width: 28px;
-            padding-top: 2px;
-        }
+        .team-card { background: linear-gradient(160deg, #141414, #0F0F0F); border: 1px solid rgba(255,255,255,0.05); border-radius: 18px; padding: 28px; transition: all 0.4s cubic-bezier(0.23,1,0.32,1); position: relative; overflow: hidden; }
+        .team-card::after { content: ''; position: absolute; top: -60%; right: -60%; width: 120%; height: 120%; background: radial-gradient(circle, rgba(255,85,0,0.04) 0%, transparent 65%); opacity: 0; transition: opacity 0.4s; pointer-events: none; }
+        .team-card:hover { border-color: rgba(255,85,0,0.18); transform: translateY(-4px); box-shadow: 0 16px 44px rgba(0,0,0,0.35), 0 0 28px rgba(255,85,0,0.05); }
+        .team-card:hover::after { opacity: 1; }
+        .team-avatar { width: 62px; height: 62px; border-radius: 50%; background: linear-gradient(135deg, rgba(255,85,0,0.18), rgba(255,85,0,0.04)); border: 2px solid rgba(255,85,0,0.18); display: flex; align-items: center; justify-content: center; font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 17px; color: #FF5500; overflow: hidden; flex-shrink: 0; transition: border-color 0.3s, box-shadow 0.3s; }
+        .team-card:hover .team-avatar { border-color: rgba(255,85,0,0.45); box-shadow: 0 0 22px rgba(255,85,0,0.12); }
+        .team-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .team-role { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #FF5500; }
 
-        /* Location card */
-        .location-card {
-            background: linear-gradient(135deg, rgba(255,85,0,0.06) 0%, rgba(255,85,0,0.02) 100%);
-            border: 1px solid rgba(255,85,0,0.15);
-            border-radius: 20px;
-            padding: 32px;
-        }
+        .service-row { display: flex; align-items: flex-start; gap: 18px; padding: 22px 0; border-bottom: 1px solid rgba(255,255,255,0.04); transition: padding-left 0.3s; }
+        .service-row:last-child { border-bottom: none; }
+        .service-row:hover { padding-left: 6px; }
+        .service-num { font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 800; color: rgba(255,85,0,0.35); min-width: 28px; padding-top: 3px; transition: color 0.3s; }
+        .service-row:hover .service-num { color: #FF5500; }
 
-        /* Destination badges */
-        .dest-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: #1F1F1F;
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 8px;
-            padding: 8px 14px;
-            font-size: 12px;
-            font-weight: 600;
-            color: #D4D4D4;
-        }
+        .stat-number { font-family: 'Manrope', sans-serif; font-weight: 800; font-size: clamp(32px, 4.5vw, 48px); color: #fff; line-height: 1; letter-spacing: -0.03em; }
+        .stat-unit { color: #FF5500; }
+        .stat-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #555; margin-top: 8px; }
 
-        /* CTA button */
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 13px 28px;
-            background: #FF5500;
-            color: #fff;
-            font-family: 'Manrope', sans-serif;
-            font-size: 12px;
-            font-weight: 800;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            border-radius: 10px;
-            text-decoration: none;
-            transition: background 0.18s, transform 0.15s;
-        }
-        .btn-primary:hover { background: #FF7733; transform: translateY(-1px); }
+        .dest-card { background: linear-gradient(155deg, rgba(20,20,20,0.9), rgba(12,12,12,0.7)); border: 1px solid rgba(255,255,255,0.05); border-radius: 18px; padding: 24px; transition: all 0.4s cubic-bezier(0.23,1,0.32,1); position: relative; overflow: hidden; }
+        .dest-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--flag-c1, #FF5500), var(--flag-c2, #fff)); opacity: 0; transition: opacity 0.35s; }
+        .dest-card:hover { border-color: rgba(255,255,255,0.1); transform: translateY(-4px); box-shadow: 0 16px 44px rgba(0,0,0,0.35); }
+        .dest-card:hover::before { opacity: 1; }
+        .flag-circle { width: 52px; height: 52px; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 2px solid rgba(255,255,255,0.08); transition: border-color 0.3s, box-shadow 0.3s; }
+        .dest-card:hover .flag-circle { border-color: rgba(255,255,255,0.2); box-shadow: 0 0 16px rgba(255,255,255,0.06); }
 
-        .btn-outline {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 24px;
-            background: transparent;
-            color: #D4D4D4;
-            font-family: 'Manrope', sans-serif;
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 10px;
-            text-decoration: none;
-            transition: border-color 0.18s, color 0.18s;
-        }
-        .btn-outline:hover { border-color: rgba(255,85,0,0.5); color: #FF5500; }
+        .loc-card { background: linear-gradient(145deg, rgba(255,85,0,0.04), rgba(255,85,0,0.01)); border: 1px solid rgba(255,85,0,0.1); border-radius: 22px; padding: 40px; position: relative; overflow: hidden; }
+        .loc-card::before { content: ''; position: absolute; top: -80px; right: -80px; width: 260px; height: 260px; background: radial-gradient(circle, rgba(255,85,0,0.05) 0%, transparent 60%); pointer-events: none; }
 
-        /* Scroll reveal */
-        .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
-        .reveal.visible { opacity: 1; transform: none; }
-        .reveal-delay-1 { transition-delay: 0.1s; }
-        .reveal-delay-2 { transition-delay: 0.2s; }
-        .reveal-delay-3 { transition-delay: 0.3s; }
+        .btn-primary { display: inline-flex; align-items: center; gap: 10px; padding: 14px 30px; background: #FF5500; color: #fff; font-family: 'Manrope', sans-serif; font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 10px; text-decoration: none; transition: all 0.3s cubic-bezier(0.23,1,0.32,1); position: relative; overflow: hidden; }
+        .btn-primary::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent); transform: translateX(-100%); transition: transform 0.5s; }
+        .btn-primary:hover::before { transform: translateX(100%); }
+        .btn-primary:hover { background: #FF7A3D; transform: translateY(-2px); box-shadow: 0 10px 36px rgba(255,85,0,0.3); }
+        .btn-outline { display: inline-flex; align-items: center; gap: 10px; padding: 13px 26px; background: transparent; color: #999; font-family: 'Manrope', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; text-decoration: none; transition: all 0.3s; }
+        .btn-outline:hover { border-color: rgba(255,85,0,0.35); color: #FF5500; transform: translateY(-2px); }
 
-        /* Footer */
-        .footer-link { color: #555; font-size: 13px; text-decoration: none; transition: color 0.18s; }
+        .marquee-track { display: flex; gap: 56px; animation: marquee 35s linear infinite; white-space: nowrap; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .marquee-item { font-family: 'Manrope', sans-serif; font-size: clamp(13px, 1.8vw, 18px); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: rgba(255,255,255,0.05); flex-shrink: 0; }
+        .marquee-dot { color: rgba(255,85,0,0.15); }
+
+        .footer-link { color: #444; font-size: 13px; text-decoration: none; transition: color 0.2s; }
         .footer-link:hover { color: #FF5500; }
     </style>
 </head>
 <body>
 
-    <!-- ═══ NAV ═══ -->
-    <nav class="nav-glass fixed top-0 left-0 right-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-            <a href="index.html" class="font-display font-extrabold text-white text-lg tracking-tight">
-                Study<span class="text-brand">Insights</span>
-            </a>
-            <div class="flex items-center gap-4 sm:gap-6">
+    <div class="grain"></div>
+    <div id="scroll-progress"></div>
+
+    <!-- NAV -->
+    <nav id="nav" class="nav-glass fixed top-0 left-0 right-0 z-50">
+        <div class="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
+            <a href="index.html" class="font-display font-extrabold text-white text-lg tracking-tight">Study<span class="text-brand">Insights</span></a>
+            <div class="flex items-center gap-5 sm:gap-7">
                 <a href="index.html#study-insights" class="nav-link hidden sm:inline">Overview</a>
-                <a href="contact.html" class="btn-primary py-2 px-5 text-[11px]">
-                    Get in Touch
-                </a>
+                <a href="financials.html" class="nav-link hidden sm:inline">Financials</a>
+                <a href="contact.html" class="btn-primary py-2 px-5 text-[11px]">Get in Touch</a>
             </div>
         </div>
     </nav>
 
-    <!-- ═══ HERO ═══ -->
-    <section class="company-hero pt-32 pb-16 sm:pt-40 sm:pb-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6">
-            <div class="max-w-3xl reveal">
-                <div class="section-label mb-4">Company Profile · Founded March 2026</div>
-                <h1 class="font-display font-extrabold text-white leading-none mb-6"
-                    style="font-size: clamp(36px, 6vw, 80px); letter-spacing: -0.03em;">
-                    Empowering Your<br><span class="num-highlight">Global Academic</span><br>Journey
+    <!-- HERO -->
+    <section class="relative min-h-[92vh] flex items-end pb-16 sm:pb-24 pt-32 overflow-hidden">
+        <div class="hero-mesh"></div>
+        <div class="hero-glow bg-brand" style="width:650px;height:650px;top:-12%;left:-8%;"></div>
+        <div class="hero-glow bg-brand-light" style="width:500px;height:500px;bottom:-18%;right:-8%;opacity:0.05;"></div>
+        <div class="max-w-7xl mx-auto px-5 sm:px-8 w-full relative z-10">
+            <div class="max-w-4xl">
+                <div class="section-label mb-6 r">Company Profile · Founded March 2026</div>
+                <h1 class="font-display font-extrabold text-white leading-[0.93] mb-8 r r-d1" style="font-size: clamp(38px, 6.5vw, 86px); letter-spacing: -0.035em;">
+                    Empowering Your<br><span class="text-brand">Global Academic</span><br>Journey
                 </h1>
-                <div class="h-line w-24 mb-6"></div>
-                <p class="text-gray-400 text-base sm:text-lg leading-relaxed max-w-2xl">
+                <div class="accent-line mb-8 r r-d2"></div>
+                <p class="text-chalk-dim text-[15px] sm:text-[17px] leading-relaxed max-w-2xl mb-10 r r-d3">
                     Study Insights is an education consultancy dedicated to bridging the gap between ambitious students and world-class international education — with honest, transparent, and expert guidance.
                 </p>
-                <div class="flex flex-wrap gap-3 mt-8">
-                    <span class="stat-pill">
-                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" fill="#FF5500"/></svg>
-                        Active · March 2026
-                    </span>
-                    <span class="stat-pill">
-                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" fill="#FF5500"/></svg>
-                        Dhaka, Bangladesh
-                    </span>
-                    <span class="stat-pill">
-                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" fill="#FF5500"/></svg>
-                        UK · Europe · Australia
-                    </span>
+                <div class="flex flex-wrap gap-3 r r-d4">
+                    <span class="hero-pill"><span class="hero-pill-dot"></span> Active · March 2026</span>
+                    <span class="hero-pill"><span class="hero-pill-dot"></span> Dhaka, Bangladesh</span>
+                    <span class="hero-pill"><span class="hero-pill-dot"></span> UK · Europe · Australia</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ═══ ABOUT ═══ -->
-    <section class="py-16 sm:py-24 bg-surface-2 border-y border-[rgba(255,255,255,0.05)]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-                <div class="reveal">
-                    <div class="section-label mb-3">About Us</div>
-                    <h2 class="font-display font-extrabold uppercase text-white leading-none mb-6"
-                        style="font-size: clamp(26px, 4vw, 50px);">
-                        Who We <span class="num-highlight">Are</span>
-                    </h2>
-                    <div class="h-line w-20 mb-8"></div>
-                    <div class="space-y-5 text-gray-400 text-sm sm:text-base leading-relaxed">
-                        <p>
-                            Welcome to Study Insights — an education consultancy firm dedicated to bridging the gap between ambitious students and world-class international education.
-                        </p>
-                        <p>
-                            Founded in March 2026, we were established with a singular mission: to provide honest, transparent, and expert guidance to students aspiring to study in Europe, the UK, and Australia.
-                        </p>
-                        <p>
-                            At Study Insights, we believe that education is the most powerful tool for shaping a bright future. We understand that the path to international study can be complex, and we take great pleasure in simplifying that journey — ensuring every student we work with finds the future they truly deserve.
-                        </p>
+    <!-- MARQUEE -->
+    <div class="py-5 border-y border-white/[0.03] overflow-hidden bg-ink-2">
+        <div class="marquee-track">
+            <span class="marquee-item">University Selection</span><span class="marquee-dot marquee-item">◆</span>
+            <span class="marquee-item">Visa Support</span><span class="marquee-dot marquee-item">◆</span>
+            <span class="marquee-item">Career Counseling</span><span class="marquee-dot marquee-item">◆</span>
+            <span class="marquee-item">Scholarship Assistance</span><span class="marquee-dot marquee-item">◆</span>
+            <span class="marquee-item">UK · Europe · Australia</span><span class="marquee-dot marquee-item">◆</span>
+            <span class="marquee-item">University Selection</span><span class="marquee-dot marquee-item">◆</span>
+            <span class="marquee-item">Visa Support</span><span class="marquee-dot marquee-item">◆</span>
+            <span class="marquee-item">Career Counseling</span><span class="marquee-dot marquee-item">◆</span>
+            <span class="marquee-item">Scholarship Assistance</span><span class="marquee-dot marquee-item">◆</span>
+            <span class="marquee-item">UK · Europe · Australia</span><span class="marquee-dot marquee-item">◆</span>
+        </div>
+    </div>
+
+    <!-- STATS -->
+    <section class="py-16 sm:py-20 bg-ink-2 border-b border-white/[0.03]">
+        <div class="max-w-5xl mx-auto px-5 sm:px-8">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-8 sm:gap-6 text-center">
+                <div class="r"><div class="stat-number"><span class="counter" data-target="8">0</span></div><div class="stat-label">Destination Countries</div></div>
+                <div class="r r-d1"><div class="stat-number"><span class="counter" data-target="4">0</span></div><div class="stat-label">Core Services</div></div>
+                <div class="r r-d2"><div class="stat-number"><span class="counter" data-target="3">0</span></div><div class="stat-label">Leadership Team</div></div>
+                <div class="r r-d3"><div class="stat-number"><span class="stat-unit">2026</span></div><div class="stat-label">Founded</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="py-20 sm:py-28 bg-ink">
+        <div class="max-w-7xl mx-auto px-5 sm:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+                <div class="lg:col-span-7 r">
+                    <div class="section-label mb-4">About Us</div>
+                    <h2 class="font-display font-extrabold text-white leading-[0.95] mb-6" style="font-size: clamp(28px, 4.5vw, 52px); letter-spacing: -0.03em;">Who We <span class="text-brand">Are</span></h2>
+                    <div class="accent-line mb-8"></div>
+                    <div class="space-y-5 text-chalk-dim text-[15px] leading-relaxed">
+                        <p>Welcome to Study Insights — an education consultancy firm dedicated to bridging the gap between ambitious students and world-class international education.</p>
+                        <p>Founded in March 2026, we were established with a singular mission: to provide honest, transparent, and expert guidance to students aspiring to study in Europe, the UK, and Australia.</p>
+                        <p>At Study Insights, we believe that education is the most powerful tool for shaping a bright future. We understand that the path to international study can be complex, and we take great pleasure in simplifying that journey — ensuring every student we work with finds the future they truly deserve.</p>
                     </div>
                 </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 reveal reveal-delay-1">
-                    <div class="info-card">
-                        <div class="info-card-icon mb-4">
-                            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#FF5500" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                        </div>
-                        <div class="text-white font-semibold text-sm mb-1">Mission</div>
-                        <p class="text-gray-500 text-xs leading-relaxed">Honest, transparent guidance for every student's international education journey.</p>
-                    </div>
-                    <div class="info-card">
-                        <div class="info-card-icon mb-4">
-                            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#FF5500" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                        </div>
-                        <div class="text-white font-semibold text-sm mb-1">Founded</div>
-                        <p class="text-gray-500 text-xs leading-relaxed">March 2026 — built from the ground up in Dhaka, Bangladesh.</p>
-                    </div>
-                    <div class="info-card">
-                        <div class="info-card-icon mb-4">
-                            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#FF5500" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-                        </div>
-                        <div class="text-white font-semibold text-sm mb-1">Headquarters</div>
-                        <p class="text-gray-500 text-xs leading-relaxed">Dhaka Trade Centre, Karwan Bazar, Dhaka.</p>
-                    </div>
-                    <div class="info-card">
-                        <div class="info-card-icon mb-4">
-                            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#FF5500" stroke-width="2"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path d="M9 12l2 2 4-4"/></svg>
-                        </div>
-                        <div class="text-white font-semibold text-sm mb-1">Destinations</div>
-                        <p class="text-gray-500 text-xs leading-relaxed">UK, Europe, and Australia — the top choices for Bangladeshi students.</p>
-                    </div>
+                <div class="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
+                    <div class="p-card p-6 r r-d1"><div class="icon-box mb-4"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#FF5500" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="text-white font-semibold text-sm mb-1">Mission</div><p class="text-chalk-dim text-xs leading-relaxed">Honest, transparent guidance for every student's international education journey.</p></div>
+                    <div class="p-card p-6 r r-d2"><div class="icon-box mb-4"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#FF5500" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div class="text-white font-semibold text-sm mb-1">Founded</div><p class="text-chalk-dim text-xs leading-relaxed">March 2026 — built from the ground up in Dhaka, Bangladesh.</p></div>
+                    <div class="p-card p-6 r r-d3"><div class="icon-box mb-4"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#FF5500" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg></div><div class="text-white font-semibold text-sm mb-1">Headquarters</div><p class="text-chalk-dim text-xs leading-relaxed">Dhaka Trade Centre, Karwan Bazar, Dhaka.</p></div>
+                    <div class="p-card p-6 r r-d4"><div class="icon-box mb-4"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#FF5500" stroke-width="2"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path d="M9 12l2 2 4-4"/></svg></div><div class="text-white font-semibold text-sm mb-1">Destinations</div><p class="text-chalk-dim text-xs leading-relaxed">UK, Europe, and Australia — the top choices for Bangladeshi students.</p></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ═══ DESTINATIONS ═══ -->
-    <section class="py-16 sm:py-20 bg-surface">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6">
-            <div class="text-center mb-10 reveal">
-                <div class="section-label mb-3">Study Destinations</div>
-                <h2 class="font-display font-extrabold uppercase text-white leading-none"
-                    style="font-size: clamp(24px, 3.5vw, 46px);">
-                    Where We Send <span class="num-highlight">Students</span>
-                </h2>
-            </div>
-            <div class="flex flex-wrap justify-center gap-4 reveal reveal-delay-1">
-                <div class="dest-badge">
-                    <span>🇬🇧</span> United Kingdom
-                </div>
-                <div class="dest-badge">
-                    <span>🇩🇪</span> Germany
-                </div>
-                <div class="dest-badge">
-                    <span>🇳🇱</span> Netherlands
-                </div>
-                <div class="dest-badge">
-                    <span>🇸🇪</span> Sweden
-                </div>
-                <div class="dest-badge">
-                    <span>🇳🇴</span> Norway
-                </div>
-                <div class="dest-badge">
-                    <span>🇦🇺</span> Australia
-                </div>
-                <div class="dest-badge">
-                    <span>🇫🇮</span> Finland
-                </div>
-                <div class="dest-badge">
-                    <span>🇩🇰</span> Denmark
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="section-divider"></div>
 
-    <!-- ═══ LEADERSHIP ═══ -->
-    <section class="py-16 sm:py-24 bg-surface-2 border-y border-[rgba(255,255,255,0.05)]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6">
-            <div class="text-center mb-12 reveal">
-                <div class="section-label mb-3">Our Leadership Team</div>
-                <h2 class="font-display font-extrabold uppercase text-white leading-none"
-                    style="font-size: clamp(26px, 4vw, 52px);">
-                    The People Behind <span class="num-highlight">Study Insights</span>
-                </h2>
-                <p class="text-gray-500 text-sm mt-4 max-w-md mx-auto">Our firm is built on a foundation of professional integrity and academic expertise.</p>
+    <!-- DESTINATIONS WITH FLAGS -->
+    <section class="py-20 sm:py-28 bg-ink-2 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-[450px] h-[450px] bg-brand rounded-full filter blur-[220px] opacity-[0.025] pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-5 sm:px-8">
+            <div class="text-center mb-14 r">
+                <div class="section-label justify-center mb-4">Study Destinations</div>
+                <h2 class="font-display font-extrabold text-white leading-[0.95]" style="font-size: clamp(28px, 4.5vw, 52px); letter-spacing: -0.03em;">Where We Send <span class="text-brand">Students</span></h2>
+                <p class="text-chalk-dim text-sm mt-5 max-w-lg mx-auto">We guide students to top universities across 8 destination countries spanning the UK, Europe, and Australia.</p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 
-                <div class="team-card reveal">
-                    <div class="flex items-start gap-4 mb-4">
-                        <div class="team-avatar">
-                            <img src="public/study-insights/sadman_bin_arif.jpg" alt="Sadman Bin Arif"
-                                 onerror="this.onerror=null;this.parentElement.innerText='SA';">
-                        </div>
-                        <div>
-                            <div class="text-white font-semibold text-base leading-tight">Sadman Bin Arif</div>
-                            <div class="team-role mt-1">Managing Director</div>
-                        </div>
+                <!-- UK -->
+                <div class="dest-card r r-d1" style="--flag-c1:#012169;--flag-c2:#C8102E;">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="flag-circle"><svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><clipPath id="uk"><circle cx="30" cy="30" r="30"/></clipPath><g clip-path="url(#uk)"><rect width="60" height="60" fill="#012169"/><path d="M0 0L60 60M60 0L0 60" stroke="#fff" stroke-width="10"/><path d="M0 0L60 60M60 0L0 60" stroke="#C8102E" stroke-width="6"/><path d="M30 0V60M0 30H60" stroke="#fff" stroke-width="16"/><path d="M30 0V60M0 30H60" stroke="#C8102E" stroke-width="10"/></g></svg></div>
+                        <div><div class="text-white font-semibold text-sm">United Kingdom</div><div class="text-chalk-dim text-[11px]">London · Manchester · Edinburgh</div></div>
                     </div>
-                    <p class="text-gray-500 text-xs leading-relaxed">
-                        Leads the firm's strategic direction, partnerships, and long-term vision for growing Study Insights into a leading global consultancy.
-                    </p>
+                    <p class="text-[#666] text-xs leading-relaxed">World-renowned universities including Oxford, Cambridge, and Imperial College. Strong post-study work visa options.</p>
                 </div>
 
-                <div class="team-card reveal reveal-delay-1">
-                    <div class="flex items-start gap-4 mb-4">
-                        <div class="team-avatar">
-                            <img src="public/study-insights/mahir_shariar_mahin.jpg" alt="Mahir Shariar Mahin"
-                                 onerror="this.onerror=null;this.parentElement.innerText='MM';">
-                        </div>
-                        <div>
-                            <div class="text-white font-semibold text-base leading-tight">Mahir Shariar Mahin</div>
-                            <div class="team-role mt-1">Manager & Head of Operation</div>
-                        </div>
+                <!-- Germany -->
+                <div class="dest-card r r-d2" style="--flag-c1:#000;--flag-c2:#FFCC00;">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="flag-circle"><svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><clipPath id="de"><circle cx="30" cy="30" r="30"/></clipPath><g clip-path="url(#de)"><rect width="60" height="20" fill="#000"/><rect y="20" width="60" height="20" fill="#DD0000"/><rect y="40" width="60" height="20" fill="#FFCC00"/></g></svg></div>
+                        <div><div class="text-white font-semibold text-sm">Germany</div><div class="text-chalk-dim text-[11px]">Berlin · Munich · Hamburg</div></div>
                     </div>
-                    <p class="text-gray-500 text-xs leading-relaxed">
-                        Oversees day-to-day operations, student workflow management, and ensures seamless delivery of our consultancy services.
-                    </p>
+                    <p class="text-[#666] text-xs leading-relaxed">Tuition-free public universities, strong engineering and tech programs, and Europe's largest economy.</p>
                 </div>
 
-                <div class="team-card reveal reveal-delay-2">
-                    <div class="flex items-start gap-4 mb-4">
-                        <div class="team-avatar">
-                            <img src="public/study-insights/shah_sadad_ahmed.jpg" alt="Shah Sadad Ahmed"
-                                 onerror="this.onerror=null;this.parentElement.innerText='SS';">
-                        </div>
-                        <div>
-                            <div class="text-white font-semibold text-base leading-tight">Shah Sadad Ahmed</div>
-                            <div class="team-role mt-1">Counselor & Head of Admissions</div>
-                        </div>
+                <!-- Netherlands -->
+                <div class="dest-card r r-d3" style="--flag-c1:#AE1C28;--flag-c2:#21468B;">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="flag-circle"><svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><clipPath id="nl"><circle cx="30" cy="30" r="30"/></clipPath><g clip-path="url(#nl)"><rect width="60" height="20" fill="#AE1C28"/><rect y="20" width="60" height="20" fill="#FFF"/><rect y="40" width="60" height="20" fill="#21468B"/></g></svg></div>
+                        <div><div class="text-white font-semibold text-sm">Netherlands</div><div class="text-chalk-dim text-[11px]">Amsterdam · Rotterdam · Utrecht</div></div>
                     </div>
-                    <p class="text-gray-500 text-xs leading-relaxed">
-                        Guides students through the full admissions pipeline — from university selection through to visa application — with precision and care.
-                    </p>
+                    <p class="text-[#666] text-xs leading-relaxed">Highest number of English-taught programs in non-English Europe. Innovation-driven academic culture.</p>
+                </div>
+
+                <!-- Sweden -->
+                <div class="dest-card r r-d4" style="--flag-c1:#006AA7;--flag-c2:#FECC02;">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="flag-circle"><svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><clipPath id="se"><circle cx="30" cy="30" r="30"/></clipPath><g clip-path="url(#se)"><rect width="60" height="60" fill="#006AA7"/><rect x="18" width="8" height="60" fill="#FECC02"/><rect y="26" width="60" height="8" fill="#FECC02"/></g></svg></div>
+                        <div><div class="text-white font-semibold text-sm">Sweden</div><div class="text-chalk-dim text-[11px]">Stockholm · Gothenburg · Lund</div></div>
+                    </div>
+                    <p class="text-[#666] text-xs leading-relaxed">Innovation leader in sustainability and technology. Top-ranked universities with generous scholarship programs.</p>
+                </div>
+
+                <!-- Norway -->
+                <div class="dest-card r r-d5" style="--flag-c1:#BA0C2F;--flag-c2:#00205B;">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="flag-circle"><svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><clipPath id="no"><circle cx="30" cy="30" r="30"/></clipPath><g clip-path="url(#no)"><rect width="60" height="60" fill="#BA0C2F"/><rect x="16" width="12" height="60" fill="#FFF"/><rect y="24" width="60" height="12" fill="#FFF"/><rect x="19" width="6" height="60" fill="#00205B"/><rect y="27" width="60" height="6" fill="#00205B"/></g></svg></div>
+                        <div><div class="text-white font-semibold text-sm">Norway</div><div class="text-chalk-dim text-[11px]">Oslo · Bergen · Trondheim</div></div>
+                    </div>
+                    <p class="text-[#666] text-xs leading-relaxed">Free tuition at public universities for all nationalities. Outstanding quality of life and research funding.</p>
+                </div>
+
+                <!-- Australia -->
+                <div class="dest-card r r-d6" style="--flag-c1:#00008B;--flag-c2:#fff;">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="flag-circle"><svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><clipPath id="au"><circle cx="30" cy="30" r="30"/></clipPath><g clip-path="url(#au)"><rect width="60" height="60" fill="#00008B"/><g transform="translate(4,3) scale(0.45)"><path d="M0 0L30 30M30 0L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0L30 30M30 0L0 30" stroke="#C8102E" stroke-width="3.5"/><path d="M15 0V30M0 15H30" stroke="#fff" stroke-width="9"/><path d="M15 0V30M0 15H30" stroke="#C8102E" stroke-width="5.5"/></g><g fill="#fff"><polygon points="42,35 43.5,39 47.5,39 44.5,41.5 45.5,45.5 42,43 38.5,45.5 39.5,41.5 36.5,39 40.5,39"/><polygon points="50,20 51,23 54,23 51.5,25 52.5,28 50,26 47.5,28 48.5,25 46,23 49,23"/><polygon points="38,48 39,51 42,51 39.5,53 40.5,56 38,54 35.5,56 36.5,53 34,51 37,51"/><polygon points="50,44 51,46.5 53.5,46.5 51.5,48 52,50.5 50,49 48,50.5 48.5,48 46.5,46.5 49,46.5"/></g></g></svg></div>
+                        <div><div class="text-white font-semibold text-sm">Australia</div><div class="text-chalk-dim text-[11px]">Sydney · Melbourne · Brisbane</div></div>
+                    </div>
+                    <p class="text-[#666] text-xs leading-relaxed">Group of Eight research universities, excellent post-study work rights, and a welcoming multicultural environment.</p>
+                </div>
+
+                <!-- Finland -->
+                <div class="dest-card r r-d7" style="--flag-c1:#003580;--flag-c2:#fff;">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="flag-circle"><svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><clipPath id="fi"><circle cx="30" cy="30" r="30"/></clipPath><g clip-path="url(#fi)"><rect width="60" height="60" fill="#FFF"/><rect x="16" width="10" height="60" fill="#003580"/><rect y="25" width="60" height="10" fill="#003580"/></g></svg></div>
+                        <div><div class="text-white font-semibold text-sm">Finland</div><div class="text-chalk-dim text-[11px]">Helsinki · Tampere · Turku</div></div>
+                    </div>
+                    <p class="text-[#666] text-xs leading-relaxed">World-leading education system with affordable tuition, strong tech ecosystem, and high quality of life.</p>
+                </div>
+
+                <!-- Denmark -->
+                <div class="dest-card r r-d8" style="--flag-c1:#C8102E;--flag-c2:#fff;">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="flag-circle"><svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><clipPath id="dk"><circle cx="30" cy="30" r="30"/></clipPath><g clip-path="url(#dk)"><rect width="60" height="60" fill="#C8102E"/><rect x="18" width="8" height="60" fill="#FFF"/><rect y="26" width="60" height="8" fill="#FFF"/></g></svg></div>
+                        <div><div class="text-white font-semibold text-sm">Denmark</div><div class="text-chalk-dim text-[11px]">Copenhagen · Aarhus · Odense</div></div>
+                    </div>
+                    <p class="text-[#666] text-xs leading-relaxed">Problem-based learning approach, strong design and sustainability focus, and excellent English proficiency nationwide.</p>
                 </div>
 
             </div>
         </div>
     </section>
 
-    <!-- ═══ PHILOSOPHY ═══ -->
-    <section class="py-16 sm:py-24 bg-surface">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+    <div class="section-divider"></div>
 
-                <div class="reveal">
-                    <div class="section-label mb-3">Our Philosophy</div>
-                    <h2 class="font-display font-extrabold uppercase text-white leading-none mb-6"
-                        style="font-size: clamp(26px, 4vw, 50px);">
-                        Honesty <span class="num-highlight">&</span> Growth
-                    </h2>
-                    <div class="h-line w-20 mb-8"></div>
-                    <div class="space-y-5 text-gray-400 text-sm sm:text-base leading-relaxed">
-                        <p>
-                            We aren't just consultants — we are partners in your academic career. Our goal is to grow into a leading global consultancy by doing honest work.
-                        </p>
-                        <p>
-                            We specialize in helping students who possess the drive and the dream to succeed, providing them with the ethical support and accurate information needed to navigate admissions and visa processes across the globe.
-                        </p>
+    <!-- LEADERSHIP -->
+    <section class="py-20 sm:py-28 bg-ink">
+        <div class="max-w-7xl mx-auto px-5 sm:px-8">
+            <div class="text-center mb-14 r">
+                <div class="section-label justify-center mb-4">Our Leadership Team</div>
+                <h2 class="font-display font-extrabold text-white leading-[0.95]" style="font-size: clamp(28px, 4.5vw, 56px); letter-spacing: -0.03em;">The People Behind<br><span class="text-brand">Study Insights</span></h2>
+                <p class="text-chalk-dim text-sm mt-5 max-w-md mx-auto">Our firm is built on a foundation of professional integrity and academic expertise.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                <div class="team-card r r-d1">
+                    <div class="flex items-start gap-4 mb-5">
+                        <div class="team-avatar"><img src="public/study-insights/sadman_bin_arif.jpg" alt="Sadman Bin Arif" onerror="this.onerror=null;this.parentElement.innerText='SA';"></div>
+                        <div><div class="text-white font-semibold text-[15px] leading-tight">Sadman Bin Arif</div><div class="team-role mt-1.5">Managing Director</div></div>
+                    </div>
+                    <p class="text-chalk-dim text-xs leading-relaxed">Leads the firm's strategic direction, partnerships, and long-term vision for growing Study Insights into a leading global consultancy.</p>
+                </div>
+                <div class="team-card r r-d2">
+                    <div class="flex items-start gap-4 mb-5">
+                        <div class="team-avatar"><img src="public/study-insights/mahir_shariar_mahin.jpg" alt="Mahir Shariar Mahin" onerror="this.onerror=null;this.parentElement.innerText='MM';"></div>
+                        <div><div class="text-white font-semibold text-[15px] leading-tight">Mahir Shariar Mahin</div><div class="team-role mt-1.5">Manager & Head of Operation</div></div>
+                    </div>
+                    <p class="text-chalk-dim text-xs leading-relaxed">Oversees day-to-day operations, student workflow management, and ensures seamless delivery of our consultancy services.</p>
+                </div>
+                <div class="team-card r r-d3">
+                    <div class="flex items-start gap-4 mb-5">
+                        <div class="team-avatar"><img src="public/study-insights/shah_sadad_ahmed.jpg" alt="Shah Sadad Ahmed" onerror="this.onerror=null;this.parentElement.innerText='SS';"></div>
+                        <div><div class="text-white font-semibold text-[15px] leading-tight">Shah Sadad Ahmed</div><div class="team-role mt-1.5">Counselor & Head of Admissions</div></div>
+                    </div>
+                    <p class="text-chalk-dim text-xs leading-relaxed">Guides students through the full admissions pipeline — from university selection through to visa application — with precision and care.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- PHILOSOPHY + SERVICES -->
+    <section class="py-20 sm:py-28 bg-ink-2 relative overflow-hidden">
+        <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-brand rounded-full filter blur-[200px] opacity-[0.025] pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-5 sm:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+                <div class="r">
+                    <div class="section-label mb-4">Our Philosophy</div>
+                    <h2 class="font-display font-extrabold text-white leading-[0.95] mb-6" style="font-size: clamp(28px, 4.5vw, 52px); letter-spacing: -0.03em;">Honesty <span class="text-brand">&</span> Growth</h2>
+                    <div class="accent-line mb-8"></div>
+                    <div class="space-y-5 text-chalk-dim text-[15px] leading-relaxed">
+                        <p>We aren't just consultants — we are partners in your academic career. Our goal is to grow into a leading global consultancy by doing honest work.</p>
+                        <p>We specialize in helping students who possess the drive and the dream to succeed, providing them with the ethical support and accurate information needed to navigate admissions and visa processes across the globe.</p>
                     </div>
                 </div>
-
-                <div class="reveal reveal-delay-1">
-                    <div class="section-label mb-3">Our Services</div>
-                    <h2 class="font-display font-extrabold uppercase text-white leading-none mb-6"
-                        style="font-size: clamp(26px, 4vw, 50px);">
-                        What We <span class="num-highlight">Offer</span>
-                    </h2>
-                    <div class="h-line w-20 mb-6"></div>
+                <div class="r r-d1">
+                    <div class="section-label mb-4">Our Services</div>
+                    <h2 class="font-display font-extrabold text-white leading-[0.95] mb-6" style="font-size: clamp(28px, 4.5vw, 52px); letter-spacing: -0.03em;">What We <span class="text-brand">Offer</span></h2>
+                    <div class="accent-line mb-4"></div>
                     <div>
-                        <div class="service-item">
-                            <div class="service-num">01</div>
-                            <div>
-                                <div class="text-white font-semibold text-sm mb-1">University Selection</div>
-                                <p class="text-gray-500 text-xs leading-relaxed">Program matching and shortlisting tailored to academic background, career goals, and destination fit.</p>
-                            </div>
-                        </div>
-                        <div class="service-item">
-                            <div class="service-num">02</div>
-                            <div>
-                                <div class="text-white font-semibold text-sm mb-1">Visa & Immigration Support</div>
-                                <p class="text-gray-500 text-xs leading-relaxed">Hands-on preparation that strengthens application quality and improves visa approval confidence.</p>
-                            </div>
-                        </div>
-                        <div class="service-item">
-                            <div class="service-num">03</div>
-                            <div>
-                                <div class="text-white font-semibold text-sm mb-1">Career Counseling</div>
-                                <p class="text-gray-500 text-xs leading-relaxed">Academic planning aligned with long-term employability, industry demand, and future career progression.</p>
-                            </div>
-                        </div>
-                        <div class="service-item">
-                            <div class="service-num">04</div>
-                            <div>
-                                <div class="text-white font-semibold text-sm mb-1">Scholarship Assistance</div>
-                                <p class="text-gray-500 text-xs leading-relaxed">Targeted support to identify, position for, and secure meaningful funding opportunities worldwide.</p>
-                            </div>
-                        </div>
+                        <div class="service-row"><div class="service-num">01</div><div><div class="text-white font-semibold text-sm mb-1">University Selection</div><p class="text-chalk-dim text-xs leading-relaxed">Program matching and shortlisting tailored to academic background, career goals, and destination fit.</p></div></div>
+                        <div class="service-row"><div class="service-num">02</div><div><div class="text-white font-semibold text-sm mb-1">Visa & Immigration Support</div><p class="text-chalk-dim text-xs leading-relaxed">Hands-on preparation that strengthens application quality and improves visa approval confidence.</p></div></div>
+                        <div class="service-row"><div class="service-num">03</div><div><div class="text-white font-semibold text-sm mb-1">Career Counseling</div><p class="text-chalk-dim text-xs leading-relaxed">Academic planning aligned with long-term employability, industry demand, and future career progression.</p></div></div>
+                        <div class="service-row"><div class="service-num">04</div><div><div class="text-white font-semibold text-sm mb-1">Scholarship Assistance</div><p class="text-chalk-dim text-xs leading-relaxed">Targeted support to identify, position for, and secure meaningful funding opportunities worldwide.</p></div></div>
                     </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- ═══ LOCATION ═══ -->
-    <section class="py-16 sm:py-24 bg-surface-2 border-y border-[rgba(255,255,255,0.05)]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6">
-            <div class="text-center mb-12 reveal">
-                <div class="section-label mb-3">Visit Us</div>
-                <h2 class="font-display font-extrabold uppercase text-white leading-none"
-                    style="font-size: clamp(26px, 4vw, 52px);">
-                    Our <span class="num-highlight">Office</span>
-                </h2>
-            </div>
-
-            <div class="max-w-2xl mx-auto reveal reveal-delay-1">
-                <div class="location-card text-center">
-                    <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-brand/10 border border-brand/20 mb-6">
-                        <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="#FF5500" stroke-width="2">
-                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-                            <circle cx="12" cy="9" r="2.5" fill="#FF5500" stroke="none"/>
-                        </svg>
-                    </div>
-                    <h3 class="font-display font-bold text-white text-xl mb-2">Study Insights</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-1">Dhaka Trade Centre, 6th Floor</p>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-1">Kazi Nazrul Islam Avenue, Karwan Bazar</p>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-6">Dhaka, Bangladesh</p>
-                    <a href="contact.html" class="btn-primary">
-                        Get Directions &amp; Contact
-                        <svg width="12" height="12" fill="none" viewBox="0 0 16 16">
-                            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ═══ CTA ═══ -->
-    <section class="py-16 sm:py-24 bg-surface">
-        <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center reveal">
-            <div class="section-label mb-4">Start Your Journey</div>
-            <h2 class="font-display font-extrabold uppercase text-white leading-none mb-6"
-                style="font-size: clamp(26px, 4.5vw, 56px);">
-                Let's Shape Your <span class="num-highlight">Future Together</span>
-            </h2>
-            <p class="text-gray-400 text-sm sm:text-base leading-relaxed max-w-xl mx-auto mb-8">
-                Whether you are aiming for the historic universities of the UK, the innovative campuses of Europe, or the vibrant academic life in Australia — Study Insights is here to make your dream a reality.
-            </p>
+    <div class="section-divider"></div>
+
+    <!-- LOCATION -->
+    <section class="py-20 sm:py-28 bg-ink">
+        <div class="max-w-7xl mx-auto px-5 sm:px-8">
+            <div class="text-center mb-14 r">
+                <div class="section-label justify-center mb-4">Visit Us</div>
+                <h2 class="font-display font-extrabold text-white leading-[0.95]" style="font-size: clamp(28px, 4.5vw, 56px); letter-spacing: -0.03em;">Our <span class="text-brand">Office</span></h2>
+            </div>
+            <div class="max-w-2xl mx-auto r r-d1">
+                <div class="loc-card text-center relative z-10">
+                    <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-brand/10 border border-brand/15 mb-6">
+                        <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="#FF5500" stroke-width="1.8"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5" fill="#FF5500" stroke="none"/></svg>
+                    </div>
+                    <h3 class="font-display font-bold text-white text-xl mb-3">Study Insights</h3>
+                    <p class="text-chalk-dim text-sm leading-relaxed">Dhaka Trade Centre, 6th Floor</p>
+                    <p class="text-chalk-dim text-sm leading-relaxed">Kazi Nazrul Islam Avenue, Karwan Bazar</p>
+                    <p class="text-chalk-dim text-sm leading-relaxed mb-8">Dhaka, Bangladesh</p>
+                    <a href="contact.html" class="btn-primary">Get Directions & Contact <svg width="12" height="12" fill="none" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- CTA -->
+    <section class="py-20 sm:py-28 bg-ink-2 relative overflow-hidden">
+        <div class="hero-mesh"></div>
+        <div class="max-w-3xl mx-auto px-5 sm:px-8 text-center relative z-10 r">
+            <div class="section-label justify-center mb-5">Start Your Journey</div>
+            <h2 class="font-display font-extrabold text-white leading-[0.95] mb-6" style="font-size: clamp(28px, 5vw, 58px); letter-spacing: -0.03em;">Let's Shape Your<br><span class="text-brand">Future Together</span></h2>
+            <p class="text-chalk-dim text-[15px] leading-relaxed max-w-xl mx-auto mb-10">Whether you are aiming for the historic universities of the UK, the innovative campuses of Europe, or the vibrant academic life in Australia — Study Insights is here to make your dream a reality.</p>
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="contact.html" class="btn-primary">
-                    Start Your Application
-                    <svg width="12" height="12" fill="none" viewBox="0 0 16 16">
-                        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </a>
-                <a href="index.html" class="btn-outline">
-                    Back to Portfolio
-                </a>
+                <a href="contact.html" class="btn-primary">Start Your Application <svg width="12" height="12" fill="none" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                <a href="index.html" class="btn-outline">Back to Portfolio</a>
             </div>
         </div>
     </section>
 
-    <!-- ═══ FOOTER ═══ -->
-    <footer class="border-t border-[rgba(255,255,255,0.06)] py-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="font-display font-extrabold text-white text-base tracking-tight">
-                Study<span class="text-brand">Insights</span>
-            </div>
+    <!-- FOOTER -->
+    <footer class="border-t border-white/[0.04] py-10 bg-ink">
+        <div class="max-w-7xl mx-auto px-5 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-5">
+            <div class="font-display font-extrabold text-white text-base tracking-tight">Study<span class="text-brand">Insights</span></div>
             <div class="flex items-center gap-6">
                 <a href="index.html" class="footer-link">Portfolio</a>
+                <a href="financials.html" class="footer-link">Financials</a>
                 <a href="contact.html" class="footer-link">Contact</a>
                 <a href="legal-privacy.html" class="footer-link">Legal</a>
             </div>
-            <p class="text-gray-600 text-xs">&copy; 2026 Study Insights. All rights reserved.</p>
+            <p class="text-[#333] text-xs">&copy; 2026 Study Insights. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
-        // Scroll reveal
-        const revealEls = document.querySelectorAll('.reveal');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(el => {
-                if (el.isIntersecting) {
-                    el.target.classList.add('visible');
-                    observer.unobserve(el.target);
-                }
-            });
-        }, { threshold: 0.08 });
-        revealEls.forEach(el => observer.observe(el));
+        window.addEventListener('scroll', () => {
+            const h = document.documentElement.scrollHeight - window.innerHeight;
+            document.getElementById('scroll-progress').style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+        });
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));
+        const ro = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('v'); ro.unobserve(e.target); } });
+        }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.r').forEach(el => ro.observe(el));
+        function animateCounter(el, target) {
+            const dur = 1800, inc = target / (dur / 16); let cur = 0;
+            const t = setInterval(() => { cur += inc; if (cur >= target) { el.textContent = target; clearInterval(t); } else el.textContent = Math.floor(cur); }, 16);
+        }
+        const co = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting && !e.target.dataset.done) { e.target.dataset.done = '1'; animateCounter(e.target, parseInt(e.target.dataset.target)); } });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.counter').forEach(c => co.observe(c));
     </script>
 
 </body>
