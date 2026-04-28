@@ -182,7 +182,6 @@
         .kpi-card {
             position: relative;
             overflow: hidden;
-            group: "kpi";
         }
 
         .kpi-card::after {
@@ -208,7 +207,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* ANIMATED BORDER GLOW */
         .kpi-card::before {
             content: '';
             position: absolute;
@@ -260,7 +258,6 @@
 
         .premium-table tbody tr:hover {
             background: linear-gradient(90deg, rgba(255, 85, 0, 0.1) 0%, rgba(255, 85, 0, 0.02) 100%);
-            padding-left: 0.5rem;
         }
 
         /* PREMIUM HEADING WITH GRADIENT */
@@ -284,12 +281,8 @@
         }
 
         @keyframes underline-expand {
-            from {
-                width: 0;
-            }
-            to {
-                width: 100%;
-            }
+            from { width: 0; }
+            to { width: 100%; }
         }
 
         /* PREMIUM BUTTON WITH GLOW */
@@ -330,6 +323,12 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* STAGGER DELAYS */
+        .stagger-1 { transition-delay: 0.1s; }
+        .stagger-2 { transition-delay: 0.2s; }
+        .stagger-3 { transition-delay: 0.3s; }
+        .stagger-4 { transition-delay: 0.4s; }
     </style>
 </head>
 <body>
@@ -359,37 +358,37 @@
         </div>
 
         <!-- KPI Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-16">
-            <!-- Card 1 -->
-            <div class="glass-card kpi-card p-6 rounded-xl border-l-4 border-l-neon-orange fade-in-scroll">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            <!-- Card 1: Investment Ask -->
+            <div class="glass-card kpi-card p-6 rounded-xl border-l-4 border-l-neon-orange fade-in-scroll stagger-1">
                 <p class="text-gray-500 text-xs uppercase tracking-widest font-bold mb-2">Investment Ask</p>
-                <h3 class="font-display text-3xl font-bold text-white">25 lac tk</h3>
+                <h3 class="font-display text-3xl font-bold text-white">25 Lac</h3>
                 <p class="text-neon-orange text-xs mt-2">for 20% Equity</p>
             </div>
-            <!-- Card 2 -->
-            <div class="glass-card kpi-card p-6 rounded-xl border-l-4 border-l-metallic-silver fade-in-scroll">
+            <!-- Card 2: Break-Even -->
+            <div class="glass-card kpi-card p-6 rounded-xl border-l-4 border-l-metallic-silver fade-in-scroll stagger-2">
                 <p class="text-gray-500 text-xs uppercase tracking-widest font-bold mb-2">Break-Even</p>
-                <h3 class="font-display text-3xl font-bold text-white">Month 8-10</h3>
+                <h3 class="font-display text-3xl font-bold text-white">Month 8–10</h3>
                 <p class="text-gray-400 text-xs mt-2">Fast Track</p>
             </div>
-            <!-- Card 3 -->
-            <div class="glass-card kpi-card p-6 rounded-xl border-l-4 border-l-white fade-in-scroll">
-                <p class="text-gray-500 text-xs uppercase tracking-widest font-bold mb-2">Year 3 Profit</p>
-                <h3 class="font-display text-3xl font-bold text-white counter" data-target="165">0</h3>
-                <p class="text-gray-400 text-xs mt-2">Cr Operating Profit</p>
+            <!-- Card 3: Year 3 Operating Profit — 1,65,00,000 = 165 Lac = 1.65 Cr -->
+            <div class="glass-card kpi-card p-6 rounded-xl border-l-4 border-l-white fade-in-scroll stagger-3">
+                <p class="text-gray-500 text-xs uppercase tracking-widest font-bold mb-2">Year 3 Op. Profit</p>
+                <h3 class="font-display text-3xl font-bold text-white"><span class="counter" data-target="165">0</span> Lac</h3>
+                <p class="text-gray-400 text-xs mt-2">1.65 Cr BDT</p>
             </div>
-            <!-- Card 4 -->
-            <div class="glass-card kpi-card p-6 rounded-xl border-l-4 border-l-green-500 fade-in-scroll">
+            <!-- Card 4: ROI -->
+            <div class="glass-card kpi-card p-6 rounded-xl border-l-4 border-l-green-500 fade-in-scroll stagger-4">
                 <p class="text-gray-500 text-xs uppercase tracking-widest font-bold mb-2">Projected ROI</p>
                 <h3 class="font-display text-3xl font-bold text-white"><span class="counter" data-target="5">0</span>X</h3>
-                <p class="text-green-400 text-xs mt-2">3 Year Horizon</p>
+                <p class="text-green-400 text-xs mt-2">380% over 3 Years</p>
             </div>
         </div>
 
-        <!-- Main Chart: Cash Flow Waterfall -->
+        <!-- Main Chart: Cumulative Cash Flow -->
         <div class="glass-card-premium rounded-2xl p-8 mb-12 fade-in-scroll">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-2xl font-display font-bold uppercase text-white">Cumulative Cash Flow Analysis</h3>
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                <h3 class="text-2xl font-display font-bold uppercase text-white">Cumulative Cash Flow</h3>
                 <div class="flex gap-2 px-3 py-2 bg-white/5 rounded-full border border-white/10">
                     <span class="w-3 h-3 rounded-full bg-neon-orange animate-pulse"></span>
                     <span class="text-xs text-gray-400 uppercase">Closing Balance</span>
@@ -401,12 +400,60 @@
         </div>
     </section>
 
+    <!-- Cash Flow Detail Table -->
+    <section class="py-8 px-6 max-w-7xl mx-auto">
+        <h3 class="text-2xl font-display font-bold uppercase text-white mb-8 premium-heading">Cash Flow Summary</h3>
+        <div class="overflow-x-auto glass-card rounded-2xl fade-in-scroll premium-table">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="border-b border-white/10 bg-gradient-to-r from-white/5 to-transparent">
+                        <th class="p-4 text-xs font-bold uppercase tracking-widest text-gray-400">Period</th>
+                        <th class="p-4 text-xs font-bold uppercase tracking-widest text-gray-400">Opening Cash</th>
+                        <th class="p-4 text-xs font-bold uppercase tracking-widest text-gray-400">Cash Inflow</th>
+                        <th class="p-4 text-xs font-bold uppercase tracking-widest text-gray-400">Cash Outflow</th>
+                        <th class="p-4 text-xs font-bold uppercase tracking-widest text-gray-400">Closing Cash</th>
+                    </tr>
+                </thead>
+                <tbody class="font-mono text-sm">
+                    <tr class="border-b border-white/5 transition-all duration-300">
+                        <td class="p-4 text-white font-bold">Pre-Seed</td>
+                        <td class="p-4 text-gray-300">3 Lac</td>
+                        <td class="p-4 text-green-400">25 Lac <span class="text-gray-500 text-xs">(Investment)</span></td>
+                        <td class="p-4 text-red-400">7 Lac <span class="text-gray-500 text-xs">(One-time)</span></td>
+                        <td class="p-4 text-white font-semibold">21 Lac</td>
+                    </tr>
+                    <tr class="border-b border-white/5 transition-all duration-300">
+                        <td class="p-4 text-white font-bold">Year 1</td>
+                        <td class="p-4 text-gray-300">21 Lac</td>
+                        <td class="p-4 text-green-400">60 Lac <span class="text-gray-500 text-xs">(Revenue)</span></td>
+                        <td class="p-4 text-red-400">42 Lac <span class="text-gray-500 text-xs">(MRC)</span></td>
+                        <td class="p-4 text-white font-semibold">39 Lac</td>
+                    </tr>
+                    <tr class="border-b border-white/5 transition-all duration-300">
+                        <td class="p-4 text-white font-bold">Year 2</td>
+                        <td class="p-4 text-gray-300">39 Lac</td>
+                        <td class="p-4 text-green-400">90 Lac <span class="text-gray-500 text-xs">(1.5× growth)</span></td>
+                        <td class="p-4 text-red-400">50 Lac <span class="text-gray-500 text-xs">(Scale-up)</span></td>
+                        <td class="p-4 text-white font-semibold">79 Lac</td>
+                    </tr>
+                    <tr class="border-b border-white/5 transition-all duration-300">
+                        <td class="p-4 text-white font-bold">Year 3</td>
+                        <td class="p-4 text-gray-300">79 Lac</td>
+                        <td class="p-4 text-green-400">1.2 Cr <span class="text-gray-500 text-xs">(2× growth)</span></td>
+                        <td class="p-4 text-red-400">60 Lac <span class="text-gray-500 text-xs">(Optimized)</span></td>
+                        <td class="p-4 text-neon-orange font-bold">1.39 Cr</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
     <!-- Secondary Charts Grid -->
     <section class="py-16 px-6 bg-gradient-to-b from-charcoal/30 to-black/10">
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 
-                <!-- Revenue Mix Chart -->
+                <!-- Revenue Mix Chart — 5 streams from Excel Profit sheet -->
                 <div class="glass-card p-8 rounded-2xl fade-in-scroll">
                     <h3 class="text-xl font-display font-bold uppercase text-white mb-6">Revenue Streams (Monthly)</h3>
                     <div class="flex flex-col md:flex-row items-center justify-center gap-8">
@@ -418,40 +465,48 @@
                         </div>
                         <div class="space-y-3 w-full max-w-xs">
                             <div class="flex justify-between items-center border-b border-white/10 pb-2 hover:border-neon-orange/50 transition-colors">
-                                <span class="text-sm text-gray-300">Study Insights</span>
-                                <span class="text-neon-orange font-bold font-mono">30%</span>
+                                <span class="text-sm text-gray-300">E-commerce (Biluibaba)</span>
+                                <span class="text-neon-orange font-bold font-mono">1.5L <span class="text-gray-500 text-xs">30%</span></span>
                             </div>
                             <div class="flex justify-between items-center border-b border-white/10 pb-2 hover:border-white/50 transition-colors">
-                                <span class="text-sm text-gray-300">Biluibaba E-comm</span>
-                                <span class="text-gray-200 font-bold font-mono">30%</span>
+                                <span class="text-sm text-gray-300">Study Insights</span>
+                                <span class="text-gray-200 font-bold font-mono">1.5L <span class="text-gray-500 text-xs">30%</span></span>
                             </div>
                             <div class="flex justify-between items-center border-b border-white/10 pb-2 hover:border-metallic-silver/50 transition-colors">
-                                <span class="text-sm text-gray-300">Biluibaba Vet</span>
-                                <span class="text-gray-400 font-bold font-mono">20%</span>
+                                <span class="text-sm text-gray-300">Vet Service (Online/Offline)</span>
+                                <span class="text-gray-400 font-bold font-mono">1L <span class="text-gray-500 text-xs">20%</span></span>
                             </div>
                             <div class="flex justify-between items-center border-b border-white/10 pb-2 hover:border-gray-500/50 transition-colors">
-                                <span class="text-sm text-gray-300">Pet Adoption/Other</span>
-                                <span class="text-gray-400 font-bold font-mono">20%</span>
+                                <span class="text-sm text-gray-300">Pet Adoption / Delivery</span>
+                                <span class="text-gray-400 font-bold font-mono">0.5L <span class="text-gray-500 text-xs">10%</span></span>
+                            </div>
+                            <div class="flex justify-between items-center border-b border-white/10 pb-2 hover:border-gray-600/50 transition-colors">
+                                <span class="text-sm text-gray-300">Online Revenue (FB, YT)</span>
+                                <span class="text-gray-400 font-bold font-mono">0.5L <span class="text-gray-500 text-xs">10%</span></span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Valuation Growth Chart -->
+                <!-- Valuation Growth — Only Seed + Y3 from Excel (no fabricated intermediates) -->
                 <div class="glass-card p-8 rounded-2xl fade-in-scroll">
                     <h3 class="text-xl font-display font-bold uppercase text-white mb-6">Investor Value Growth</h3>
                     <div class="chart-container">
                         <canvas id="valuationChart"></canvas>
                     </div>
                     <div class="mt-6 bg-gradient-to-r from-white/5 to-white/0 p-4 rounded border border-white/10 hover:border-white/20 transition-colors">
-                        <p class="text-xs text-gray-400 mb-2">Post-Money Valuation Trajectory</p>
+                        <p class="text-xs text-gray-400 mb-3">Post-Money Valuation Trajectory</p>
                         <div class="flex justify-between text-sm mb-2">
-                            <span class="text-gray-500">Seed Stage</span>
+                            <span class="text-gray-500">Seed Stage (Now)</span>
                             <span class="text-white font-semibold">1.25 Cr</span>
                         </div>
-                        <div class="flex justify-between text-sm">
+                        <div class="flex justify-between text-sm mb-2">
                             <span class="text-gray-500">Year 3 Projection</span>
                             <span class="text-neon-orange font-bold">6.00 Cr</span>
+                        </div>
+                        <div class="flex justify-between text-sm border-t border-white/10 pt-2 mt-2">
+                            <span class="text-gray-500">Investor 20% Stake at Y3</span>
+                            <span class="text-green-400 font-bold">1.2 Cr</span>
                         </div>
                     </div>
                 </div>
@@ -460,41 +515,80 @@
         </div>
     </section>
 
-    <!-- Detailed Financial Table -->
+    <!-- Gross Profit & Operating Profit Tables -->
     <section class="py-16 px-6 max-w-7xl mx-auto">
-        <h3 class="text-2xl font-display font-bold uppercase text-white mb-8 premium-heading">Detailed Breakdown</h3>
+        <h3 class="text-2xl font-display font-bold uppercase text-white mb-8 premium-heading">Gross Profit</h3>
         
-        <div class="overflow-x-auto glass-card rounded-2xl fade-in-scroll premium-table">
+        <div class="overflow-x-auto glass-card rounded-2xl fade-in-scroll premium-table mb-12">
             <table class="w-full text-left border-collapse">
                 <thead>
                     <tr class="border-b border-white/10 bg-gradient-to-r from-white/5 to-transparent">
                         <th class="p-4 text-xs font-bold uppercase tracking-widest text-gray-400">Year</th>
-                        <th class="p-4 text-xs font-bold uppercase tracking-widest text-gray-400">Revenue</th>
-                        <th class="p-4 text-xs font-bold uppercase tracking-widest text-gray-400">OpEx</th>
-                        <th class="p-4 text-xs font-bold uppercase tracking-widest text-gray-400">Net Profit/Loss</th>
-                        <th class="p-4 text-xs font-bold uppercase tracking-widest text-gray-400">Margin</th>
+                        <th class="p-4 text-xs font-bold uppercase tracking-widest text-gray-400">Annual Revenue</th>
+                        <th class="p-4 text-xs font-bold uppercase tracking-widest text-gray-400">COGS (25%)</th>
+                        <th class="p-4 text-xs font-bold uppercase tracking-widest text-gray-400">Gross Profit</th>
+                        <th class="p-4 text-xs font-bold uppercase tracking-widest text-gray-400">Gross Margin</th>
                     </tr>
                 </thead>
                 <tbody class="font-mono text-sm">
                     <tr class="border-b border-white/5 transition-all duration-300">
-                        <td class="p-4 text-white font-bold">Year 1</td>
+                        <td class="p-4 text-white font-bold">Y1</td>
+                        <td class="p-4 text-gray-300">12 Lac</td>
+                        <td class="p-4 text-gray-300">3 Lac</td>
+                        <td class="p-4 text-gray-300">9 Lac</td>
+                        <td class="p-4 text-gray-400">75%</td>
+                    </tr>
+                    <tr class="border-b border-white/5 transition-all duration-300">
+                        <td class="p-4 text-white font-bold">Y2</td>
                         <td class="p-4 text-gray-300">60 Lac</td>
+                        <td class="p-4 text-gray-300">15 Lac</td>
+                        <td class="p-4 text-gray-300">45 Lac</td>
+                        <td class="p-4 text-gray-400">75%</td>
+                    </tr>
+                    <tr class="border-b border-white/5 transition-all duration-300">
+                        <td class="p-4 text-white font-bold">Y3</td>
+                        <td class="p-4 text-gray-300">3 Cr</td>
+                        <td class="p-4 text-gray-300">75 Lac</td>
+                        <td class="p-4 text-green-400 font-semibold">2.25 Cr</td>
+                        <td class="p-4 text-green-500 font-semibold">75%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3 class="text-2xl font-display font-bold uppercase text-white mb-8 premium-heading">Operating Profit</h3>
+
+        <div class="overflow-x-auto glass-card rounded-2xl fade-in-scroll premium-table mb-12">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="border-b border-white/10 bg-gradient-to-r from-white/5 to-transparent">
+                        <th class="p-4 text-xs font-bold uppercase tracking-widest text-gray-400">Year</th>
+                        <th class="p-4 text-xs font-bold uppercase tracking-widest text-gray-400">Gross Profit</th>
+                        <th class="p-4 text-xs font-bold uppercase tracking-widest text-gray-400">Operating Expenses</th>
+                        <th class="p-4 text-xs font-bold uppercase tracking-widest text-gray-400">Operating Profit / (Loss)</th>
+                        <th class="p-4 text-xs font-bold uppercase tracking-widest text-gray-400">Status</th>
+                    </tr>
+                </thead>
+                <tbody class="font-mono text-sm">
+                    <tr class="border-b border-white/5 transition-all duration-300">
+                        <td class="p-4 text-white font-bold">Y1</td>
+                        <td class="p-4 text-gray-300">9 Lac</td>
                         <td class="p-4 text-gray-300">40.8 Lac</td>
-                        <td class="p-4 text-red-400">-31.8 Lac</td>
+                        <td class="p-4 text-red-400 font-semibold">-31.8 Lac</td>
                         <td class="p-4 text-gray-500">Investment Phase</td>
                     </tr>
                     <tr class="border-b border-white/5 transition-all duration-300">
-                        <td class="p-4 text-white font-bold">Year 2</td>
-                        <td class="p-4 text-gray-300">90 Lac</td>
+                        <td class="p-4 text-white font-bold">Y2</td>
+                        <td class="p-4 text-gray-300">45 Lac</td>
                         <td class="p-4 text-gray-300">40.8 Lac</td>
-                        <td class="p-4 text-green-400">+4.2 Lac</td>
+                        <td class="p-4 text-green-400 font-semibold">+4.2 Lac</td>
                         <td class="p-4 text-green-500 font-semibold">Profitable</td>
                     </tr>
                     <tr class="border-b border-white/5 transition-all duration-300">
-                        <td class="p-4 text-white font-bold">Year 3</td>
-                        <td class="p-4 text-gray-300">120 Lac</td>
+                        <td class="p-4 text-white font-bold">Y3</td>
+                        <td class="p-4 text-gray-300">2.25 Cr</td>
                         <td class="p-4 text-gray-300">60 Lac</td>
-                        <td class="p-4 text-green-400">+165 Lac</td>
+                        <td class="p-4 text-green-400 font-bold">+165 Lac</td>
                         <td class="p-4 text-green-500 font-semibold">High Growth</td>
                     </tr>
                 </tbody>
@@ -502,9 +596,139 @@
         </div>
     </section>
 
+    <!-- Cost Structure Section -->
+    <section class="py-16 px-6 bg-gradient-to-b from-charcoal/30 to-black/10">
+        <div class="max-w-7xl mx-auto">
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+                <!-- One-Time Costs -->
+                <div class="glass-card p-8 rounded-2xl fade-in-scroll">
+                    <h3 class="text-xl font-display font-bold uppercase text-white mb-2">One-Time Setup Cost</h3>
+                    <p class="text-neon-orange font-display font-bold text-2xl mb-6">7 Lac BDT</p>
+                    <div class="chart-container" style="height:320px;">
+                        <canvas id="oneTimeCostChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Monthly OpEx -->
+                <div class="glass-card p-8 rounded-2xl fade-in-scroll">
+                    <h3 class="text-xl font-display font-bold uppercase text-white mb-2">Monthly Operating Cost</h3>
+                    <p class="text-neon-orange font-display font-bold text-2xl mb-6">3.5 Lac BDT <span class="text-gray-500 text-sm font-normal">(42 Lac / year)</span></p>
+                    <div class="space-y-4">
+                        <!-- Rent -->
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-gray-300">Rent & Utilities</span>
+                                <span class="text-white font-mono">25,000</span>
+                            </div>
+                            <div class="w-full h-2 bg-white/5 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-neon-orange to-orange-400 rounded-full" style="width:7.1%"></div>
+                            </div>
+                        </div>
+                        <!-- Salaries -->
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-gray-300">Employee Salaries (9 members)</span>
+                                <span class="text-white font-mono">2,80,000</span>
+                            </div>
+                            <div class="w-full h-2 bg-white/5 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-neon-orange to-orange-400 rounded-full" style="width:80%"></div>
+                            </div>
+                        </div>
+                        <!-- Marketing -->
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-gray-300">Marketing (BB & SI)</span>
+                                <span class="text-white font-mono">30,000</span>
+                            </div>
+                            <div class="w-full h-2 bg-white/5 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-neon-orange to-orange-400 rounded-full" style="width:8.6%"></div>
+                            </div>
+                        </div>
+                        <!-- IT & Admin -->
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-gray-300">IT & Admin</span>
+                                <span class="text-white font-mono">15,000</span>
+                            </div>
+                            <div class="w-full h-2 bg-white/5 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-neon-orange to-orange-400 rounded-full" style="width:4.3%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Investment & Cap Table -->
+    <section class="py-16 px-6 max-w-7xl mx-auto">
+        <h3 class="text-2xl font-display font-bold uppercase text-white mb-8 premium-heading">Investment & Cap Table</h3>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+            <!-- Investment Summary -->
+            <div class="glass-card p-8 rounded-2xl fade-in-scroll">
+                <h4 class="text-lg font-display font-bold uppercase text-white mb-6">Investment Summary</h4>
+                <div class="space-y-4 font-mono text-sm">
+                    <div class="flex justify-between border-b border-white/10 pb-3">
+                        <span class="text-gray-400">Investment Amount</span>
+                        <span class="text-white font-semibold">25,00,000 BDT</span>
+                    </div>
+                    <div class="flex justify-between border-b border-white/10 pb-3">
+                        <span class="text-gray-400">Equity Offered</span>
+                        <span class="text-neon-orange font-semibold">20%</span>
+                    </div>
+                    <div class="flex justify-between border-b border-white/10 pb-3">
+                        <span class="text-gray-400">Pre-Money Valuation</span>
+                        <span class="text-white font-semibold">1,00,00,000 BDT</span>
+                    </div>
+                    <div class="flex justify-between border-b border-white/10 pb-3">
+                        <span class="text-gray-400">Post-Money Valuation</span>
+                        <span class="text-white font-semibold">1,25,00,000 BDT</span>
+                    </div>
+                    <div class="flex justify-between border-b border-white/10 pb-3">
+                        <span class="text-gray-400">ROI Multiplier (3Y)</span>
+                        <span class="text-green-400 font-bold">5×</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">3-Year ROI</span>
+                        <span class="text-green-400 font-bold">380%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cap Table -->
+            <div class="glass-card p-8 rounded-2xl fade-in-scroll">
+                <h4 class="text-lg font-display font-bold uppercase text-white mb-6">Cap Table (Post-Investment)</h4>
+                <div class="chart-container" style="height:220px;">
+                    <canvas id="capTableChart"></canvas>
+                </div>
+                <div class="mt-6 space-y-3">
+                    <div class="flex justify-between items-center border-b border-white/10 pb-2">
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-white inline-block"></span>
+                            <span class="text-sm text-gray-300">Founder(s) & Team</span>
+                        </div>
+                        <span class="text-white font-bold font-mono">80%</span>
+                    </div>
+                    <div class="flex justify-between items-center border-b border-white/10 pb-2">
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-neon-orange inline-block"></span>
+                            <span class="text-sm text-gray-300">Seed Investor</span>
+                        </div>
+                        <span class="text-neon-orange font-bold font-mono">20%</span>
+                    </div>
+                    <p class="text-xs text-gray-600 mt-2">Post-money valuation: 1 Cr 25 Lac BDT</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
     <!-- Download Source Data -->
     <section id="invest" class="py-24 bg-gradient-to-b from-charcoal to-black border-t border-white/10 relative overflow-hidden">
-        <!-- Background Glows -->
         <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-full h-64 bg-neon-orange opacity-5 blur-[100px]"></div>
         <div class="absolute bottom-0 right-0 w-96 h-96 bg-neon-orange/5 rounded-full blur-[150px]"></div>
 
@@ -527,30 +751,21 @@
 
     <script>
         // FADE-IN-SCROLL ANIMATION
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
         const observer = new IntersectionObserver(function(entries) {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-        document.querySelectorAll('.fade-in-scroll').forEach(el => {
-            observer.observe(el);
-        });
+        document.querySelectorAll('.fade-in-scroll').forEach(el => observer.observe(el));
 
         // ANIMATED COUNTER
         function animateCounter(element, target) {
             const duration = 2000;
-            const start = 0;
             const increment = target / (duration / 16);
             let current = 0;
-
             const timer = setInterval(() => {
                 current += increment;
                 if (current >= target) {
@@ -562,32 +777,34 @@
             }, 16);
         }
 
-        // Start counters when visible
         const counterObserver = new IntersectionObserver(function(entries) {
             entries.forEach(entry => {
                 if (entry.isIntersecting && !entry.target.dataset.animated) {
                     entry.target.dataset.animated = 'true';
-                    const target = parseInt(entry.target.dataset.target);
-                    animateCounter(entry.target, target);
+                    animateCounter(entry.target, parseInt(entry.target.dataset.target));
                 }
             });
         }, { threshold: 0.1 });
 
-        document.querySelectorAll('.counter').forEach(counter => {
-            counterObserver.observe(counter);
-        });
+        document.querySelectorAll('.counter').forEach(c => counterObserver.observe(c));
 
         document.addEventListener('DOMContentLoaded', () => {
             
-            // --- 1. Cash Flow Chart (Mixed Bar/Line) ---
-            const ctxCashFlow = document.getElementById('cashFlowChart').getContext('2d');
+            // ========================================
+            // 1. CASH FLOW CHART
+            // Data from Excel "Cash Flow Summary" sheet:
+            //   Pre-Seed Closing: 21,00,000  (21 Lac)
+            //   Y1 Closing:       39,00,000  (39 Lac)
+            //   Y2 Closing:       79,00,000  (79 Lac)
+            //   Y3 Closing:     1,39,00,000  (139 Lac = 1.39 Cr)
+            // ========================================
+            const ctxCF = document.getElementById('cashFlowChart').getContext('2d');
             
-            // Gradient for Bars
-            let gradientBar = ctxCashFlow.createLinearGradient(0, 0, 0, 400);
+            let gradientBar = ctxCF.createLinearGradient(0, 0, 0, 400);
             gradientBar.addColorStop(0, '#FF5500');
             gradientBar.addColorStop(1, 'rgba(255, 85, 0, 0.1)');
 
-            new Chart(ctxCashFlow, {
+            new Chart(ctxCF, {
                 type: 'bar',
                 data: {
                     labels: ['Pre-Seed', 'Year 1', 'Year 2', 'Year 3'],
@@ -615,7 +832,8 @@
                             boxPadding: 6,
                             callbacks: {
                                 label: function(context) {
-                                    return ' Closing: ' + (context.raw / 1000000).toFixed(2) + ' Cr BDT';
+                                    const lac = (context.raw / 100000).toFixed(0);
+                                    return ' Closing: ' + lac + ' Lac BDT';
                                 }
                             }
                         }
@@ -624,33 +842,43 @@
                         y: {
                             beginAtZero: true,
                             grid: { color: 'rgba(255,255,255,0.05)' },
-                            ticks: { color: '#888', callback: (value) => (value / 1000000) + 'Cr' }
+                            ticks: {
+                                color: '#888',
+                                callback: function(value) {
+                                    return (value / 100000) + ' Lac';
+                                }
+                            }
                         },
                         x: {
                             grid: { display: false },
                             ticks: { color: '#fff', font: { family: 'Oswald', size: 14 } }
                         }
                     },
-                    animation: {
-                        duration: 2000,
-                        easing: 'easeOutQuart'
-                    }
+                    animation: { duration: 2000, easing: 'easeOutQuart' }
                 }
             });
 
-            // --- 2. Revenue Mix Chart (Doughnut) ---
+            // ========================================
+            // 2. REVENUE MIX CHART — 5 streams from Excel "Profit" sheet
+            //   E-commerce:           1,50,000  (30%)
+            //   Study Insights:       1,50,000  (30%)
+            //   Vet Service:          1,00,000  (20%)
+            //   Pet Adoption/Delivery:   50,000  (10%)
+            //   Online Revenue (FB,YT):  50,000  (10%)
+            // ========================================
             const ctxMix = document.getElementById('revenueMixChart').getContext('2d');
             new Chart(ctxMix, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Study Insights', 'E-Commerce', 'Vet Service', 'Adoption/Other'],
+                    labels: ['E-commerce (BB)', 'Study Insights', 'Vet Service', 'Pet Adoption', 'Online Revenue (FB, YT)'],
                     datasets: [{
-                        data: [30, 30, 20, 20], // Based on 1.5L, 1.5L, 1L, 0.5L monthly revenue
+                        data: [30, 30, 20, 10, 10],
                         backgroundColor: [
-                            '#FF5500', // Neon Orange
-                            '#C0C0C0', // Metallic Silver
-                            '#333333', // Dark Gray
-                            '#555555'  // Gray
+                            '#FF5500',
+                            '#C0C0C0',
+                            '#444444',
+                            '#666666',
+                            '#888888'
                         ],
                         borderWidth: 0,
                         hoverOffset: 15
@@ -667,43 +895,44 @@
                             borderWidth: 1,
                             callbacks: {
                                 label: function(context) {
-                                    return ' ' + context.label + ': ' + context.raw + '%';
+                                    const amounts = [150000, 150000, 100000, 50000, 50000];
+                                    const amt = (amounts[context.dataIndex] / 100000).toFixed(1);
+                                    return ' ' + context.label + ': ' + amt + 'L (' + context.raw + '%)';
                                 }
                             }
                         }
                     },
-                    animation: {
-                        animateScale: true,
-                        animateRotate: true,
-                        duration: 2000
-                    }
+                    animation: { animateScale: true, animateRotate: true, duration: 2000 }
                 }
             });
 
-            // --- 3. Valuation Growth Chart (Line/Area) ---
+            // ========================================
+            // 3. VALUATION CHART — Only data from Excel "Investment and Return" sheet
+            //   Seed Stage (Now):        1,25,00,000  (1.25 Cr)
+            //   Projected (After 3Y):    6,00,00,000  (6 Cr)
+            //   NO intermediate Y1/Y2 values exist in the Excel.
+            // ========================================
             const ctxVal = document.getElementById('valuationChart').getContext('2d');
             
-            let gradientLine = ctxVal.createLinearGradient(0, 0, 0, 300);
-            gradientLine.addColorStop(0, 'rgba(192, 192, 192, 0.5)'); // Silver top
-            gradientLine.addColorStop(1, 'rgba(192, 192, 192, 0)');   // Transparent bottom
+            let gradVal1 = ctxVal.createLinearGradient(0, 0, 0, 300);
+            gradVal1.addColorStop(0, 'rgba(192, 192, 192, 0.8)');
+            gradVal1.addColorStop(1, 'rgba(192, 192, 192, 0.1)');
+
+            let gradVal2 = ctxVal.createLinearGradient(0, 0, 0, 300);
+            gradVal2.addColorStop(0, 'rgba(255, 85, 0, 0.8)');
+            gradVal2.addColorStop(1, 'rgba(255, 85, 0, 0.1)');
 
             new Chart(ctxVal, {
-                type: 'line',
+                type: 'bar',
                 data: {
-                    labels: ['Seed (Now)', 'Year 1', 'Year 2', 'Year 3'],
+                    labels: ['Seed (Now)', 'Year 3 Projection'],
                     datasets: [{
                         label: 'Company Valuation (BDT)',
-                        data: [12500000, 20000000, 35000000, 60000000], // Projected growth
-                        borderColor: '#C0C0C0',
-                        backgroundColor: gradientLine,
-                        borderWidth: 3,
-                        pointBackgroundColor: '#000',
-                        pointBorderColor: '#C0C0C0',
-                        pointBorderWidth: 2,
-                        pointRadius: 6,
-                        pointHoverRadius: 8,
-                        fill: true,
-                        tension: 0.4
+                        data: [12500000, 60000000],
+                        backgroundColor: [gradVal1, gradVal2],
+                        borderRadius: 8,
+                        barPercentage: 0.45,
+                        borderSkipped: false
                     }]
                 },
                 options: {
@@ -718,21 +947,129 @@
                             padding: 12,
                             callbacks: {
                                 label: function(context) {
-                                    return ' Valuation: ' + (context.raw / 10000000) + ' Cr BDT';
+                                    const cr = (context.raw / 10000000).toFixed(2);
+                                    return ' Valuation: ' + cr + ' Cr BDT';
                                 }
                             }
                         }
                     },
                     scales: {
                         y: {
+                            beginAtZero: true,
                             grid: { color: 'rgba(255,255,255,0.05)' },
-                            ticks: { color: '#888', callback: (value) => (value / 1000000) + 'Cr' }
+                            ticks: {
+                                color: '#888',
+                                callback: function(value) {
+                                    return (value / 10000000).toFixed(1) + ' Cr';
+                                }
+                            }
                         },
                         x: {
                             grid: { display: false },
-                            ticks: { color: '#888' }
+                            ticks: { color: '#fff', font: { family: 'Oswald', size: 14 } }
                         }
-                    }
+                    },
+                    animation: { duration: 2000, easing: 'easeOutQuart' }
+                }
+            });
+
+            // ========================================
+            // 4. ONE-TIME COST CHART — from Excel "Cost" sheet (grouped)
+            //   Biluibaba Launch:  3,00,000  (Website+Domain+Hosting+Reg+API+Logo+Mktg+Ops+ID+Video+Product+Launch+PostOps+PostLaunch)
+            //   Office Setup:     4,00,000  (Core Setup+SI Setup+Equipment+AC+Office Decor+Misc)
+            //   Total:            7,00,000
+            // ========================================
+            const ctxOTC = document.getElementById('oneTimeCostChart').getContext('2d');
+
+            // Biluibaba items sum: 100000+4500+26000+15500+30500+2000+36000+17000+8000+3000+15000+7500+5000+30000 = 300000
+            // Office items sum:    250000+25000+25000+60000+30000+10000 = 400000
+
+            new Chart(ctxOTC, {
+                type: 'bar',
+                data: {
+                    labels: ['Biluibaba Launch', 'Office & Equipment'],
+                    datasets: [{
+                        label: 'One-Time Cost (BDT)',
+                        data: [300000, 400000],
+                        backgroundColor: ['rgba(255, 85, 0, 0.7)', 'rgba(192, 192, 192, 0.5)'],
+                        borderRadius: 8,
+                        barPercentage: 0.4,
+                        borderSkipped: false
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: 'rgba(20,20,20,0.95)',
+                            borderColor: 'rgba(255,255,255,0.2)',
+                            borderWidth: 1,
+                            callbacks: {
+                                label: function(context) {
+                                    const lac = (context.raw / 100000).toFixed(1);
+                                    return ' ' + lac + ' Lac BDT';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(255,255,255,0.05)' },
+                            ticks: {
+                                color: '#888',
+                                callback: function(value) {
+                                    return (value / 100000) + 'L';
+                                }
+                            }
+                        },
+                        y: {
+                            grid: { display: false },
+                            ticks: { color: '#fff', font: { family: 'Oswald', size: 14 } }
+                        }
+                    },
+                    animation: { duration: 1500, easing: 'easeOutQuart' }
+                }
+            });
+
+            // ========================================
+            // 5. CAP TABLE CHART — from Excel "Investment and Return" sheet
+            //   Founder(s) & Team: 80%
+            //   Seed Investor:     20%
+            // ========================================
+            const ctxCap = document.getElementById('capTableChart').getContext('2d');
+            new Chart(ctxCap, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Founder(s) & Team', 'Seed Investor'],
+                    datasets: [{
+                        data: [80, 20],
+                        backgroundColor: ['#ffffff', '#FF5500'],
+                        borderWidth: 0,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '65%',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: 'rgba(20,20,20,0.95)',
+                            borderColor: 'rgba(255,255,255,0.2)',
+                            borderWidth: 1,
+                            callbacks: {
+                                label: function(context) {
+                                    return ' ' + context.label + ': ' + context.raw + '%';
+                                }
+                            }
+                        }
+                    },
+                    animation: { animateScale: true, animateRotate: true, duration: 1500 }
                 }
             });
         });
