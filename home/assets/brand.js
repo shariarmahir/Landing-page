@@ -1,0 +1,23 @@
+(() => {
+  const body=document.body, mobile=document.querySelector('.mobile');
+  document.querySelector('#menuOpen')?.addEventListener('click',()=>mobile?.classList.add('open'));
+  document.querySelector('#menuClose')?.addEventListener('click',()=>mobile?.classList.remove('open'));
+  mobile?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>mobile.classList.remove('open')));
+  addEventListener('scroll',()=>body.classList.toggle('scrolled',scrollY>24),{passive:true});
+  const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('in');observer.unobserve(entry.target)}}),{threshold:.12});
+  document.querySelectorAll('[data-reveal]').forEach(el=>observer.observe(el));
+  let started=false;
+  function startTerrain(){
+    if(started||!window.THREE||!document.querySelector('#terrain'))return; started=true;
+    const canvas=document.querySelector('#terrain'),hero=canvas.closest('.hero'),renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true}),scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(47,1,.1,180);
+    renderer.setPixelRatio(Math.min(devicePixelRatio,1.7)); camera.position.set(0,10,29); scene.fog=new THREE.Fog(0x151310,24,84);
+    const W=78,D=45,X=108,Z=63,geo=new THREE.PlaneGeometry(W,D,X,Z);geo.rotateX(-Math.PI/2);const pos=geo.attributes.position,colors=new Float32Array(pos.count*3),a=new THREE.Color(0x17402d),b=new THREE.Color(0x4da776),c=new THREE.Color(0xede6d4),shade=new THREE.Color();
+    const height=(x,z,t)=>{const u=(x+W/2)/W;return Math.pow(u,2.1)*12-2+Math.sin(x*.14+t)*Math.cos(z*.13-t*.65)*(1+u)+Math.sin(x*.06-z*.1+t*.3)*1.7};
+    for(let i=0;i<pos.count;i++){const y=height(pos.getX(i),pos.getZ(i),0),h=Math.max(0,Math.min(1,(y+3)/13));pos.setY(i,y);shade.copy(a).lerp(b,Math.min(1,h*1.7));if(h>.62)shade.lerp(c,(h-.62)*1.5);colors.set([shade.r,shade.g,shade.b],i*3)}geo.setAttribute('color',new THREE.BufferAttribute(colors,3));
+    const points=new THREE.Points(geo,new THREE.PointsMaterial({size:.28,vertexColors:true,transparent:true,opacity:.9,depthWrite:false})),group=new THREE.Group();group.add(points);group.rotation.y=-.22;scene.add(group);
+    let ty=-.22,cy=-.22,tx=0,cx=0,drag=false,lx=0,ly=0,t=0,visible=true;canvas.addEventListener('pointerdown',e=>{drag=true;lx=e.clientX;ly=e.clientY;canvas.setPointerCapture(e.pointerId)});canvas.addEventListener('pointermove',e=>{if(!drag)return;ty+=(e.clientX-lx)*.004;tx=Math.max(-.3,Math.min(.3,tx+(e.clientY-ly)*.002));lx=e.clientX;ly=e.clientY});addEventListener('pointerup',()=>drag=false);new IntersectionObserver(e=>visible=e[0].isIntersecting).observe(hero);
+    const resize=()=>{renderer.setSize(hero.clientWidth,hero.clientHeight,false);camera.aspect=hero.clientWidth/hero.clientHeight;camera.updateProjectionMatrix()};resize();addEventListener('resize',resize);
+    const frame=()=>{requestAnimationFrame(frame);if(!visible)return;t+=.009;for(let i=0;i<pos.count;i++)pos.setY(i,height(pos.getX(i),pos.getZ(i),t));pos.needsUpdate=true;if(!drag)ty+=.0009;cy+=(ty-cy)*.06;cx+=(tx-cx)*.06;group.rotation.y=cy;group.rotation.x=cx;camera.lookAt(0,2,0);renderer.render(scene,camera)};frame();
+  }
+  const boot=()=>{body.classList.add('loaded');startTerrain()};addEventListener('load',()=>setTimeout(boot,450));setTimeout(boot,1800);
+})();
