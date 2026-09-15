@@ -20,4 +20,45 @@
     const frame=()=>{requestAnimationFrame(frame);if(!visible)return;t+=.009;for(let i=0;i<pos.count;i++)pos.setY(i,height(pos.getX(i),pos.getZ(i),t));pos.needsUpdate=true;if(!drag)ty+=.0009;cy+=(ty-cy)*.06;cx+=(tx-cx)*.06;group.rotation.y=cy;group.rotation.x=cx;camera.lookAt(0,2,0);renderer.render(scene,camera)};frame();
   }
   const boot=()=>{body.classList.add('loaded');startTerrain()};addEventListener('load',()=>setTimeout(boot,450));setTimeout(boot,1800);
+
+  function splitLetters(){
+    document.querySelectorAll('[data-reveal="letters"]').forEach(el=>{
+      const text=el.textContent;
+      el.textContent="";
+      let i=0;
+      for(const ch of text){
+        const span=document.createElement("span");
+        span.className="L"+(ch==="."?" dot":"");
+        span.style.setProperty("--i",i);
+        span.textContent=ch===" "?" ":ch;
+        el.appendChild(span);
+        i++;
+      }
+    });
+  }
+
+  window.showToast=function(title,msg){
+    const t=document.getElementById("toastTitle"),m=document.getElementById("toastMsg"),el=document.getElementById("toast");
+    if(!el)return;
+    t.textContent=title;m.textContent=msg;
+    el.classList.add("show");clearTimeout(window.showToast._t);
+    window.showToast._t=setTimeout(()=>el.classList.remove("show"),4200);
+  };
+
+  function initCopyChips(){
+    document.querySelectorAll("[data-email]").forEach(btn=>{
+      btn.addEventListener("click",async()=>{
+        const email=btn.getAttribute("data-email");
+        try{
+          await navigator.clipboard.writeText(email);
+          showToast("Copied",email+" is on your clipboard");
+        }catch(e){
+          showToast("Copy this address",email);
+        }
+      });
+    });
+  }
+
+  splitLetters();
+  initCopyChips();
 })();

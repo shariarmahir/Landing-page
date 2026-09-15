@@ -24,8 +24,8 @@ const SETUP=[
  {g:"Executive & conference",a:70000,i:[["CEO / executive desk",18000],["Executive ergonomic chair",10000],["Conference / meeting table",18000],["Conference chairs — 6",12000],["Storage cabinet",7000],["Bookshelf / display rack",3000],["File / document storage boxes — 1 lot",2000]]},
  {g:"Signboard & indoor signage",a:60000,i:[["Outdoor illuminated signboard",30000],["Reception wall branding",8000],["Indoor directional signage",5000],["Room / department nameplates",5000],["Main entrance nameplate",3000],["Window / door graphics",4000],["Installation & miscellaneous",5000]]}
 ]},
-{l:"Air conditioning",a:280000,n:"Four split units (1 × 2.0-ton, 3 × 1.5-ton) with installation and dedicated wiring — a final budget cap of ৳2,80,000 including a ৳3,000 price contingency.",d:[
- {g:null,i:[["2.0-ton split AC — 1",75000],["1.5-ton split AC — 3 × ৳55,000",165000],["AC installation & commissioning",20000],["Copper pipe, drain pipe & fittings",10000],["Dedicated wiring, breakers & isolators",7000],["Price-adjustment contingency",3000]]}
+{l:"Air conditioning",a:280000,n:"Four split units (1 × 2.0-ton, 3 × 1.5-ton) with installation and dedicated wiring — a final budget cap of BDT 2,80,000 including a BDT 3,000 price contingency.",d:[
+ {g:null,i:[["2.0-ton split AC — 1",75000],["1.5-ton split AC — 3 × BDT 55,000",165000],["AC installation & commissioning",20000],["Copper pipe, drain pipe & fittings",10000],["Dedicated wiring, breakers & isolators",7000],["Price-adjustment contingency",3000]]}
 ]},
 {l:"Technology & equipment",a:424000,n:"The complete technology stack: nine laptops, networking, CCTV, UPS backup, display and communications.",d:[
  {g:null,i:[["Used laptops — 9",230000],["Multifunction printer / scanner",20000],["CCTV system",15000],["Router",3000],["24-port network switch",7500],["Wi-Fi access points / extenders",7500],["UPS units",31500],["External backup drives",12000],["Headsets",13500],["Business phones — 2",16000],["Waiting-area TV / display",30000],["LAN / network cabling",15000],["Intercom",10000],["Paper shredder",8000],["Cable management & accessories",5000]]}
@@ -36,7 +36,7 @@ const SETUP=[
 {l:"Branding & stationery",a:80000,n:"Company branding and stationery for both ventures.",d:[
  {g:null,i:[["Visiting cards",8000],["Letterheads / envelopes",5000],["ID cards",5000],["Brochures / company profiles",20000],["Folders / presentation materials",8000],["Stamps / seals",3000],["Initial stationery",15000],["Basic promotional materials",16000]]}
 ]},
-{l:"Legal, registration & software",a:80000,n:"Legal, registration and software setup — a final cap of ৳80,000 including a ৳5,000 contingency.",d:[
+{l:"Legal, registration & software",a:80000,n:"Legal, registration and software setup — a final cap of BDT 80,000 including a BDT 5,000 contingency.",d:[
  {g:null,i:[["Company / legal restructuring & documentation",20000],["Trade licence setup / renewal",5000],["TIN / BIN / VAT documentation & assistance",5000],["Partnership / shareholder / investment agreements",15000],["Trademark / legal consultation",8000],["Accounting & bookkeeping system setup",7000],["Basic business software configuration",5000],["Domain, hosting & business email setup",10000],["Registration price contingency",5000]]}
 ]},
 {l:"Safety & miscellaneous",a:25000,n:"Safety and miscellaneous office setup.",d:[
@@ -80,7 +80,7 @@ const COMP=[["One-time setup",15.5,"#b9793f"],["12-month operations",66,"#1f6b4a
 const CNT={inv:INVESTED.length,setup:SETUP.reduce((s,c)=>s+c.d.reduce((t,g)=>t+g.i.length,0),0),mrc:MRC.reduce((s,c)=>s+(c.d?c.d[0].i.length:0),0),yrc:YRC.length,cont:CONT.length};
 const LINE_TOTAL=CNT.inv+CNT.setup+CNT.mrc+CNT.yrc+CNT.cont;
 
-const fmtB=n=>{const s=Math.round(Math.abs(n)).toString(),l3=s.slice(-3),rest=s.slice(0,-3);return (n<0?"−":"")+"৳"+(rest?rest.replace(/\B(?=(\d{2})+(?!\d))/g,",")+",":"")+l3;};
+const fmtB=n=>{const s=Math.round(Math.abs(n)).toString(),l3=s.slice(-3),rest=s.slice(0,-3);return (n<0?"−":"")+"BDT "+(rest?rest.replace(/\B(?=(\d{2})+(?!\d))/g,",")+",":"")+l3;};
 const pc=(a,t)=>(a/t*100).toFixed(1)+"%";
 
 const ledgerEl=document.getElementById("ledger");
@@ -101,11 +101,11 @@ summary(){
   const T=SUM.final;
   const rows=[
    {cls:"ctx",n:"Founder capital already expended across both ventures — the Biluibaba platform build, licensing and launch, and Study Insights expenses to date. Shown for completeness; excluded from the ask.",c:["Already invested — both ventures",fmtB(SUM.inv),"—","Founder-expended to date · excluded from this ask"]},
-   {n:"One-time costs still to be expended: office establishment ৳6.00 L, air conditioning ৳2.80 L, technology ৳4.24 L, kitchen ৳0.55 L, branding ৳0.80 L, legal ৳0.80 L and safety ৳0.25 L. Categories calculate to ৳15,44,000; the commitment carries ৳15,50,000.",c:["One-time costs — to expend",fmtB(SUM.otc),pc(SUM.otc,T),"Office, technology, AC, branding, legal & safety"]},
-   {n:"Twelve months of the full monthly recurring cost — ৳5,50,000 × 12. Covers the ten-person shared team, rent and utilities, marketing for both ventures, IT and a daily operating buffer.",c:["12-month recurring costs",fmtB(SUM.mrcY),pc(SUM.mrcY,T),"Salaries, rent, marketing & IT — ৳5.50 L × 12"]},
+   {n:"One-time costs still to be expended: office establishment BDT 6.00 L, air conditioning BDT 2.80 L, technology BDT 4.24 L, kitchen BDT 0.55 L, branding BDT 0.80 L, legal BDT 0.80 L and safety BDT 0.25 L. Categories calculate to BDT 15,44,000; the commitment carries BDT 15,50,000.",c:["One-time costs — to expend",fmtB(SUM.otc),pc(SUM.otc,T),"Office, technology, AC, branding, legal & safety"]},
+   {n:"Twelve months of the full monthly recurring cost — BDT 5,50,000 × 12. Covers the ten-person shared team, rent and utilities, marketing for both ventures, IT and a daily operating buffer.",c:["12-month recurring costs",fmtB(SUM.mrcY),pc(SUM.mrcY,T),"Salaries, rent, marketing & IT — BDT 5.50 L × 12"]},
    {n:"Annual renewals and compliance: domains and hosting, software licences, accounting and tax, equipment servicing, business renewals, printing and backups.",c:["Yearly recurring costs",fmtB(SUM.yrc),pc(SUM.yrc,T),"Renewals, compliance, servicing & brand refresh"]},
-   {n:"A protected reserve of ৳4,50,000 allocated across ten defined emergency categories. Under the base plan it is never drawn — month twelve ends with ৳4.70 lakh still in hand.",c:["Emergency reserve",fmtB(SUM.cont),pc(SUM.cont,T),"Ten defined risk categories · held intact"]},
-   {cls:"em",n:"One-time ৳15,50,000 + twelve months of recurring ৳66,00,000 + yearly recurring ৳1,80,000 + emergency reserve ৳4,50,000.",c:["Calculated funding requirement",fmtB(SUM.calc),"—",""]},
+   {n:"A protected reserve of BDT 4,50,000 allocated across ten defined emergency categories. Under the base plan it is never drawn — month twelve ends with BDT 4.70 lakh still in hand.",c:["Emergency reserve",fmtB(SUM.cont),pc(SUM.cont,T),"Ten defined risk categories · held intact"]},
+   {cls:"em",n:"One-time BDT 15,50,000 + twelve months of recurring BDT 66,00,000 + yearly recurring BDT 1,80,000 + emergency reserve BDT 4,50,000.",c:["Calculated funding requirement",fmtB(SUM.calc),"—",""]},
    {n:"Rounds the calculated requirement to a clean commitment figure.",c:["Rounding buffer",fmtB(SUM.buf),pc(SUM.buf,T),"Commitment rounding"]},
    {cls:"fin",n:"The funding commitment being raised for both ventures, together.",c:["Final funding commitment",fmtB(SUM.final),"100.0%","The ask"]}
   ];
@@ -125,7 +125,7 @@ setup(){
     h+=detRows(c,i,4);
   });
   h+=`<tr class="em" data-l="Calculated one-time total" data-n="Sum of all seven setup categories as calculated in the model."><td class="tl" data-c="0">Calculated one-time total</td><td data-c="1">${fmtB(SUM.otcC)}</td><td data-c="2">100.0%</td><td data-c="3">${CNT.setup} items</td></tr>`;
-  h+=`<tr class="ctx" data-l="Committed one-time envelope" data-n="The funding commitment carries ৳15,50,000 for the one-time envelope — the ৳6,000 difference over the calculated ৳15,44,000 is absorbed within the commitment's rounding."><td class="tl" data-c="0">Committed one-time envelope</td><td data-c="1">${fmtB(SUM.otc)}</td><td data-c="2">—</td><td data-c="3">carried in the ask</td></tr>`;
+  h+=`<tr class="ctx" data-l="Committed one-time envelope" data-n="The funding commitment carries BDT 15,50,000 for the one-time envelope — the BDT 6,000 difference over the calculated BDT 15,44,000 is absorbed within the commitment's rounding."><td class="tl" data-c="0">Committed one-time envelope</td><td data-c="1">${fmtB(SUM.otc)}</td><td data-c="2">—</td><td data-c="3">carried in the ask</td></tr>`;
   return h+"</tbody>";
 },
 mrc(){
@@ -135,23 +135,23 @@ mrc(){
     h+=`<tr${hasD?` class="xr" data-i="${i}"`:""} data-l="${c.l}" data-n="${c.n||""}"><td class="tl" data-c="0">${c.l}${hasD?'<i class="chev">+</i>':""}</td><td data-c="1">${fmtB(c.a)}</td><td data-c="2">${fmtB(c.a*12)}</td><td data-c="3">${pc(c.a,SUM.mrc)}</td></tr>`;
     if(hasD)h+=detRows(c,i,4);
   });
-  h+=`<tr class="em" data-l="Total monthly recurring" data-n="The full monthly burn of the combined organisation: ৳5,50,000 per month, ৳66,00,000 across twelve months."><td class="tl" data-c="0">Total monthly recurring</td><td data-c="1">${fmtB(SUM.mrc)}</td><td data-c="2">${fmtB(SUM.mrcY)}</td><td data-c="3">100.0%</td></tr>`;
+  h+=`<tr class="em" data-l="Total monthly recurring" data-n="The full monthly burn of the combined organisation: BDT 5,50,000 per month, BDT 66,00,000 across twelve months."><td class="tl" data-c="0">Total monthly recurring</td><td data-c="1">${fmtB(SUM.mrc)}</td><td data-c="2">${fmtB(SUM.mrcY)}</td><td data-c="3">100.0%</td></tr>`;
   return h+"</tbody>";
 },
 annual(){
   let h=thRow(["Item","Amount (BDT)","Share"])+`<tbody>`;
-  h+=`<tr class="grp"><td colspan="3" data-c="0">Yearly recurring — ৳1,80,000 per year</td></tr>`;
+  h+=`<tr class="grp"><td colspan="3" data-c="0">Yearly recurring — BDT 1,80,000 per year</td></tr>`;
   YRC.forEach(r=>{h+=`<tr data-l="${r[0]}" data-n="${r[2]}"><td class="tl" data-c="0">${r[0]}</td><td data-c="1">${fmtB(r[1])}</td><td data-c="2">${pc(r[1],SUM.yrc)}</td></tr>`;});
-  h+=`<tr class="grp"><td colspan="3" data-c="0">Emergency reserve — ৳4,50,000 · one-off, protected</td></tr>`;
+  h+=`<tr class="grp"><td colspan="3" data-c="0">Emergency reserve — BDT 4,50,000 · one-off, protected</td></tr>`;
   CONT.forEach(r=>{h+=`<tr data-l="${r[0]}" data-n="Emergency reserve allocation: ${r[0].toLowerCase()}."><td class="tl" data-c="0">${r[0]}</td><td data-c="1">${fmtB(r[1])}</td><td data-c="2">${pc(r[1],SUM.cont)}</td></tr>`;});
   return h+"</tbody>";
 }};
 const TABNOTE={
-summary:"Build-up of the ৳88,00,000 commitment · the already-invested amount is shown for context and excluded from the ask · hover any row for its definition",
-invested:"Founder-funded, already expended · BB = Biluibaba · SI = Study Insights · totals ৳6,00,000",
-setup:"Click a category to open its line items · categories calculate to ৳15,44,000; the commitment carries ৳15,50,000",
-mrc:"Click a category to open its line items · ৳5,50,000 per month · annualized = monthly × 12 = ৳66,00,000",
-annual:"Yearly recurring charges (৳1,80,000 / year) and the protected emergency reserve (৳4,50,000) across ten risk categories"};
+summary:"Build-up of the BDT 88,00,000 commitment · the already-invested amount is shown for context and excluded from the ask · hover any row for its definition",
+invested:"Founder-funded, already expended · BB = Biluibaba · SI = Study Insights · totals BDT 6,00,000",
+setup:"Click a category to open its line items · categories calculate to BDT 15,44,000; the commitment carries BDT 15,50,000",
+mrc:"Click a category to open its line items · BDT 5,50,000 per month · annualized = monthly × 12 = BDT 66,00,000",
+annual:"Yearly recurring charges (BDT 1,80,000 / year) and the protected emergency reserve (BDT 4,50,000) across ten risk categories"};
 function renderTab(){
   ledgerEl.innerHTML=RENDER[ui.tab]();
   document.getElementById("ledgerNoteTx").textContent=TABNOTE[ui.tab];
@@ -201,20 +201,20 @@ function initTableFx(){
 }
 function buildRail(){
   document.getElementById("stackBar").innerHTML=COMP.map(c=>`<i style="width:${(c[1]/88*100)}%;background:${c[2]}"></i>`).join("");
-  document.getElementById("stackList").innerHTML=COMP.map(c=>`<li><span class="sl"><i style="background:${c[2]}"></i>${c[0]}</span><b>৳${c[1].toFixed(2)} L</b></li>`).join("");
+  document.getElementById("stackList").innerHTML=COMP.map(c=>`<li><span class="sl"><i style="background:${c[2]}"></i>${c[0]}</span><b>BDT ${c[1].toFixed(2)} L</b></li>`).join("");
 }
 function buildUof(){
   const items=[["One-time setup — office, technology & branding",15.5],["12-month operations — team, rent & marketing",66],["Annual recurring — renewals & compliance",1.8],["Emergency reserve — protected",4.5],["Rounding buffer",0.2]];
   const mx=Math.max(...items.map(i=>i[1]));
   document.getElementById("uofList").innerHTML=items.map((u,i)=>`
-    <div class="uof"><div class="uof-head"><span>${u[0]}</span><span>৳${u[1].toFixed(2)} L · ${(u[1]/88*100).toFixed(1)}%</span></div>
+    <div class="uof"><div class="uof-head"><span>${u[0]}</span><span>BDT ${u[1].toFixed(2)} L · ${(u[1]/88*100).toFixed(1)}%</span></div>
     <div class="uof-track"><div class="uof-fill${i>2?" alt":""}" style="--w:${Math.max(1.2,u[1]/mx*100).toFixed(1)}%;--d:${i*0.1}s"></div></div></div>`).join("");
 }
 function updateCaptions(){
-  document.getElementById("capDeploy").innerHTML=`The commitment absorbs the one-time setup, then <strong>৳5.50 lakh</strong> of operations each month. At month twelve — after setup, twelve months of recurring costs and the annual charge — <strong>৳4.70 lakh</strong> remains, leaving the <strong>৳4.50 lakh</strong> emergency reserve untouched across the entire plan.`;
-  document.getElementById("capAlloc").innerHTML=`Three quarters of the commitment funds twelve months of operations; <strong>17.6%</strong> builds the shared office and technology; the <strong>৳4.50 lakh</strong> reserve stays protected.`;
+  document.getElementById("capDeploy").innerHTML=`The commitment absorbs the one-time setup, then <strong>BDT 5.50 lakh</strong> of operations each month. At month twelve — after setup, twelve months of recurring costs and the annual charge — <strong>BDT 4.70 lakh</strong> remains, leaving the <strong>BDT 4.50 lakh</strong> emergency reserve untouched across the entire plan.`;
+  document.getElementById("capAlloc").innerHTML=`Three quarters of the commitment funds twelve months of operations; <strong>17.6%</strong> builds the shared office and technology; the <strong>BDT 4.50 lakh</strong> reserve stays protected.`;
   document.getElementById("capMonthly").innerHTML=`Salaries — a ten-person team shared across both ventures — are <strong>73.6%</strong> of the monthly burn. Biluibaba and Study Insights each carry dedicated marketing budgets.`;
-  document.getElementById("capSetup").innerHTML=`Office build-out (<strong>৳6.00 L</strong>) and technology (<strong>৳4.24 L</strong>) dominate the one-time setup. All <strong>${CNT.setup} line items</strong> are itemized in the model tables and the Excel export.`;
+  document.getElementById("capSetup").innerHTML=`Office build-out (<strong>BDT 6.00 L</strong>) and technology (<strong>BDT 4.24 L</strong>) dominate the one-time setup. All <strong>${CNT.setup} line items</strong> are itemized in the model tables and the Excel export.`;
 }
 let chDeploy,chAlloc,chMonthly,chSetup;
 const depLabels=["Day 0","Setup"];for(let m=1;m<=12;m++)depLabels.push("M"+m);
@@ -232,18 +232,18 @@ function initCharts(){
     type:"line",
     data:{labels:depLabels,datasets:[
       {label:"Remaining cash",data:depRem,borderColor:"#1f6b4a",backgroundColor:"rgba(31,107,74,.10)",borderWidth:2.5,pointRadius:3.5,pointHoverRadius:5,tension:.35,fill:true},
-      {label:"Emergency reserve floor — ৳4.50 L",data:Array(14).fill(4.5),borderColor:"#b9793f",borderWidth:2,borderDash:[6,5],pointRadius:0},
+      {label:"Emergency reserve floor — BDT 4.50 L",data:Array(14).fill(4.5),borderColor:"#b9793f",borderWidth:2,borderDash:[6,5],pointRadius:0},
       {type:"scatter",label:"Selected month",data:cursorData,backgroundColor:"#68c494",borderColor:"#151310",borderWidth:2,pointRadius:6,pointHoverRadius:7}
     ]},
     options:{maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
-      plugins:{legend:LEG,tooltip:{...TT,callbacks:{label:c=>{const y=c.parsed.y;return [` Remaining: ৳${y.toFixed(2)} L`,` Deployed: ৳${(88-y).toFixed(2)} L`];}}}},
-      scales:{x:{grid:{display:false},ticks:{maxRotation:0}},y:{grid:GRID,border:{display:false},min:0,max:92,ticks:{callback:v=>"৳"+v+"L"}}}}
+      plugins:{legend:LEG,tooltip:{...TT,callbacks:{label:c=>{const y=c.parsed.y;return [` Remaining: BDT ${y.toFixed(2)} L`,` Deployed: BDT ${(88-y).toFixed(2)} L`];}}}},
+      scales:{x:{grid:{display:false},ticks:{maxRotation:0}},y:{grid:GRID,border:{display:false},min:0,max:92,ticks:{callback:v=>"BDT "+v+"L"}}}}
   });
   const centerText={id:"centerText",afterDraw(chart){
     const meta=chart.getDatasetMeta(0);if(!meta.data.length)return;
     const {ctx}=chart,x=meta.data[0].x,y=meta.data[0].y;
     ctx.save();ctx.textAlign="center";
-    ctx.font="700 24px Fraunces, Georgia, serif";ctx.fillStyle="#151310";ctx.fillText("৳88 L",x,y-2);
+    ctx.font="700 24px Fraunces, Georgia, serif";ctx.fillStyle="#151310";ctx.fillText("BDT 88 L",x,y-2);
     ctx.font="500 8.5px 'Spline Sans Mono', monospace";ctx.fillStyle="#6F695B";ctx.fillText("TOTAL COMMITMENT",x,y+16);
     ctx.restore();
   }};
@@ -252,7 +252,7 @@ function initCharts(){
     data:{labels:COMP.map(c=>c[0]),datasets:[{data:COMP.map(c=>c[1]),backgroundColor:COMP.map(c=>c[2]),borderColor:"#FAF6EC",borderWidth:3}]},
     options:{maintainAspectRatio:false,cutout:"68%",
       plugins:{legend:{position:"bottom",labels:{boxWidth:9,boxHeight:9,padding:12}},
-      tooltip:{...TT,callbacks:{label:c=>` ${c.label}: ৳${c.parsed} L · ${(c.parsed/88*100).toFixed(1)}%`}}}}
+      tooltip:{...TT,callbacks:{label:c=>` ${c.label}: BDT ${c.parsed} L · ${(c.parsed/88*100).toFixed(1)}%`}}}}
     ,plugins:[centerText]
   });
   chMonthly=new Chart(document.getElementById("chMonthly"),{
@@ -261,8 +261,8 @@ function initCharts(){
       {data:[4.05,0.40,0.40,0.30,0.30,0.05],backgroundColor:["#1f6b4a","#43936b","#8a8471","#b9793f","#b3a98f","#8a8471"],barPercentage:.62}
     ]},
     options:{indexAxis:"y",maintainAspectRatio:false,
-      plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>` ৳${c.parsed.x.toFixed(2)} L / month · ${(c.parsed.x/5.5*100).toFixed(1)}% of MRC`}}},
-      scales:{x:{grid:GRID,border:{display:false},ticks:{callback:v=>"৳"+v+"L"}},y:{grid:{display:false}}}}
+      plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>` BDT ${c.parsed.x.toFixed(2)} L / month · ${(c.parsed.x/5.5*100).toFixed(1)}% of MRC`}}},
+      scales:{x:{grid:GRID,border:{display:false},ticks:{callback:v=>"BDT "+v+"L"}},y:{grid:{display:false}}}}
   });
   chSetup=new Chart(document.getElementById("chSetup"),{
     type:"bar",
@@ -270,8 +270,8 @@ function initCharts(){
       {data:[6.00,4.24,2.80,0.80,0.80,0.55,0.25],backgroundColor:["#1f6b4a","#2e7350","#43936b","#6baf88","#8cc5a5","#a9d6be","#c4e4d3"],barPercentage:.6}
     ]},
     options:{indexAxis:"y",maintainAspectRatio:false,
-      plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>` ৳${c.parsed.x.toFixed(2)} L · ${(c.parsed.x/15.44*100).toFixed(1)}% of setup`}}},
-      scales:{x:{grid:GRID,border:{display:false},ticks:{callback:v=>"৳"+v+"L"}},y:{grid:{display:false}}}}
+      plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>` BDT ${c.parsed.x.toFixed(2)} L · ${(c.parsed.x/15.44*100).toFixed(1)}% of setup`}}},
+      scales:{x:{grid:GRID,border:{display:false},ticks:{callback:v=>"BDT "+v+"L"}},y:{grid:{display:false}}}}
   });
 }
 function initDeploySlider(){
@@ -282,24 +282,17 @@ function initDeploySlider(){
     cursorData.fill(null);cursorData[idx]=rem;
     if(chDeploy)chDeploy.update("none");
     document.getElementById("depOut").textContent=v===0?"Setup complete":"Month "+v;
-    document.getElementById("depSpent").textContent="৳"+(88-rem).toFixed(2)+" L";
-    document.getElementById("depLeft").textContent="৳"+rem.toFixed(2)+" L";
-    document.getElementById("depRes").textContent=rem>=4.5?"Intact · ৳4.50 L held":"Reserve drawn";
+    document.getElementById("depSpent").textContent="BDT "+(88-rem).toFixed(2)+" L";
+    document.getElementById("depLeft").textContent="BDT "+rem.toFixed(2)+" L";
+    document.getElementById("depRes").textContent=rem>=4.5?"Intact · BDT 4.50 L held":"Reserve drawn";
   };
   paint();apply();
   s.addEventListener("input",()=>{paint();apply();});
 }
 function buildTicker(){
-  const items=["Biluibaba × Study Insights","Funding commitment · ৳88 lakh","Monthly recurring · ৳5,50,000","12-month runway · fully funded","Emergency reserve · ৳4.5 lakh, protected","Students abroad annually · 52,799","Foreign education spend FY25 · $667.77M","Global consulting market · $4.04B → $6.34B","Bangladesh's first one-stop pet platform","Shared office · Dhaka Trade Centre"];
+  const items=["Biluibaba × Study Insights","Funding commitment · BDT 88 lakh","Monthly recurring · BDT 5,50,000","12-month runway · fully funded","Emergency reserve · BDT 4.5 lakh, protected","Students abroad annually · 52,799","Foreign education spend FY25 · $667.77M","Global consulting market · $4.04B → $6.34B","Bangladesh's first one-stop pet platform","Shared office · Dhaka Trade Centre"];
   const seq=items.map(t=>`<span class="tk">${t}</span><span class="tk-d"></span>`).join("");
   document.getElementById("tickerTrack").innerHTML=seq+seq;
-}
-function showToast(title,msg){
-  document.getElementById("toastTitle").textContent=title;
-  document.getElementById("toastMsg").textContent=msg;
-  const el=document.getElementById("toast");
-  el.classList.add("show");clearTimeout(showToast._t);
-  showToast._t=setTimeout(()=>el.classList.remove("show"),4200);
 }
 function exportXLSX(){
   if(!window.XLSX){showToast("Library unavailable","The Excel engine could not be loaded — check your connection.");return;}
@@ -328,7 +321,7 @@ function exportXLSX(){
     ["Component","Amount (BDT)","Share","What it covers"],
     ["Already invested — both ventures (context)",SUM.inv,"","Founder-expended to date; excluded from the ask"],
     ["One-time costs — to expend",SUM.otc,SUM.otc/T,"Office, technology, AC, branding, legal & safety"],
-    ["12-month recurring costs",SUM.mrcY,SUM.mrcY/T,"Salaries, rent, marketing & IT — ৳5,50,000 × 12"],
+    ["12-month recurring costs",SUM.mrcY,SUM.mrcY/T,"Salaries, rent, marketing & IT — BDT 5,50,000 × 12"],
     ["Yearly recurring costs",SUM.yrc,SUM.yrc/T,"Renewals, compliance, servicing & brand refresh"],
     ["Emergency reserve",SUM.cont,SUM.cont/T,"Ten defined risk categories — held intact"],
     ["Calculated funding requirement",SUM.calc,"",""],
@@ -337,7 +330,7 @@ function exportXLSX(){
   ],[null,null,null,null,[BF],[BF,PF],[BF,PF],[BF,PF],[BF,PF],[BF],[BF,PF],[BF,PF]],[{wch:38},{wch:15},{wch:10},{wch:46}]);
   sh("One-Time Invested",[
     ["One-time costs — already expended (founder-funded)"],
-    ["BDT · totals ৳6,00,000"],
+    ["BDT · totals BDT 6,00,000"],
     [],
     ["Item","Venture","Amount (BDT)"],
     ...INVESTED.map(r=>[r[0],r[1]==="BB"?"Biluibaba":"Study Insights",r[2]]),
@@ -355,7 +348,7 @@ function exportXLSX(){
   }));
   setupAoa.push(["","GRAND TOTAL",SUM.otcC]);setupFmts.push([null,null,BF]);
   sh("One-Time To Expend",setupAoa,setupFmts,[{wch:30},{wch:52},{wch:14}]);
-  const mrcAoa=[["Monthly recurring costs"],["BDT · totals ৳5,50,000 per month"],[],["Category","Item","Monthly (BDT)"]];
+  const mrcAoa=[["Monthly recurring costs"],["BDT · totals BDT 5,50,000 per month"],[],["Category","Item","Monthly (BDT)"]];
   const mrcFmts=[null,null,null,null];
   MRC.forEach(c=>{
     if(c.d){c.d[0].i.forEach(it=>{mrcAoa.push([c.l,it[0],it[1]]);mrcFmts.push([null,null,BF]);});
@@ -366,13 +359,13 @@ function exportXLSX(){
   mrcFmts.push([null,null,BF],[null,null,BF]);
   sh("Monthly Recurring",mrcAoa,mrcFmts,[{wch:34},{wch:52},{wch:15}]);
   sh("Yearly Recurring",[
-    ["Yearly recurring costs"],["BDT · totals ৳1,80,000 per year"],[],
+    ["Yearly recurring costs"],["BDT · totals BDT 1,80,000 per year"],[],
     ["Item","Amount (BDT)"],
     ...YRC.map(r=>[r[0],r[1]]),
     ["Total",SUM.yrc]
   ],[null,null,null,null,...YRC.map(()=>[BF]),[BF]],[{wch:40},{wch:14}]);
   sh("Emergency Reserve",[
-    ["Emergency reserve"],["BDT · totals ৳4,50,000 · held intact across the 12-month plan"],[],
+    ["Emergency reserve"],["BDT · totals BDT 4,50,000 · held intact across the 12-month plan"],[],
     ["Risk category","Reserve (BDT)"],
     ...CONT.map(r=>[r[0],r[1]]),
     ["Total",SUM.cont]
