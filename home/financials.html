@@ -1,36 +1,79 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Financial Model | Biluibaba x Study Insights</title><meta name="description" content="The combined funding requirement and cost structure for Biluibaba and Study Insights."><link rel="icon" href="favicon.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/brand.css"><script src="https://cdn.jsdelivr.net/npm/chart.js"></script></head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Financial Model | Biluibaba x Study Insights</title><meta name="description" content="The combined funding requirement and cost structure for Biluibaba and Study Insights, with the full line-item breakdown and Excel export."><link rel="icon" href="favicon.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/brand.css"><script src="https://cdn.jsdelivr.net/npm/chart.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script></head>
 <body><div class="page"><div class="loader"><div><b>BILUIBABA x STUDY INSIGHTS</b><i></i></div></div><nav id="nav"><a class="brand" href="index.html">Biluibaba<i></i>Study Insights</a><div class="links"><a href="index.html">Home</a><a href="company.html">Companies</a><a href="team.html">Team</a><a class="active" href="financials.html">Financials</a><a href="contact.html">Contact</a></div><button class="menu" id="menuOpen" aria-label="Open navigation">+</button></nav><div class="mobile"><button id="menuClose" aria-label="Close navigation">x</button><a href="index.html">Home</a><a href="company.html">Companies</a><a href="team.html">Team</a><a href="financials.html">Financials</a><a href="contact.html">Contact</a></div>
-<main><section class="hero"><canvas id="terrain" aria-hidden="true"></canvas><div class="hero-copy"><div class="eyebrow">Approved cost structure</div><h1 class="hero-title">The financial model,<br><em>made legible.</em></h1><p class="hero-text">A direct translation of the combined Biluibaba and Study Insights cost model. Figures describe the funding requirement, not a revenue forecast.</p><a class="button" href="#breakdown">See the breakdown <span>↓</span></a></div><span class="drag-hint">Drag the landscape</span><div class="hero-stats"><div><b>৳88L</b><span>Final funding commitment</span></div><div><b>৳15.5L</b><span>One-time costs</span></div><div><b>৳66L</b><span>12-month recurring</span></div><div><b>৳5.5L</b><span>Monthly operating base</span></div></div></section>
-<div class="ticker"><div><span>One-time costs ৳15,50,000</span><i></i><span>12-month recurring ৳66,00,000</span><i></i><span>Yearly recurring ৳1,80,000</span><i></i><span>Emergency reserve ৳4,50,000</span><i></i><span>One-time costs ৳15,50,000</span><i></i><span>12-month recurring ৳66,00,000</span><i></i><span>Yearly recurring ৳1,80,000</span><i></i><span>Emergency reserve ৳4,50,000</span><i></i></div></div>
-<section class="section" id="breakdown"><div class="wrap"><div class="section-head" data-reveal><div class="eyebrow">Funding composition</div><h2 class="display">Every taka has a <em>defined role.</em></h2><p class="lead">The combined model funds one-time setup, twelve months of operations, yearly renewals and a contingency reserve.</p></div>
-<div class="stat-strip" data-reveal><div class="stat"><b>৳15,50,000</b><span>One-time costs — office, technology, facilities, branding, legal &amp; safety setup.</span></div><div class="stat"><b>৳66,00,000</b><span>12-month recurring costs — ৳5,50,000 per month across salaries, rent, IT and marketing.</span></div><div class="stat"><b>৳1,80,000</b><span>Yearly recurring costs — renewals, compliance, servicing and brand refresh.</span></div></div>
-<div class="chart-panel" data-reveal style="margin-top:26px"><h3>Funding requirement by component</h3><div class="chart-box"><canvas id="cashChart" aria-label="Bar chart showing funding requirements by cost component"></canvas></div></div>
+<main><section class="hero"><canvas id="terrain" aria-hidden="true"></canvas><div class="hero-copy"><div class="eyebrow">Approved cost structure</div><h1 class="hero-title">Every taka,<br><em>accounted for.</em></h1><p class="hero-text">The combined cost model for both ventures — one-time setup, monthly operations, annual recurring and a protected emergency reserve — exactly as documented. Click a category to open its full line-item detail.</p><a class="button" href="#model">See the breakdown <span>↓</span></a></div><span class="drag-hint">Drag the landscape</span><div class="hero-stats"><div><b>৳88L</b><span>Final funding commitment</span></div><div><b>৳15.5L</b><span>One-time costs</span></div><div><b>৳66L</b><span>12-month recurring</span></div><div><b>৳5.5L</b><span>Monthly operating base</span></div></div></section>
+<div class="ticker"><div id="tickerTrack"></div></div>
+<section class="section dark" id="model"><div class="wrap"><div class="section-head" data-reveal><div class="eyebrow">The commitment</div><h2 class="display">The model, <em>line by line.</em></h2><p class="lead">Hover any row for its definition; click a category to open its full line-item detail; hover a column to trace it.</p></div>
+<div class="model-grid">
+<aside class="rail" data-reveal>
+<h3>The commitment</h3>
+<div class="rail-big">৳88,00,000</div>
+<p class="rail-sub">৳88 lakh · ৳0.88 crore<br>12-month combined funding</p>
+<div class="stack-bar" id="stackBar"></div>
+<ul class="stack-list" id="stackList"></ul>
+<div class="rail-note"><b>Already invested — ৳6.00 lakh</b>Expended by the founders across both ventures to date: platform build, licensing, launch marketing and Study Insights setup. Not part of this ask.</div>
+<p class="rail-kv">Monthly recurring <b>৳5,50,000</b><br>Runway <b>12 months</b><br>Emergency reserve <b>protected</b></p>
+</aside>
+<div class="ledger" data-reveal style="--d:.1s">
+<div class="ledger-head">
+<div class="tabs" id="tabs">
+<button data-t="summary" class="on">Funding summary</button>
+<button data-t="invested">Invested to date</button>
+<button data-t="setup">One-time setup</button>
+<button data-t="mrc">Monthly recurring</button>
+<button data-t="annual">Annual &amp; reserve</button>
+</div>
+<div class="ledger-tools"><button class="exp-all" id="expAll">Expand all</button><span class="live"><span class="dot"></span>Combined model · BDT</span></div>
+</div>
+<div class="table-wrap"><table id="ledger" class="ledger-table"></table></div>
+<p class="ledger-note"><span id="ledgerNoteTx"></span></p>
+</div>
+</div>
 </div></section>
-<section class="section dark"><div class="wrap statement-grid">
-<div data-reveal><div class="eyebrow">Commitment bridge</div><h2 class="display">From components to <em>final commitment.</em></h2><div class="ledger" style="margin-top:28px"><div class="ledger-head"><h3>Final commitment bridge</h3><span>Source: combined cost model</span></div><table><tbody>
-<tr><td>One-time costs</td><td>৳15,50,000</td></tr>
-<tr><td>12-month recurring costs</td><td>৳66,00,000</td></tr>
-<tr><td>Yearly recurring costs</td><td>৳1,80,000</td></tr>
-<tr><td>Emergency reserve</td><td>৳4,50,000</td></tr>
-<tr class="em"><td>Calculated funding requirement</td><td>৳87,80,000</td></tr>
-<tr class="em"><td>Rounding buffer</td><td>৳20,000</td></tr>
-<tr class="em"><td>Final funding commitment</td><td>৳88,00,000</td></tr>
-</tbody></table></div></div>
-<div class="chart-panel" data-reveal style="--d:.1s"><h3>Commitment allocation</h3><div class="chart-box"><canvas id="fundingChart" aria-label="Doughnut chart showing cost allocation"></canvas></div></div>
+<section class="section" id="charts"><div class="wrap"><div class="section-head" data-reveal><div class="eyebrow">Visual analysis</div><h2 class="display">The shape of the <em>commitment.</em></h2><p class="lead">The same figures, drawn — where the money goes, how it burns each month, and how the twelve months deploy. Drag the slider to walk the plan month by month.</p></div>
+<div class="chart-panel main" data-reveal>
+<div class="cp-head"><h3>The 12-month deployment</h3><span class="cp-k">Remaining cash · ৳ lakh</span></div>
+<div class="chart-box tall"><canvas id="chDeploy"></canvas></div>
+<div class="deploy-ctl">
+<div class="dc-slider"><label>Months into operation</label><input type="range" id="depSlider" min="0" max="12" step="1" value="0"/><output id="depOut">Setup complete</output></div>
+<div class="dc-reads">
+<div class="dcr"><span>Deployed</span><b id="depSpent">৳15.50 L</b></div>
+<div class="dcr"><span>Remaining</span><b id="depLeft">৳72.50 L</b></div>
+<div class="dcr ok"><span>Emergency reserve</span><b id="depRes">Intact · ৳4.50 L held</b></div>
+</div>
+</div>
+<p class="cp-cap" id="capDeploy"></p>
+</div>
+<div class="chart-split">
+<div class="chart-panel" data-reveal style="--d:.06s"><div class="cp-head"><h3>Where the ৳88 lakh goes</h3><span class="cp-k">Allocation</span></div><div class="chart-box"><canvas id="chAlloc"></canvas></div><p class="cp-cap" id="capAlloc"></p></div>
+<div class="chart-panel" data-reveal style="--d:.12s"><div class="cp-head"><h3>Monthly operating rhythm</h3><span class="cp-k">৳ lakh per month</span></div><div class="chart-box"><canvas id="chMonthly"></canvas></div><p class="cp-cap" id="capMonthly"></p></div>
+</div>
+<div class="chart-panel" data-reveal><div class="cp-head"><h3>One-time setup by category</h3><span class="cp-k">৳ lakh</span></div><div class="chart-box"><canvas id="chSetup"></canvas></div><p class="cp-cap" id="capSetup"></p></div>
 </div></section>
-<section class="section soft"><div class="wrap"><div class="section-head" data-reveal><div class="eyebrow">Monthly operating base</div><h2 class="display">৳5,50,000 per month, <em>fully mapped.</em></h2><p class="lead">The 12-month recurring cost establishes the operating base across people, space, market development and administration.</p></div>
-<div class="ledger" data-reveal><div class="ledger-head"><h3>Monthly recurring cost</h3><span>BDT / month</span></div><table><tbody>
-<tr><td>Employee salaries</td><td>৳4,05,000</td></tr>
-<tr><td>Daily operating buffer</td><td>৳5,000</td></tr>
-<tr><td>Rent + utilities</td><td>৳40,000</td></tr>
-<tr><td>Biluibaba marketing</td><td>৳40,000</td></tr>
-<tr><td>Study-Insights marketing</td><td>৳30,000</td></tr>
-<tr><td>IT + administration</td><td>৳30,000</td></tr>
-<tr class="em"><td>Final MRC</td><td>৳5,50,000</td></tr>
-</tbody></table></div>
+<section class="section soft" id="ask"><div class="wrap"><div class="section-head" data-reveal><div class="eyebrow">The ask</div><h2 class="display">৳88 lakh. Twelve months.<br><em>Both ventures, funded.</em></h2><p class="lead">A single commitment of ৳88,00,000 covers the complete one-time setup of the shared office and a full twelve months of combined operations — with a ৳4.50 lakh emergency reserve protected for the entire plan. The founders have already invested ৳6,00,000 of their own capital to bring both ventures to this point.</p></div>
+<div class="ask-grid">
+<div class="uof-block" data-reveal><h3 class="blk-h">Use of funds</h3><div id="uofList"></div></div>
+<div class="terms" data-reveal style="--d:.1s"><h3 class="blk-h">Terms</h3>
+<div class="tr"><span>Funding commitment</span><b class="hl-g">৳88,00,000</b></div>
+<div class="tr"><span>Structure</span><b>One commitment · both ventures</b></div>
+<div class="tr"><span>Runway</span><b>12 months, fully funded</b></div>
+<div class="tr"><span>Monthly recurring</span><b>৳5,50,000</b></div>
+<div class="tr"><span>Already invested</span><b class="hl-a">৳6,00,000 · founders</b></div>
+<div class="tr"><span>Emergency reserve</span><b>৳4,50,000 · protected</b></div>
+<div class="tr"><span>Shared office</span><b>Dhaka Trade Centre, Karwan Bazar</b></div>
+<div class="tr" style="border-bottom:0"><span>Next step</span><b>On close of funding</b></div>
+</div>
+</div>
+<div data-reveal><h3 class="blk-h">What the commitment unlocks</h3>
+<div class="ms-row"><span class="ms-year">2025</span><div><h4>The launch</h4><p>Biluibaba begins operations in Dhaka City — e-commerce, vet care, delivery and adoption in one platform, giving pet owners a comfortable pet life.</p></div></div>
+<div class="ms-row"><span class="ms-year">2026</span><div><h4>National reach</h4><p>Biluibaba crosses the city boundary to serve other parts of Bangladesh, while Study Insights opens in March from the shared office at Dhaka Trade Centre.</p></div></div>
+<div class="ms-row"><span class="ms-year">2027</span><div><h4>Global impact</h4><p>Both ventures look across national borders — Biluibaba toward the global pet market, Study Insights toward its vision of South Asia's most trusted education consultancy.</p></div></div>
+</div>
 </div></section>
-<section id="download" class="section green-section"><div class="wrap location"><div data-reveal><div class="eyebrow">Source workbook</div><h3>Review the full Excel model.</h3><p>Use the live workbook to review the underlying line items and cost assumptions.</p></div><div class="contact-list" data-reveal><a href="https://docs.google.com/spreadsheets/d/1JqAQOL649M2TDzyaj-ULkS7OPRzmZXk1/export?format=xlsx&amp;gid=671862489" target="_blank" rel="noopener">Download the .xlsx ↓</a><a href="company.html">Back to companies →</a></div></div></section></main>
-<footer><div class="wrap"><div class="footer-name">Biluibaba <em>x</em> Study Insights</div><div class="footer-row"><p>Financial figures shown in BDT, based on the combined cost model.</p><div class="footer-links"><a href="index.html">Home</a><a href="company.html">Companies</a><a href="team.html">Team</a><a href="financials.html">Financials</a><a href="contact.html">Contact</a></div></div></div></footer></div><script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script><script src="assets/brand.js"></script>
-<script>(()=>{const money=n=>new Intl.NumberFormat('en-BD').format(n);function draw(){if(!window.Chart)return setTimeout(draw,120);Chart.defaults.color='#8a8163';Chart.defaults.font.family='Spline Sans Mono';const cash=document.getElementById('cashChart');if(cash)new Chart(cash,{type:'bar',data:{labels:['One-time setup','Recurring / 12 months','Yearly recurring','Contingency'],datasets:[{data:[1550000,6600000,180000,450000],backgroundColor:['#b9793f','#1f6b4a','#68c494','#151310'],borderRadius:2,borderSkipped:false}]},options:{maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`BDT ${money(c.raw)}`}}},scales:{x:{grid:{display:false}},y:{grid:{color:'rgba(21,19,16,.08)'},ticks:{callback:v=>`৳${(v/100000).toFixed(0)}L`}}}}});const funding=document.getElementById('fundingChart');if(funding)new Chart(funding,{type:'doughnut',data:{labels:['12-month recurring costs','One-time costs','Contingency reserve','Yearly recurring costs'],datasets:[{data:[6600000,1550000,450000,180000],backgroundColor:['#1f6b4a','#b9793f','#68c494','#272119'],borderWidth:0,hoverOffset:8}]},options:{cutout:'73%',plugins:{legend:{position:'bottom',labels:{color:'#45403A',font:{family:'Spline Sans Mono',size:10}}},tooltip:{callbacks:{label:c=>`${c.label}: BDT ${money(c.raw)}`}}},animation:{animateRotate:true,duration:1200}}})}draw()})();</script>
+<section id="download" class="section green-section"><div class="wrap location"><div data-reveal><div class="eyebrow">Source data</div><h3>Download the full financial model.</h3><p id="dlNote">A clean, six-sheet Excel workbook — funding summary, invested-to-date, one-time setup, monthly recurring, yearly recurring and emergency reserve — generated on your machine from the exact figures on this page.</p></div><div class="contact-list" data-reveal><button class="button" data-dl style="border:0;cursor:pointer">Download the .xlsx <span>↓</span></button><a href="https://docs.google.com/spreadsheets/d/1JqAQOL649M2TDzyaj-ULkS7OPRzmZXk1/export?format=xlsx&amp;gid=671862489" target="_blank" rel="noopener">Source workbook ↓</a><a href="company.html">Back to companies →</a></div></div></section></main>
+<footer><div class="wrap"><div class="footer-name">Biluibaba <em>x</em> Study Insights</div><div class="footer-row"><p>Financial figures shown in BDT, based on the combined cost model.</p><div class="footer-links"><a href="index.html">Home</a><a href="company.html">Companies</a><a href="team.html">Team</a><a href="financials.html">Financials</a><a href="contact.html">Contact</a></div></div></div></footer></div>
+<div class="row-tip" id="rowTip"><strong></strong><p></p></div>
+<div class="toast" id="toast"><div class="toast-tx"><strong id="toastTitle"></strong><span id="toastMsg"></span></div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script><script src="assets/brand.js"></script>
+<script src="assets/financials-model.js"></script>
 </body></html>
