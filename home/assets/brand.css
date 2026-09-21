@@ -59,3 +59,17 @@ footer .footer-name.split-letters{font-family:var(--serif);font-weight:900;font-
 .rk-v{display:flex;align-items:baseline;gap:10px;white-space:nowrap;font:500 11.6px var(--mono);color:#6F695B;font-variant-numeric:tabular-nums}
 .rk-v b{color:var(--ink);font-weight:600;min-width:42px;text-align:right}
 @media(max-width:400px){.rk-l{font-size:12px}.rk-v{font-size:10.8px;gap:7px}}
+
+/* stacked month: the bar is a single proportion strip, the detail lives below */
+.chart-panel:has(#chMonthly) .chart-box{height:96px}
+@media(max-width:760px){.chart-panel:has(#chMonthly) .chart-box{height:88px}}
+.mon-key{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column;gap:0}
+.mon-key li{display:grid;grid-template-columns:4px 1fr auto;align-items:center;gap:0 13px;padding:10px 0;border-bottom:1px solid rgba(21,19,16,.07)}
+.mon-key li:last-child{border-bottom:0}
+.mk-band{width:4px;height:30px;border-radius:2px;align-self:center}
+.mk-tx{min-width:0}
+.mk-tx b{display:block;font-weight:500;font-size:13.2px;color:#2A2620;line-height:1.35}
+.mk-tx i{display:block;font-style:normal;font-size:11.4px;line-height:1.45;color:#6F695B;margin-top:2px}
+.mk-v{display:flex;align-items:baseline;gap:11px;white-space:nowrap;font:500 11.6px var(--mono);color:#6F695B;font-variant-numeric:tabular-nums}
+.mk-v b{color:var(--ink);font-weight:600;min-width:44px;text-align:right}
+@media(max-width:430px){.mon-key li{grid-template-columns:4px 1fr;gap:0 11px}.mk-v{grid-column:2;margin-top:5px;justify-content:flex-start}.mk-v b{min-width:0}.mk-tx i{display:none}}

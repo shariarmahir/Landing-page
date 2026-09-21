@@ -299,18 +299,70 @@ function initCharts(){
     ticks:{callback:v=>"BDT "+v+"L",font:{size:9.5},maxTicksLimit:6,padding:4}};
   const BAR={borderRadius:3,borderSkipped:false,barPercentage:.62,categoryPercentage:.9};
 
+  /* Salaries are 4.05 of a 5.50 month, so a plain bar chart leaves the
+     other five lines as unreadable stubs. Drawn instead as one stacked
+     month — every line keeps a visible share of the same whole. */
+  const MON=[
+    ["Employee salaries",4.05,"#1f6b4a","A ten-person team shared across both ventures"],
+    ["Biluibaba marketing",0.40,"#43936b","Paid social, influencers and content"],
+    ["Rent + utilities",0.40,"#8a8471","The shared office at Dhaka Trade Centre"],
+    ["Study Insights marketing",0.30,"#b9793f","Lead generation, content and events"],
+    ["IT + administration",0.30,"#b3a98f","Connectivity, cloud, software and admin"],
+    ["Daily operating buffer",0.05,"#d9cdb4","A float for small unpredictable costs"]
+  ];
+  const MON_T=5.5;
+  /* Share printed inside each band that can hold it. */
+  const stackValue={id:"stackValue",afterDatasetsDraw(chart){
+    const {ctx}=chart;
+    ctx.save();
+    ctx.font="600 10.5px 'Spline Sans Mono', monospace";
+    ctx.textBaseline="middle";ctx.textAlign="center";
+    chart.data.datasets.forEach((ds,di)=>{
+      const el=chart.getDatasetMeta(di).data[0];if(!el)return;
+      const v=ds.data[0],pct=v/MON_T*100;
+      const w=Math.abs(el.x-el.base);
+      const tx=pct.toFixed(1)+"%";
+      if(w<ctx.measureText(tx).width+14)return;   // too thin to label
+      const m=/^#([0-9a-f]{6})$/i.exec(ds.backgroundColor||"");
+      let light=false;
+      if(m){const n=parseInt(m[1],16);
+        light=((n>>16&255)*.299+(n>>8&255)*.587+(n&255)*.114)>150;}
+      ctx.fillStyle=light?"rgba(21,19,16,.8)":"rgba(255,255,255,.96)";
+      ctx.fillText(tx,(el.x+el.base)/2,el.y);
+    });
+    ctx.restore();
+  }};
   chMonthly=new Chart(document.getElementById("chMonthly"),{
     type:"bar",
-    data:{labels:["Employee salaries",["Biluibaba","marketing"],"Rent + utilities",["Study Insights","marketing"],["IT +","administration"],["Daily operating","buffer"]],datasets:[
-      {data:[4.05,0.40,0.40,0.30,0.30,0.05],backgroundColor:["#1f6b4a","#43936b","#8a8471","#b9793f","#b3a98f","#8a8471"],hoverBackgroundColor:"#151310",...BAR}
-    ]},
+    data:{labels:["Monthly recurring"],
+      datasets:MON.map(m=>({label:m[0],data:[m[1]],backgroundColor:m[2],
+        hoverBackgroundColor:"#151310",borderColor:"#FAF6EC",borderWidth:1.5,
+        borderRadius:2,borderSkipped:false,barPercentage:.92,categoryPercentage:1}))},
     options:{indexAxis:"y",maintainAspectRatio:false,
-      layout:{padding:{right:16,left:2,top:4,bottom:2}},
+      layout:{padding:{left:2,right:6,top:2,bottom:0}},
       animation:{duration:1200,easing:"easeOutQuart"},
-      plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>` BDT ${c.parsed.x.toFixed(2)} L / month · ${(c.parsed.x/5.5*100).toFixed(1)}% of MRC`}}},
-      scales:{x:valAxis,y:catAxis(146)}},
-    plugins:[barTrack,barValue(v=>v.toFixed(2))]
+      interaction:{mode:"nearest",intersect:true},
+      plugins:{legend:{display:false},
+        tooltip:{...TT,displayColors:true,callbacks:{
+          title:()=>"Monthly recurring · BDT 5.50 L",
+          label:c=>` ${c.dataset.label}: BDT ${c.parsed.x.toFixed(2)} L · ${(c.parsed.x/MON_T*100).toFixed(1)}%`}}},
+      scales:{
+        x:{stacked:true,min:0,max:MON_T,grid:{display:false},border:{display:false},
+           // explicit whole-lakh ticks plus the 5.50 end stop, never rotated
+           afterBuildTicks(a){const n=a.chart.width<430?[0,2,4,5.5]:[0,1,2,3,4,5,5.5];
+             a.ticks=n.map(v=>({value:v}));},
+           ticks:{callback:v=>v===5.5?"BDT 5.5L":"BDT "+v+"L",
+             font:{size:9.5},padding:6,maxRotation:0,minRotation:0,autoSkip:false}},
+        y:{stacked:true,grid:{display:false},border:{display:false},ticks:{display:false}}}},
+    plugins:[stackValue]
   });
+  /* The detail sits in HTML beneath the bar, where it can wrap and
+     carry both the taka figure and the share. */
+  const mk=document.getElementById("keyMonthly");
+  if(mk)mk.innerHTML=MON.map(m=>
+    `<li><span class="mk-band" style="background:${m[2]}"></span>`+
+    `<span class="mk-tx"><b>${m[0]}</b><i>${m[3]}</i></span>`+
+    `<span class="mk-v">BDT ${m[1].toFixed(2)} L<b>${(m[1]/MON_T*100).toFixed(1)}%</b></span></li>`).join("");
   chSetup=new Chart(document.getElementById("chSetup"),{
     type:"bar",
     data:{labels:["Office establishment",["Technology &","equipment"],"Air conditioning",["Branding &","stationery"],["Legal, registration","& software"],["Kitchen &","facilities"],["Safety &","miscellaneous"]],datasets:[
