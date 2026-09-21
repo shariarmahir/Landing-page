@@ -370,8 +370,42 @@ function exportXLSX(){
     ...CONT.map(r=>[r[0],r[1]]),
     ["Total",SUM.cont]
   ],[null,null,null,null,...CONT.map(()=>[BF]),[BF]],[{wch:44},{wch:14}]);
+  if(typeof REV!=="undefined"){
+    sh("Revenue Structure",[
+      ["Estimated revenue structure"],["BDT · totals BDT 5,00,000 per month, BDT 60,00,000 per year"],[],
+      ["Revenue stream","Venture","Monthly (BDT)","Annual (BDT)"],
+      ...REV.map(r=>[r.l,r.v==="BB"?"Biluibaba":"Study Insights",r.m,r.m*12]),
+      ["Total","",REV_M,REV_Y]
+    ],[null,null,null,null,...REV.map(()=>[null,BF,BF]),[null,BF,BF]],[{wch:34},{wch:16},{wch:15},{wch:15}]);
+    sh("Cash Flow Summary",[
+      ["Cumulative cash flow summary"],["BDT · pre-seed through Year 3"],[],
+      ["Year","Opening cash","Cash inflow","Cash outflow","Closing cash","Note"],
+      ...CF.map(r=>[r.y,r.open,r.in,r.out,r.close,r.lab]),
+      [],
+      ["Operating result by year"],["Year","Revenue (BDT)","Operating cost (BDT)","Operating profit/(loss) (BDT)"],
+      ...PROFIT.map(p=>[p.y,p.rev,p.cost,p.op]),
+      [],["Break-even","During Year 2"]
+    ],[null,null,null,null,...CF.map(()=>[BF,BF,BF,BF]),null,null,null,...PROFIT.map(()=>[BF,BF,BF])],
+      [{wch:16},{wch:16},{wch:18},{wch:18},{wch:18},{wch:20}]);
+    sh("Investment and Return",[
+      ["Investment summary"],["BDT · seed round for the combined entity"],[],
+      ["Item","Amount / detail"],
+      ...INVEST.map(r=>[r[0],r[1]]),
+      [],
+      ["Valuation growth & investor returns"],["Metric","Value"],
+      ...RETURN.map(r=>[r[0],r[1]]),
+      [],
+      ["Updated cap table (post-investment)"],["Shareholder","Stake","Remarks"],
+      ...CAP.map(r=>[r[0],r[1]/100,r[3]]),
+      ["Total",1,"Post-money valuation BDT 2,20,00,000"]
+    ],[null,null,null,null,...INVEST.map(r=>r[3]?[BF]:null),null,null,null,
+       ...RETURN.map(r=>typeof r[1]==="number"?[BF]:null),null,null,null,
+       ...CAP.map(()=>[PF]),[PF]],
+      [{wch:40},{wch:22},{wch:44}]);
+  }
+  const nS=(typeof REV!=="undefined")?9:6;
   XLSX.writeFile(wb,"Biluibaba_x_Study_Insights_Financial_Model.xlsx");
-  showToast("Financial model exported",`6 sheets · ${LINE_TOTAL} line items · BDT — exactly as documented`);
+  showToast("Financial model exported",`${nS} sheets · cost, revenue, cash flow & returns · BDT — exactly as documented`);
 }
 
 document.addEventListener("DOMContentLoaded",()=>{
