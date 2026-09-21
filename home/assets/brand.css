@@ -89,3 +89,18 @@ footer .footer-name.split-letters{font-family:var(--serif);font-weight:900;font-
 .phase-pill{display:inline-block;padding:4px 11px;background:var(--green);color:var(--cream);font:600 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;margin-right:10px}
 .phase-pill.p2{background:#151310}
 .phase-pill.p3{background:#8a8471}
+
+/* .tr rows used inside a light-background .rt-panel (not the dark .terms
+   box they were designed for) — override the cream/muted colors that
+   would otherwise be unreadable on paper */
+.rt-panel .tr{font:500 11.5px var(--mono);color:#3A352A}
+.rt-panel .tr span{color:#6F695B}
+.rt-panel .tr b{color:var(--ink)}
+.rt-panel .tr b.hl-g{color:var(--green)}
+
+/* .ms-row used on a dark section background (pitch decks) — the default
+   treatment hardcodes a dark paragraph color and light-mode border,
+   both tuned for .soft/.paper sections only */
+.dark .ms-row{border-top-color:var(--line-dark)}
+.dark .ms-row h4{color:var(--cream)}
+.dark .ms-row p{color:#c1b9a7}
