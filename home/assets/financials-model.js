@@ -47,7 +47,7 @@ const MRC=[
 {l:"Employee salaries",a:405000,n:"A ten-person team serving both ventures. Several roles are shared across Biluibaba and Study Insights — the heart of the combined-model efficiency.",d:[
  {g:null,i:[["CEO — both companies",100000],["Director — both companies",50000],["COO, Biluibaba · Head Creative & Digital Marketing, Study Insights",50000],["CTO, Biluibaba — part-time",40000],["Head of IT — Biluibaba",30000],["Head of Marketing & Sales — Biluibaba",30000],["Procurement Manager — Biluibaba",30000],["Head of Operations — Study Insights",30000],["Head of Admissions — Study Insights",30000],["Office Assistant",15000]]}
 ]},
-{l:"Rent + utilities",a:40000,n:"Monthly rent and utilities for the shared office at Dhaka Trade Centre."},
+{l:"Rent + utilities",a:40000,n:"Monthly rent and utilities for the shared office in Dhaka."},
 {l:"Biluibaba marketing",a:40000,n:"Monthly growth budget for the pet platform — paid social, influencers and content.",d:[
  {g:null,i:[["Meta / Facebook & Instagram ads",20000],["Micro-influencer collaborations — 2",10000],["Content production",5000],["Content boosting",2500],["Ad creative / testing budget",2500]]}
 ]},
@@ -305,7 +305,7 @@ function initCharts(){
   const MON=[
     ["Employee salaries",4.05,"#1f6b4a","A ten-person team shared across both ventures"],
     ["Biluibaba marketing",0.40,"#43936b","Paid social, influencers and content"],
-    ["Rent + utilities",0.40,"#8a8471","The shared office at Dhaka Trade Centre"],
+    ["Rent + utilities",0.40,"#8a8471","The shared office in Dhaka"],
     ["Study Insights marketing",0.30,"#b9793f","Lead generation, content and events"],
     ["IT + administration",0.30,"#b3a98f","Connectivity, cloud, software and admin"],
     ["Daily operating buffer",0.05,"#d9cdb4","A float for small unpredictable costs"]
@@ -392,7 +392,7 @@ function initDeploySlider(){
   s.addEventListener("input",()=>{paint();apply();});
 }
 function buildTicker(){
-  const items=["Biluibaba × Study Insights","Funding commitment · BDT 88 lakh","Monthly recurring · BDT 5,50,000","12-month runway · fully funded","Emergency reserve · BDT 4.5 lakh, protected","Students abroad annually · 52,799","Foreign education spend FY25 · $667.77M","Global consulting market · $4.04B → $6.34B","Bangladesh's first one-stop pet platform","Shared office · Dhaka Trade Centre"];
+  const items=["Biluibaba × Study Insights","Funding commitment · BDT 88 lakh","Monthly recurring · BDT 5,50,000","12-month runway · fully funded","Emergency reserve · BDT 4.5 lakh, protected","Students abroad annually · 52,799","Foreign education spend FY25 · $667.77M","Global consulting market · $4.04B → $6.34B","Bangladesh's first one-stop pet platform","Shared office · Dhaka, Bangladesh"];
   const seq=items.map(t=>`<span class="tk">${t}</span><span class="tk-d"></span>`).join("");
   document.getElementById("tickerTrack").innerHTML=seq+seq;
 }

@@ -4,7 +4,7 @@
 /* ---- Profit sheet: estimated revenue structure ---- */
 const REV=[
  {l:"E-commerce",v:"BB",m:150000,n:"Pet food, accessories and supplies sold through the Biluibaba platform — the largest single revenue line."},
- {l:"Vet service — online & offline",v:"BB",m:100000,n:"Consultation revenue from the in-house vet service, delivered both online and from the Karwan Bazar consultation rooms."},
+ {l:"Vet service — online & offline",v:"BB",m:100000,n:"Consultation revenue from the in-house vet service, delivered both online and from the Dhaka consultation rooms."},
  {l:"Pet adoption & delivery",v:"BB",m:50000,n:"Adoption facilitation and the last-mile delivery network across Dhaka City."},
  {l:"Online revenue from content",v:"BB",m:50000,n:"Monetised content across Facebook and YouTube — the audience built during launch marketing."},
  {l:"Study Insights — consultancy",v:"SI",m:150000,n:"Student admission and visa consultancy fees from the Study Insights practice."}
