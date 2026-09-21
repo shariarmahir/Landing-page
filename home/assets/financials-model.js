@@ -239,22 +239,15 @@ function initCharts(){
       plugins:{legend:LEG,tooltip:{...TT,callbacks:{label:c=>{const y=c.parsed.y;return [` Remaining: BDT ${y.toFixed(2)} L`,` Deployed: BDT ${(88-y).toFixed(2)} L`];}}}},
       scales:{x:{grid:{display:false},ticks:{maxRotation:0}},y:{grid:GRID,border:{display:false},min:0,max:92,ticks:{callback:v=>"BDT "+v+"L"}}}}
   });
-  const centerText={id:"centerText",afterDraw(chart){
-    const meta=chart.getDatasetMeta(0);if(!meta.data.length)return;
-    const {ctx}=chart,x=meta.data[0].x,y=meta.data[0].y;
-    ctx.save();ctx.textAlign="center";
-    ctx.font="700 24px Fraunces, Georgia, serif";ctx.fillStyle="#151310";ctx.fillText("BDT 88 L",x,y-2);
-    ctx.font="500 8.5px 'Spline Sans Mono', monospace";ctx.fillStyle="#6F695B";ctx.fillText("TOTAL COMMITMENT",x,y+16);
-    ctx.restore();
-  }};
   chAlloc=new Chart(document.getElementById("chAlloc"),{
     type:"doughnut",
-    data:{labels:COMP.map(c=>c[0]),datasets:[{data:COMP.map(c=>c[1]),backgroundColor:COMP.map(c=>c[2]),borderColor:"#FAF6EC",borderWidth:3}]},
-    options:{maintainAspectRatio:false,cutout:"68%",
-      plugins:{legend:{position:"bottom",labels:{boxWidth:9,boxHeight:9,padding:12}},
+    data:{labels:COMP.map(c=>c[0]),datasets:[{data:COMP.map(c=>c[1]),backgroundColor:COMP.map(c=>c[2]),...ARC}]},
+    options:{...ringOpts(88,"L"),
+      plugins:{legend:{display:false},
       tooltip:{...TT,callbacks:{label:c=>` ${c.label}: BDT ${c.parsed} L · ${(c.parsed/88*100).toFixed(1)}%`}}}}
-    ,plugins:[centerText]
+    ,plugins:[ringCenter("BDT 88 L","Total commitment"),ringLeader]
   });
+  buildKeys("keyAlloc",COMP.map(c=>[c[0],c[2],"BDT "+c[1].toFixed(2)+" L",(c[1]/88*100).toFixed(1)+"%"]));
   /* A muted track behind each bar, so short bars still read as a
      proportion of the whole rather than a stub floating in space. */
   const barTrack={id:"barTrack",beforeDatasetsDraw(chart){

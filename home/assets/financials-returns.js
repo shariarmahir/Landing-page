@@ -118,30 +118,25 @@ function initReturnCharts(){
   /* revenue mix — animated pie */
   const revEl=document.getElementById("chRev");
   if(revEl)chRev=new Chart(revEl,{
-    type:"pie",
-    data:{labels:REV.map(r=>r.l),datasets:[{data:REV.map(r=>lakh(r.m)),backgroundColor:["#1f6b4a","#2e7350","#43936b","#6baf88","#b9793f"],borderColor:"#FAF6EC",borderWidth:3,hoverOffset:14}]},
-    options:{maintainAspectRatio:false,animation:{...ANIM,animateRotate:true,animateScale:true},
-      plugins:{legend:{position:"bottom",labels:{boxWidth:9,boxHeight:9,padding:11}},
+    type:"doughnut",
+    data:{labels:REV.map(r=>r.l),datasets:[{data:REV.map(r=>lakh(r.m)),backgroundColor:["#1f6b4a","#2e7350","#43936b","#6baf88","#b9793f"],...ARC}]},
+    options:{...ringOpts(5,"L"),
+      plugins:{legend:{display:false},
       tooltip:{...TT,callbacks:{label:c=>` ${c.label}: BDT ${c.parsed.toFixed(2)} L / mo · ${(c.parsed/5*100).toFixed(1)}%`}}}}
+    ,plugins:[ringCenter("BDT 5.00 L","Revenue per month"),ringLeader]
   });
+  buildKeys("keyRev",REV.map((r,i)=>[r.l,["#1f6b4a","#2e7350","#43936b","#6baf88","#b9793f"][i],
+    "BDT "+lakh(r.m).toFixed(2)+" L",(r.m/REV_M*100).toFixed(1)+"%"]));
 
   /* cap table — animated doughnut with centre text */
-  const capCenter={id:"capCenter",afterDraw(chart){
-    const meta=chart.getDatasetMeta(0);if(!meta.data.length)return;
-    const {ctx}=chart,x=meta.data[0].x,y=meta.data[0].y;
-    ctx.save();ctx.textAlign="center";
-    ctx.font="700 22px Fraunces, Georgia, serif";ctx.fillStyle="#151310";ctx.fillText("BDT 2.20 Cr",x,y-2);
-    ctx.font="500 8.5px 'Spline Sans Mono', monospace";ctx.fillStyle="#6F695B";ctx.fillText("POST-MONEY VALUATION",x,y+16);
-    ctx.restore();
-  }};
   const capEl=document.getElementById("chCap");
   if(capEl)chCap=new Chart(capEl,{
     type:"doughnut",
-    data:{labels:CAP.map(c=>c[0]),datasets:[{data:CAP.map(c=>c[1]),backgroundColor:CAP.map(c=>c[2]),borderColor:"#FAF6EC",borderWidth:3,hoverOffset:12}]},
-    options:{maintainAspectRatio:false,cutout:"64%",animation:{...ANIM,animateRotate:true,animateScale:true},
-      plugins:{legend:{position:"bottom",labels:{boxWidth:9,boxHeight:9,padding:12}},
+    data:{labels:CAP.map(c=>c[0]),datasets:[{data:CAP.map(c=>c[1]),backgroundColor:CAP.map(c=>c[2]),...ARC}]},
+    options:{...ringOpts(100,"%"),
+      plugins:{legend:{display:false},
       tooltip:{...TT,callbacks:{label:c=>` ${c.label}: ${c.parsed}% of the combined entity`}}}}
-    ,plugins:[capCenter]
+    ,plugins:[ringCenter("BDT 2.20 Cr","Post-money valuation"),ringLeader]
   });
 
   /* revenue vs cost, three years */

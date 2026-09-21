@@ -49,3 +49,13 @@ footer .footer-name.split-letters{font-family:var(--serif);font-weight:900;font-
 /* bar charts with two-line category labels need more vertical room */
 .chart-panel:has(#chSetup) .chart-box{height:320px}.chart-panel:has(#chMonthly) .chart-box{height:282px}
 @media(max-width:760px){.chart-panel:has(#chSetup) .chart-box{height:300px}.chart-panel:has(#chMonthly) .chart-box{height:270px}}
+
+/* key beneath a ring chart — carries the values so the ring stays clean */
+.ring-key{list-style:none;margin:16px 0 0;padding:14px 0 0;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:0}
+.ring-key li{display:flex;align-items:baseline;justify-content:space-between;gap:14px;padding:7px 0;border-bottom:1px solid rgba(21,19,16,.06)}
+.ring-key li:last-child{border-bottom:0}
+.rk-l{display:flex;align-items:baseline;gap:9px;font-size:12.8px;line-height:1.4;color:#3A352A;min-width:0}
+.rk-l i{flex:0 0 auto;width:9px;height:9px;border-radius:1px;transform:translateY(1px)}
+.rk-v{display:flex;align-items:baseline;gap:10px;white-space:nowrap;font:500 11.6px var(--mono);color:#6F695B;font-variant-numeric:tabular-nums}
+.rk-v b{color:var(--ink);font-weight:600;min-width:42px;text-align:right}
+@media(max-width:400px){.rk-l{font-size:12px}.rk-v{font-size:10.8px;gap:7px}}

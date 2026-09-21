@@ -45,7 +45,7 @@
 <p class="cp-cap" id="capDeploy"></p>
 </div>
 <div class="chart-split">
-<div class="chart-panel" data-reveal style="--d:.06s"><div class="cp-head"><h3>Where the BDT 88 lakh goes</h3><span class="cp-k">Allocation</span></div><div class="chart-box"><canvas id="chAlloc"></canvas></div><p class="cp-cap" id="capAlloc"></p></div>
+<div class="chart-panel" data-reveal style="--d:.06s"><div class="cp-head"><h3>Where the BDT 88 lakh goes</h3><span class="cp-k">Allocation</span></div><div class="chart-box"><canvas id="chAlloc"></canvas></div><ul class="ring-key" id="keyAlloc"></ul><p class="cp-cap" id="capAlloc"></p></div>
 <div class="chart-panel" data-reveal style="--d:.12s"><div class="cp-head"><h3>Monthly operating rhythm</h3><span class="cp-k">BDT lakh per month</span></div><div class="chart-box"><canvas id="chMonthly"></canvas></div><p class="cp-cap" id="capMonthly"></p></div>
 </div>
 <div class="chart-panel" data-reveal><div class="cp-head"><h3>One-time setup by category</h3><span class="cp-k">BDT lakh</span></div><div class="chart-box"><canvas id="chSetup"></canvas></div><p class="cp-cap" id="capSetup"></p></div>
@@ -53,7 +53,7 @@
 <section class="section soft" id="revenue"><div class="wrap"><div class="section-head" data-reveal><div class="eyebrow">Revenue</div><h2 class="display">Where the money <em>comes from.</em></h2><p class="lead">Five revenue streams across the two ventures — four from the Biluibaba pet platform, one from the Study Insights consultancy. Together they carry an estimated BDT 5,00,000 a month, BDT 60,00,000 in the first full year.</p></div>
 <div class="rt-split">
 <div class="rt-panel" data-reveal><div class="rt-head"><h3>Estimated revenue structure</h3><span>Monthly &amp; annual · BDT</span></div><div class="table-wrap"><table class="rt-table" id="revTable"></table></div><div class="vsplit" id="revSplit"></div><p class="rt-note">Hover any stream for its definition. Biluibaba carries four of the five streams; Study Insights contributes consultancy fees at an equal weight to the largest single Biluibaba line.</p></div>
-<div class="chart-panel" data-reveal style="--d:.08s"><div class="cp-head"><h3>Revenue mix by stream</h3><span class="cp-k">BDT lakh per month</span></div><div class="chart-box tall"><canvas id="chRev"></canvas></div><p class="cp-cap">E-commerce and the Study Insights consultancy are the two largest streams at <strong>BDT 1.50 lakh</strong> each — <strong>30%</strong> apiece. The vet service adds a further <strong>20%</strong>, with adoption, delivery and content monetisation carrying <strong>10%</strong> each.</p></div>
+<div class="chart-panel" data-reveal style="--d:.08s"><div class="cp-head"><h3>Revenue mix by stream</h3><span class="cp-k">BDT lakh per month</span></div><div class="chart-box tall"><canvas id="chRev"></canvas></div><ul class="ring-key" id="keyRev"></ul><p class="cp-cap">E-commerce and the Study Insights consultancy are the two largest streams at <strong>BDT 1.50 lakh</strong> each — <strong>30%</strong> apiece. The vet service adds a further <strong>20%</strong>, with adoption, delivery and content monetisation carrying <strong>10%</strong> each.</p></div>
 </div>
 <div class="section-head" data-reveal style="margin-top:72px"><div class="eyebrow">Three-year outlook</div><h2 class="display">Loss in year one.<br><em>Break-even in year two.</em></h2><p class="lead">Revenue grows 1.5× in Year 2 and 2× by Year 3 while operating cost rises just 15% a year. The combined entity crosses break-even during Year 2 and closes Year 3 above BDT 1 crore in cash.</p></div>
 <div class="chart-panel main" data-reveal><div class="cp-head"><h3>Revenue, cost &amp; operating profit</h3><span class="cp-k">BDT lakh per year</span></div><div class="chart-box tall"><canvas id="chGrow"></canvas></div><p class="cp-cap">Year 1 runs an operating loss of <strong>BDT 7.80 lakh</strong>, fully absorbed by the funded runway. Year 2 returns <strong>BDT 12.03 lakh</strong> of operating profit and Year 3 <strong>BDT 30.33 lakh</strong> — the gap between the two bars turning positive is the break-even crossing.</p></div>
@@ -104,6 +104,7 @@
 <div class="row-tip" id="rowTip"><strong></strong><p></p></div>
 <div class="toast" id="toast"><div class="toast-tx"><strong id="toastTitle"></strong><span id="toastMsg"></span></div></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script><script src="assets/brand.js"></script>
+<script src="assets/financials-rings.js"></script>
 <script src="assets/financials-model.js"></script>
 <script src="assets/financials-returns.js"></script>
 </body></html>
