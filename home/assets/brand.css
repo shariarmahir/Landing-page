@@ -45,3 +45,7 @@ footer .footer-name.split-letters{font-family:var(--serif);font-weight:900;font-
 @media(max-width:760px){.rt-split{grid-template-columns:minmax(0,1fr)}.pf-row,.roi-grid{grid-template-columns:minmax(0,1fr)}.rt-panel{padding:20px 16px 18px}.rt-table{font-size:12.4px}.rt-table td,.rt-table th{padding-left:6px;padding-right:6px}}
 
 #chVal,#chGrow,#chCash{padding-left:2px}.chart-panel .chart-box{padding-right:4px}
+
+/* bar charts with two-line category labels need more vertical room */
+.chart-panel:has(#chSetup) .chart-box{height:320px}.chart-panel:has(#chMonthly) .chart-box{height:282px}
+@media(max-width:760px){.chart-panel:has(#chSetup) .chart-box{height:300px}.chart-panel:has(#chMonthly) .chart-box{height:270px}}

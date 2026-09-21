@@ -255,23 +255,80 @@ function initCharts(){
       tooltip:{...TT,callbacks:{label:c=>` ${c.label}: BDT ${c.parsed} L · ${(c.parsed/88*100).toFixed(1)}%`}}}}
     ,plugins:[centerText]
   });
+  /* A muted track behind each bar, so short bars still read as a
+     proportion of the whole rather than a stub floating in space. */
+  const barTrack={id:"barTrack",beforeDatasetsDraw(chart){
+    const {ctx,chartArea:ca,scales:{x,y}}=chart;
+    const meta=chart.getDatasetMeta(0);if(!meta.data.length)return;
+    ctx.save();ctx.fillStyle="rgba(21,19,16,.045)";
+    meta.data.forEach(b=>{
+      const h=b.height||10,r=Math.min(3,h/2),x0=x.getPixelForValue(0),w=ca.right-x0;
+      if(w<=0)return;
+      ctx.beginPath();
+      if(ctx.roundRect)ctx.roundRect(x0,b.y-h/2,w,h,r);else ctx.rect(x0,b.y-h/2,w,h);
+      ctx.fill();
+    });
+    ctx.restore();
+  }};
+  /* Value printed at the end of each bar — removes the need to read
+     a figure off the axis. */
+  const barValue=(fmt)=>({id:"barValue",afterDatasetsDraw(chart){
+    const {ctx,chartArea:ca,scales:{x}}=chart;
+    const meta=chart.getDatasetMeta(0);if(!meta.data.length)return;
+    ctx.save();
+    ctx.font=`600 ${chart.width<430?9.5:10.5}px 'Spline Sans Mono', monospace`;
+    ctx.textBaseline="middle";
+    meta.data.forEach((b,i)=>{
+      const v=chart.data.datasets[0].data[i],tx=fmt(v);
+      const end=b.x,w=ctx.measureText(tx).width;
+      // sit inside the bar when it is long enough, otherwise just past it
+      const inside=(end-x.getPixelForValue(0))>w+22;
+      ctx.textAlign=inside?"right":"left";
+      // pale fills need dark text to stay legible
+      const fill=(chart.data.datasets[0].backgroundColor||[])[i]||"#1f6b4a";
+      const m=/^#([0-9a-f]{6})$/i.exec(fill);
+      let light=false;
+      if(m){const n=parseInt(m[1],16);
+        light=((n>>16&255)*.299+(n>>8&255)*.587+(n&255)*.114)>150;}
+      ctx.fillStyle=inside?(light?"rgba(21,19,16,.82)":"rgba(255,255,255,.95)"):"#6F695B";
+      const px=inside?end-10:Math.min(end+9,ca.right-w-2);
+      ctx.fillText(tx,px,b.y);
+    });
+    ctx.restore();
+  }});
+  /* Flat, left-aligned category labels with enough room for the
+     longest name — nothing rotated, nothing truncated. */
+  const catAxis=(w)=>({grid:{display:false},border:{display:false},
+    afterFit(sc){const cap=sc.chart.width*.46;sc.width=Math.min(w,cap);},
+    ticks:{crossAlign:"far",mirror:false,autoSkip:false,padding:10,
+      color:"#57513F",font:{family:"'Archivo', system-ui, sans-serif",size:11.5,weight:"500"}}});
+  const valAxis={grid:GRID,border:{display:false},
+    ticks:{callback:v=>"BDT "+v+"L",font:{size:9.5},maxTicksLimit:6,padding:4}};
+  const BAR={borderRadius:3,borderSkipped:false,barPercentage:.62,categoryPercentage:.9};
+
   chMonthly=new Chart(document.getElementById("chMonthly"),{
     type:"bar",
-    data:{labels:["Employee salaries","Biluibaba marketing","Rent + utilities","Study Insights marketing","IT + administration","Daily operating buffer"],datasets:[
-      {data:[4.05,0.40,0.40,0.30,0.30,0.05],backgroundColor:["#1f6b4a","#43936b","#8a8471","#b9793f","#b3a98f","#8a8471"],barPercentage:.62}
+    data:{labels:["Employee salaries",["Biluibaba","marketing"],"Rent + utilities",["Study Insights","marketing"],["IT +","administration"],["Daily operating","buffer"]],datasets:[
+      {data:[4.05,0.40,0.40,0.30,0.30,0.05],backgroundColor:["#1f6b4a","#43936b","#8a8471","#b9793f","#b3a98f","#8a8471"],hoverBackgroundColor:"#151310",...BAR}
     ]},
     options:{indexAxis:"y",maintainAspectRatio:false,
+      layout:{padding:{right:16,left:2,top:4,bottom:2}},
+      animation:{duration:1200,easing:"easeOutQuart"},
       plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>` BDT ${c.parsed.x.toFixed(2)} L / month · ${(c.parsed.x/5.5*100).toFixed(1)}% of MRC`}}},
-      scales:{x:{grid:GRID,border:{display:false},ticks:{callback:v=>"BDT "+v+"L"}},y:{grid:{display:false}}}}
+      scales:{x:valAxis,y:catAxis(146)}},
+    plugins:[barTrack,barValue(v=>v.toFixed(2))]
   });
   chSetup=new Chart(document.getElementById("chSetup"),{
     type:"bar",
-    data:{labels:["Office establishment","Technology & equipment","Air conditioning","Branding & stationery","Legal, registration & software","Kitchen & facilities","Safety & miscellaneous"],datasets:[
-      {data:[6.00,4.24,2.80,0.80,0.80,0.55,0.25],backgroundColor:["#1f6b4a","#2e7350","#43936b","#6baf88","#8cc5a5","#a9d6be","#c4e4d3"],barPercentage:.6}
+    data:{labels:["Office establishment",["Technology &","equipment"],"Air conditioning",["Branding &","stationery"],["Legal, registration","& software"],["Kitchen &","facilities"],["Safety &","miscellaneous"]],datasets:[
+      {data:[6.00,4.24,2.80,0.80,0.80,0.55,0.25],backgroundColor:["#1f6b4a","#2e7350","#43936b","#6baf88","#8cc5a5","#a9d6be","#c4e4d3"],hoverBackgroundColor:"#151310",...BAR}
     ]},
     options:{indexAxis:"y",maintainAspectRatio:false,
+      layout:{padding:{right:16,left:2,top:4,bottom:2}},
+      animation:{duration:1200,easing:"easeOutQuart"},
       plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>` BDT ${c.parsed.x.toFixed(2)} L · ${(c.parsed.x/15.44*100).toFixed(1)}% of setup`}}},
-      scales:{x:{grid:GRID,border:{display:false},ticks:{callback:v=>"BDT "+v+"L"}},y:{grid:{display:false}}}}
+      scales:{x:valAxis,y:catAxis(168)}},
+    plugins:[barTrack,barValue(v=>v.toFixed(2))]
   });
 }
 function initDeploySlider(){

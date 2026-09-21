@@ -174,16 +174,40 @@ function initReturnCharts(){
   });
 
   /* valuation growth */
+  /* Crore value sitting above each column, so the step from 1.32 → 2.20
+     → 11 reads without tracing back to the axis. */
+  const colValue={id:"colValue",afterDatasetsDraw(chart){
+    const {ctx,chartArea:ca}=chart,meta=chart.getDatasetMeta(0);if(!meta.data.length)return;
+    const narrow=chart.width<430;
+    ctx.save();ctx.textAlign="center";ctx.textBaseline="bottom";
+    ctx.font=`700 ${narrow?10.5:13}px Fraunces, Georgia, serif`;ctx.fillStyle="#151310";
+    meta.data.forEach((b,i)=>{
+      const v=chart.data.datasets[0].data[i];
+      const tx="BDT "+(v/100).toFixed(2)+" Cr",half=ctx.measureText(tx).width/2;
+      // keep the label inside the plot area on narrow screens
+      const px=Math.min(Math.max(b.x,ca.left+half),ca.right-half);
+      ctx.fillText(tx,px,b.y-7);
+    });
+    ctx.restore();
+  }};
   const valEl=document.getElementById("chVal");
   if(valEl)chVal=new Chart(valEl,{
     type:"bar",
-    data:{labels:["Pre-money","Post-money — now","Projected — 3 years"],datasets:[
-      {label:"Valuation",data:[132,220,1100],backgroundColor:["#b3a98f","#43936b","#1f6b4a"],barPercentage:.55}
+    data:{labels:[["Pre-money"],["Post-money","now"],["Projected","3 years"]],datasets:[
+      {label:"Valuation",data:[132,220,1100],
+       backgroundColor:["#b3a98f","#43936b","#1f6b4a"],hoverBackgroundColor:"#151310",
+       barPercentage:.5,categoryPercentage:.8,borderRadius:3,borderSkipped:false}
     ]},
     options:{maintainAspectRatio:false,animation:ANIM,
+      layout:{padding:{top:26,left:2,right:6}},
       plugins:{legend:{display:false},
       tooltip:{...TT,callbacks:{label:c=>` BDT ${c.parsed.y} lakh · BDT ${(c.parsed.y/100).toFixed(2)} crore`}}},
-      scales:{x:{grid:{display:false}},y:{grid:GRID,border:{display:false},ticks:{callback:v=>"BDT "+v+"L"}}}}
+      scales:{
+        x:{grid:{display:false},border:{display:false},
+           ticks:{padding:8,color:"#57513F",font:{family:"'Archivo', system-ui, sans-serif",size:11.5,weight:"500"}}},
+        y:{grid:GRID,border:{display:false},beginAtZero:true,
+           ticks:{callback:v=>"BDT "+v+"L",font:{size:9.5},maxTicksLimit:6,padding:4}}}},
+    plugins:[colValue]
   });
 
   /* replay the animation when each chart scrolls into view */
