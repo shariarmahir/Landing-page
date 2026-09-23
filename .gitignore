@@ -1,0 +1,19 @@
+# Temporary verification/debug screenshots produced during development
+# sessions (headless-browser checks against the live pages). These are
+# dotfile PNGs written to the repo root for quick review and are never
+# part of the published site — never commit them.
+/.bb-part*.png
+/.si-part*.png
+/.deck-*.png
+/.fund-chart-check.png
+/.now-*.png
+/.footer-*.png
+/.v-*.png
+/.r-*.png
+/.g-*.png
+/.m-*.png
+/.shot-*.png
+/.cur-*.png
+/.yr-*.png
+/.loc-check.png
+/.*-check.png
