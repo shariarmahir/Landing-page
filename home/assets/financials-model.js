@@ -499,7 +499,7 @@ function exportXLSX(){
       [],
       ["Updated cap table (post-investment)"],["Shareholder","Stake","Remarks"],
       ...CAP.map(r=>[r[0],r[1]/100,r[3]]),
-      ["Total",1,"Post-money valuation BDT 2,20,00,000"]
+      ["Total",1,"Post-money valuation BDT 4,40,00,000"]
     ],[null,null,null,null,...INVEST.map(r=>r[3]?[BF]:null),null,null,null,
        ...RETURN.map(r=>typeof r[1]==="number"?[BF]:null),null,null,null,
        ...CAP.map(()=>[PF]),[PF]],

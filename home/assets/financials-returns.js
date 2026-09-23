@@ -25,29 +25,30 @@ const CF=[
 const PROFIT=[{y:"Year 1",rev:6000000,cost:6780000,op:-780000},{y:"Year 2",rev:9000000,cost:7797000,op:1203000},{y:"Year 3",rev:12000000,cost:8966550,op:3033450}];
 
 /* ---- Investment and Return sheet ----
-   The workbook's stake column carries a doubled percentage format (0.80 rendered
-   as "80%" of a 200% total). The underlying model is unambiguous elsewhere:
-   BDT 88,00,000 into a BDT 2,20,00,000 post-money = 40%, and 40% of the
-   BDT 11,00,00,000 three-year valuation = BDT 4,40,00,000 — the sheet's own
-   stake value and its 5x multiplier. Those reconciled figures are used here. */
+   Terms: BDT 88,00,000 for 20% of the combined entity. The post-money follows
+   directly from those two numbers — 88,00,000 ÷ 0.20 = BDT 4,40,00,000 — and the
+   pre-money is that less the commitment, BDT 3,52,00,000. The BDT 11,00,00,000
+   three-year valuation is revenue-derived (Year 3 revenue of BDT 1.20 crore and
+   BDT 30.33 lakh operating profit), so it is unaffected by the equity split;
+   the investor's 20% of it is BDT 2,20,00,000, a 2.5x return on the commitment. */
 const INVEST=[
  ["Investment amount",8800000,"The funding commitment being raised, covering both ventures for twelve months.",1],
- ["Equity offered","40%","50% of Study Insights and 30% of Biluibaba, blended across the combined entity.",0],
- ["Implied pre-money valuation",13200000,"The combined valuation of both ventures immediately before the raise.",1],
- ["Post-money valuation",22000000,"Pre-money of BDT 1,32,00,000 plus the BDT 88,00,000 commitment — BDT 2.20 crore.",1],
- ["Investor stake post-funding","40%","The seed investor's holding in the combined entity once the round closes.",0],
- ["Founder & team ownership","60%","Retained by the founding team, inclusive of the ESOP pool where required.",0]
+ ["Equity offered","20%","A single 20% holding in the combined entity, spanning both ventures.",0],
+ ["Implied pre-money valuation",35200000,"The combined valuation of both ventures immediately before the raise.",1],
+ ["Post-money valuation",44000000,"Pre-money of BDT 3,52,00,000 plus the BDT 88,00,000 commitment — BDT 4.40 crore.",1],
+ ["Investor stake post-funding","20%","The seed investor's holding in the combined entity once the round closes.",0],
+ ["Founder & team ownership","80%","Retained by the founding team, inclusive of the ESOP pool where required.",0]
 ];
 const RETURN=[
- ["Seed stage — now",22000000,"Post-money valuation at the close of this round."],
+ ["Seed stage — now",44000000,"Post-money valuation at the close of this round."],
  ["Projected valuation — after 3 years",110000000,"BDT 11 crore, supported by the Year 3 revenue of BDT 1.20 crore and BDT 30.33 lakh operating profit."],
- ["Investor 40% stake value — 3 years",44000000,"40% of the projected BDT 11,00,00,000 valuation."],
- ["Investor ROI multiplier","5x","BDT 4,40,00,000 returned on a BDT 88,00,000 commitment."],
- ["3-year ROI","400%","(BDT 4.40 Cr − BDT 88 L) ÷ BDT 88 L × 100."]
+ ["Investor 20% stake value — 3 years",22000000,"20% of the projected BDT 11,00,00,000 valuation."],
+ ["Investor ROI multiplier","2.5x","BDT 2,20,00,000 returned on a BDT 88,00,000 commitment."],
+ ["3-year ROI","150%","(BDT 2.20 Cr − BDT 88 L) ÷ BDT 88 L × 100."]
 ];
 const CAP=[
- ["Founders & team",60,"#1f6b4a","Includes the ESOP pool if and when required"],
- ["Seed investor",40,"#b9793f","BDT 88,00,000 commitment"]
+ ["Founders & team",80,"#1f6b4a","Includes the ESOP pool if and when required"],
+ ["Seed investor",20,"#b9793f","BDT 88,00,000 commitment"]
 ];
 
 const fmtR=n=>{const s=Math.round(Math.abs(n)).toString(),l3=s.slice(-3),rest=s.slice(0,-3);return (n<0?"−":"")+"BDT "+(rest?rest.replace(/\B(?=(\d{2})+(?!\d))/g,",")+",":"")+l3;};
@@ -101,7 +102,7 @@ function buildInvestment(){
   if(cap){
     let h="<thead><tr><th class='tl'>Shareholder</th><th>Stake</th><th>Remarks</th></tr></thead><tbody>";
     CAP.forEach(r=>{h+=`<tr data-l="${r[0]}" data-n="${r[3]}"><td class="tl"><span class="swatch" style="background:${r[2]}"></span>${r[0]}</td><td><b>${r[1]}%</b></td><td>${r[3]}</td></tr>`;});
-    h+=`<tr class="em" data-l="Total" data-n="Post-money valuation of BDT 2,20,00,000 — BDT 2 crore 20 lakh."><td class="tl">Total</td><td><b>100%</b></td><td>Post-money valuation BDT 2,20,00,000</td></tr>`;
+    h+=`<tr class="em" data-l="Total" data-n="Post-money valuation of BDT 4,40,00,000 — BDT 4 crore 40 lakh."><td class="tl">Total</td><td><b>100%</b></td><td>Post-money valuation BDT 4,40,00,000</td></tr>`;
     cap.innerHTML=h+"</tbody>";
   }
 }
@@ -136,7 +137,7 @@ function initReturnCharts(){
     options:{...ringOpts(100,"%"),
       plugins:{legend:{display:false},
       tooltip:{...TT,callbacks:{label:c=>` ${c.label}: ${c.parsed}% of the combined entity`}}}}
-    ,plugins:[ringCenter("BDT 2.20 Cr","Post-money valuation"),ringLeader]
+    ,plugins:[ringCenter("BDT 4.40 Cr","Post-money valuation"),ringLeader]
   });
 
   /* revenue vs cost, three years */
@@ -189,7 +190,7 @@ function initReturnCharts(){
   if(valEl)chVal=new Chart(valEl,{
     type:"bar",
     data:{labels:[["Pre-money"],["Post-money","now"],["Projected","3 years"]],datasets:[
-      {label:"Valuation",data:[132,220,1100],
+      {label:"Valuation",data:[352,440,1100],
        backgroundColor:["#b3a98f","#43936b","#1f6b4a"],hoverBackgroundColor:"#151310",
        barPercentage:.5,categoryPercentage:.8,borderRadius:3,borderSkipped:false}
     ]},
