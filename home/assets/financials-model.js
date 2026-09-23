@@ -13,7 +13,10 @@ const INVESTED=[
 ["Launch day cost","BB",7500,"Launch-day event and operations."],
 ["Post-launch operations & misc. reserve","BB",5000,"Buffer for early post-launch operations."],
 ["Post-launching budget","BB",30000,"Operating budget for the post-launch phase."],
-["Study Insights — expenses to date","SI",300000,"All expenses incurred for Study Insights so far."]
+["Operations — Study Insights","SI",200000,"Day-to-day running of the Study Insights practice to date."],
+["Website development — Study Insights","SI",150000,"Design and build of the Study Insights web platform."],
+["Procurement — Study Insights","SI",150000,"Equipment and supplies purchased for the practice."],
+["Utilities & office running costs","SI",100000,"Electricity, internet and other running costs carried to date."]
 ];
 const SETUP=[
 {l:"Office establishment",a:600000,n:"Full build-out of the shared office: rent advance, partitions and electrical, reception and consultation furniture, workstations, executive and conference furniture, and complete signage.",d:[
@@ -75,7 +78,7 @@ const CONT=[
 ["Unexpected office expenses",35000],["Business operations emergency",35000],
 ["Technology / software emergency",25000],["Miscellaneous / unforeseen expenses",50000]
 ];
-const SUM={inv:600000,otcC:1544000,otc:1550000,mrc:550000,mrcY:6600000,yrc:180000,cont:450000,calc:8780000,buf:20000,final:8800000};
+const SUM={inv:900000,otcC:1544000,otc:1550000,mrc:550000,mrcY:6600000,yrc:180000,cont:450000,calc:8780000,buf:20000,final:8800000};
 const COMP=[["One-time setup",15.5,"#b9793f"],["12-month operations",66,"#1f6b4a"],["Annual recurring",1.8,"#68c494"],["Emergency reserve",4.5,"#d9a35f"],["Rounding buffer",0.2,"#e8dfcc"]];
 const CNT={inv:INVESTED.length,setup:SETUP.reduce((s,c)=>s+c.d.reduce((t,g)=>t+g.i.length,0),0),mrc:MRC.reduce((s,c)=>s+(c.d?c.d[0].i.length:0),0),yrc:YRC.length,cont:CONT.length};
 const LINE_TOTAL=CNT.inv+CNT.setup+CNT.mrc+CNT.yrc+CNT.cont;
@@ -148,7 +151,7 @@ annual(){
 }};
 const TABNOTE={
 summary:"Build-up of the BDT 88,00,000 commitment · the already-invested amount is shown for context and excluded from the ask · hover any row for its definition",
-invested:"Founder-funded, already expended · BB = Biluibaba · SI = Study Insights · totals BDT 6,00,000",
+invested:"Founder-funded, already expended · BB = Biluibaba · SI = Study Insights · totals BDT 9,00,000",
 setup:"Click a category to open its line items · categories calculate to BDT 15,44,000; the commitment carries BDT 15,50,000",
 mrc:"Click a category to open its line items · BDT 5,50,000 per month · annualized = monthly × 12 = BDT 66,00,000",
 annual:"Yearly recurring charges (BDT 1,80,000 / year) and the protected emergency reserve (BDT 4,50,000) across ten risk categories"};
@@ -432,7 +435,7 @@ function exportXLSX(){
   ],[null,null,null,null,[BF],[BF,PF],[BF,PF],[BF,PF],[BF,PF],[BF],[BF,PF],[BF,PF]],[{wch:38},{wch:15},{wch:10},{wch:46}]);
   sh("One-Time Invested",[
     ["One-time costs — already expended (founder-funded)"],
-    ["BDT · totals BDT 6,00,000"],
+    ["BDT · totals BDT 9,00,000"],
     [],
     ["Item","Venture","Amount (BDT)"],
     ...INVESTED.map(r=>[r[0],r[1]==="BB"?"Biluibaba":"Study Insights",r[2]]),

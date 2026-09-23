@@ -19,6 +19,33 @@
     const resize=()=>{renderer.setSize(hero.clientWidth,hero.clientHeight,false);camera.aspect=hero.clientWidth/hero.clientHeight;camera.updateProjectionMatrix()};resize();addEventListener('resize',resize);
     const frame=()=>{requestAnimationFrame(frame);if(!visible)return;t+=.009;for(let i=0;i<pos.count;i++)pos.setY(i,height(pos.getX(i),pos.getZ(i),t));pos.needsUpdate=true;if(!drag)ty+=.0009;cy+=(ty-cy)*.06;cx+=(tx-cx)*.06;group.rotation.y=cy;group.rotation.x=cx;camera.lookAt(0,2,0);renderer.render(scene,camera)};frame();
   }
+  /* The hero stats bar is absolutely positioned over the hero, so the hero copy
+     has to reserve its height as bottom padding or the text runs underneath it.
+     The bar's height varies by page (2-4 stats, labels wrap at narrow widths),
+     so measure it rather than assuming a fixed value. */
+  const sizeHeroStats=()=>{
+    document.querySelectorAll('.hero').forEach(hero=>{
+      const stats=hero.querySelector('.hero-stats'),copy=hero.querySelector('.hero-copy');
+      if(!stats)return;
+      if(getComputedStyle(stats).position!=='absolute'){
+        hero.style.removeProperty('--hero-stats-h');hero.style.removeProperty('--hero-min-h');return;
+      }
+      hero.style.setProperty('--hero-stats-h',Math.ceil(stats.getBoundingClientRect().height)+'px');
+      /* aspect-ratio fixes the hero's height, and overflow:hidden clips anything
+         taller — so on pages whose headline wraps to three lines the copy would
+         be cut off behind the stats bar. Measure the copy's natural height and
+         raise the floor only when 16:6 genuinely cannot hold it. */
+      if(!copy)return;
+      hero.style.removeProperty('--hero-min-h');
+      /* Tolerate a few px of slack so a hair of sub-pixel overflow does not cost
+         the exact 16:6 ratio; only a real shortfall (a wrapped headline) grows it. */
+      const need=Math.ceil(copy.scrollHeight);
+      if(need>hero.getBoundingClientRect().height+12)hero.style.setProperty('--hero-min-h',need+'px');
+    });
+  };
+  sizeHeroStats();addEventListener('resize',sizeHeroStats);addEventListener('load',sizeHeroStats);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(sizeHeroStats);
+
   const boot=()=>{body.classList.add('loaded');startTerrain()};addEventListener('load',()=>setTimeout(boot,450));setTimeout(boot,1800);
 
   function splitLetters(){

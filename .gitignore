@@ -17,3 +17,7 @@
 /.yr-*.png
 /.loc-check.png
 /.*-check.png
+# Catch-all: every verification screenshot this workflow writes is a dotfile
+# PNG at the repo root, so ignore the whole shape rather than chasing new
+# prefixes one at a time.
+/.*.png
